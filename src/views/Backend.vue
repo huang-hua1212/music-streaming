@@ -161,12 +161,12 @@
             </tbody>
           </table>
 
-          <paginationComponent
+          <pagination-component
             v-bind:pagination="totalPages"
             v-bind:currentpage="currentPage"
             v-bind:searchproducts="searchProducts"
             v-on:on-changepage="onChangePage"
-          ></paginationComponent>
+          ></pagination-component>
 
           <!-- 暫時 -->
         </div>
@@ -492,7 +492,7 @@
 <script>
 import axios from 'axios';
 import Modal from 'bootstrap/js/dist/modal';
-import paginationComponent from './Backend_Pagination.vue';
+import paginationComponent from '@/components/Backend_Pagination.vue';
 
 const url = 'https://vue3-course-api.hexschool.io/v2'; // 請加入站點
 const path = 'cakeshop'; // 請加入個人 API Path  //1. vuespringclass-api //2. vuespringclassapi //3.cakeshop

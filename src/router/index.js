@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import Login from '../views/Login.vue';
 import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
 
@@ -9,11 +8,6 @@ const routes = [
     path: '/',
     name: 'FrontendProducts',
     component: FrontendProducts,
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
   },
   {
     path: '/backend',

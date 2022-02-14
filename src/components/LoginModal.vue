@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import login from './Login.vue';
+import login from '../views/Login.vue';
 
 export default {
   components: { login },

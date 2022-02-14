@@ -294,7 +294,7 @@
 </template>
 <script>
 import axios from 'axios';
-import loginModal from './LoginModal.vue';
+import loginModal from '@/components/LoginModal.vue';
 
 export default {
   data() {

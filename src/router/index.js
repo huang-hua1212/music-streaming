@@ -2,12 +2,18 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
+import CheckoutPayment from '../views/CheckoutPayment.vue';
 
 const routes = [
   {
     path: '/',
     name: 'FrontendProducts',
     component: FrontendProducts,
+  },
+  {
+    path: '/checkout-payment',
+    name: 'CheckoutPayment',
+    component: CheckoutPayment,
   },
   {
     path: '/backend',

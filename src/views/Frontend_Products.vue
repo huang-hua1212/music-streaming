@@ -35,7 +35,9 @@
                   data-bs-target="#modalCart"
                   aria-expanded="false"
                 >
-                  <i class="bi bi-cart-fill"></i>
+                  <!-- <font-awesome-icon icon="plus" size="3x"  style="margin-top: 2px" /> -->
+                  <!-- <i class="bi bi-cart-fill"></i> -->
+                  <font-awesome-icon icon="cart-shopping" size="1x" />
                   <div v-if="productsInCart.length">
                     <span
                       class="badge rounded-pill badge-notification bg-danger"
@@ -105,9 +107,9 @@
                 <h3 class="card-title text-primary">{{ item.title }}</h3>
                 <h6 class="text-danger">售價: {{ item.price }}</h6>
                 <h6>
-                  <del>原價: {{ item.originPrice }}</del>
+                  <del>原價: {{ item.origin_price }}</del>
                 </h6>
-                <h6>是否啟用: {{ item.isActivated ? "啟用" : "未啟用" }}</h6>
+                <h6>是否啟用: {{ item.is_enabled ? "啟用" : "未啟用" }}</h6>
                 <button
                   type="button"
                   class="btn btn-warning"
@@ -170,7 +172,7 @@
                 <h6 class="mt-3">
                   {{ temp.price }}
                   <span class="ms-2">
-                    <del>{{ temp.originPrice }}</del
+                    <del>{{ temp.origin_price }}</del
                     >元/個
                   </span>
                 </h6>
@@ -203,7 +205,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                v-on:click="addProdut()"
+                v-on:click="addProduct()"
                 data-bs-dismiss="modal"
               >
                 加入購物車
@@ -235,13 +237,13 @@
             <div class="modal-body">
               <div class="container">
                 <table class="table">
-                  <thea>
-                    <th scope="col">產品名稱</th>
-                    <th scope="col">售價</th>
-                    <th scope="col">數量</th>
-                    <th scope="col">小計</th>
-                    <th scope="col">變更</th>
-                  </thea>
+                  <thead>
+                    <th >產品名稱</th>
+                    <th >售價</th>
+                    <th >數量</th>
+                    <th >小計</th>
+                    <th >變更</th>
+                  </thead>
                   <tbody>
                     <tr v-for="item in productsInCart" :key="item.id">
                       <td>
@@ -323,15 +325,17 @@ export default {
     this.productsIn();
   },
   methods: {
-    addProdut(temp = this.temp) {
+    addProduct(temp = this.temp) {
       this.temp.num += 1;
-      this.productsToSell[temp.id - 1].num += 1;
+      // this.productsToSell[temp.id - 1].num += 1;
+      const tempProductToAdd = this.productsToSell.find((element) => element.id === temp.id);
+      tempProductToAdd.num += 1;
       const tempCopy = JSON.parse(JSON.stringify(temp));
       if (this.productsInCart.length === 0) {
         this.productsInCart.push(tempCopy);
       } else {
         this.productsInCart = [];
-        this.data.forEach((element) => {
+        this.productsToSell.forEach((element) => {
           if (element.num > 0) {
             this.productsInCart.push(element);
           }

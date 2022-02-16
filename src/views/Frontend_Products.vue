@@ -30,13 +30,12 @@
                   class="nav-link"
                   id="navbarDropdownCart"
                   role="button"
-                  data-mdb-toggle="dropdown"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalCart"
-                  aria-expanded="false"
+                  @click="openCartModal"
                 >
+                  <!-- data-mdb-toggle="dropdown" data-bs-toggle="modal"
+                  data-bs-target="#modalCart"
+                  aria-expanded="false" -->
                   <!-- <font-awesome-icon icon="plus" size="3x"  style="margin-top: 2px" /> -->
-                  <!-- <i class="bi bi-cart-fill"></i> -->
                   <font-awesome-icon icon="cart-shopping" size="1x" />
                   <div v-if="productsInCart.length">
                     <span
@@ -78,12 +77,7 @@
               </ul>
             </li>
             <li class="nav-item active" v-else>
-              <a
-                class="nav-link"
-                data-bs-toggle="modal"
-                data-bs-target="#modalLogin"
-                >登入/註冊</a
-              >
+              <a class="nav-link" @click="openLoginModal">登入/註冊</a>
             </li>
           </ul>
           <!-- Right elements -->
@@ -216,75 +210,16 @@
       </div>
 
       <!-- Modal of cart -->
-      <div
-        class="modal fade"
-        id="modalCart"
-        tabindex="-1"
-        aria-labelledby="modalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel">購物車</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="container">
-                <table class="table">
-                  <thead>
-                    <th >產品名稱</th>
-                    <th >售價</th>
-                    <th >數量</th>
-                    <th >小計</th>
-                    <th >變更</th>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in productsInCart" :key="item.id">
-                      <td>
-                        {{ item.title }}
-                      </td>
-                      <td>
-                        {{ item.price }}
-                      </td>
-                      <td>
-                        {{ item.num }}
-                      </td>
-                      <td>
-                        {{ item.num * item.price }}
-                      </td>
-                      <td>
-                        <button type="button" class="btn btn-primary">
-                          編輯
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">結帳</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <productlist-cartmodal
+      ref='callCartModal'
+      :productsInCart="productsInCart" >
+      </productlist-cartmodal>
 
       <!-- Modal of personProfile -->
-      <login-modal></login-modal>
+      <login-modal ref="callLoginModal"></login-modal>
     </div>
+
+    //Loading ProgressBar
     <div
       v-show="isShowProgressBar"
       class="spinner-border text-success"
@@ -297,6 +232,8 @@
 <script>
 import axios from 'axios';
 import loginModal from '@/components/LoginModal.vue';
+import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
+// import Modal from 'bootstrap/js/dist/modal';
 
 export default {
   data() {
@@ -314,7 +251,7 @@ export default {
       },
     };
   },
-  components: { loginModal },
+  components: { loginModal, ProductlistCartmodal },
   created() {
     const cookieToken = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
@@ -325,10 +262,23 @@ export default {
     this.productsIn();
   },
   methods: {
+    // closeLoginModal(isCloseModal) {
+    //   if (isCloseModal) {
+    //     this.modal.loginModal.hide();
+    //   }
+    // },
+    openLoginModal() {
+      this.$refs.callLoginModal.openModal();
+    },
+    openCartModal() {
+      this.$refs.callCartModal.openModal();
+    },
     addProduct(temp = this.temp) {
       this.temp.num += 1;
       // this.productsToSell[temp.id - 1].num += 1;
-      const tempProductToAdd = this.productsToSell.find((element) => element.id === temp.id);
+      const tempProductToAdd = this.productsToSell.find(
+        (element) => element.id === temp.id,
+      );
       tempProductToAdd.num += 1;
       const tempCopy = JSON.parse(JSON.stringify(temp));
       if (this.productsInCart.length === 0) {
@@ -387,6 +337,7 @@ export default {
       this.temp.imageUrl = this.temp.imagesUrl[key];
       this.temp.imagesUrl.splice(key, 1);
     },
+
     login() {
       axios
         .post(`${this.url}/admin/signin`, this.account)

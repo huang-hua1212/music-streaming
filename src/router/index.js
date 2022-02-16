@@ -6,14 +6,14 @@ import CheckoutPayment from '../views/CheckoutPayment.vue';
 
 const routes = [
   {
-    path: '/',
+    path: '/frontendproducts',
     name: 'FrontendProducts',
     component: FrontendProducts,
   },
   {
-    path: '/checkout-payment',
-    name: 'CheckoutPayment',
-    component: CheckoutPayment,
+    path: '/',
+    name: 'CheckoutPayment1',
+    component: CheckoutPayment1,
   },
   {
     path: '/backend',

@@ -9,7 +9,7 @@
 
       <div class="container">
         <div class="col-auto">
-          <Form v-slot="{ errors }" id="form" class="form-signin" @submit="login">
+          <Form v-slot="{ errors }" id="form" @submit="login">
             <div class="mx-auto col-5 mb-3">
               <Field
                 type="email"
@@ -23,22 +23,11 @@
                 required
                 autofocus
               ></Field>
-              <error-message name="email" class="invalid-feedback"></error-message>
+              <error-message
+                name="email"
+                class="invalid-feedback"
+              ></error-message>
             </div>
-            <!-- <div class="mx-auto col-5 mb-5">
-              <Field
-                type="password"
-                name="password"
-                id="forPassword"
-                class="form-control"
-                placeholder="password"
-                rules="required|min:8"
-                :class="{ 'is-invalid': errors['password'] }"
-                v-model="account.password"
-              ></Field>
-              <error-message name="password" class="invalid-feedback"></error-message>
-            </div> -->
-            <!-- rules="required|min:8" -->
             <div class="mx-auto col-5 mb-5">
               <Field
                 type="password"
@@ -50,22 +39,33 @@
                 :class="{ 'is-invalid': errors['password'] }"
                 v-model="account.password"
               ></Field>
-              <error-message name="password" class="invalid-feedback"></error-message>
+              <error-message
+                name="password"
+                class="invalid-feedback"
+              ></error-message>
             </div>
             <div class="mx-auto col-5">
-              <button type="submit" class="btn btn-secondary col-12">登入</button>
+              <button type="submit" class="btn btn-secondary col-12">
+                登入
+              </button>
             </div>
           </Form>
 
           <div class="mx-auto col-5 row mt-1">
             <div class="col-4 ps-0">
-              <a class="nav-item nav-link text-start ps-0 pt-0 text-secondary" href="#">
+              <a
+                class="nav-item nav-link text-start ps-0 pt-0 text-secondary"
+                href="#"
+              >
                 忘記密碼
               </a>
             </div>
             <div class="col-4"></div>
             <div class="col-4 pe-0">
-              <a class="nav-item nav-link text-end pe-0 pt-0 text-secondary" href="./LogIn.html">
+              <a
+                class="nav-item nav-link text-end pe-0 pt-0 text-secondary"
+                href="./LogIn.html"
+              >
                 註冊
               </a>
             </div>
@@ -98,8 +98,11 @@ export default {
   methods: {
     passWord_verify(value) {
       const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}$/;
-      return passwordRules.test(value) ? true : '密碼長度至少八碼，必須包含大小寫英文及數字';
+      return passwordRules.test(value)
+        ? true
+        : '密碼長度至少八碼，必須包含大小寫英文及數字';
     },
+
     login() {
       //   const emailRule = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
 
@@ -108,27 +111,31 @@ export default {
       //     // alert('輸入不符合');
       //   }
       axios.post(`${url}/admin/signin`, this.account).then((res) => {
+        this.closeModal(); // 要先關閉modal才不會有陰影
         const { token, expired } = res.data;
-        document.cookie = `hexToken=${token}; expired=${new Date(expired)};path=/`;
-        // window.location = './VueSpringClass_hw4.html';
+        document.cookie = `hexToken=${token}; expired=${new Date(
+          expired,
+        )};path=/`;
         this.$router.push('/backend');
       });
-      // .catch((error) => {
-      // //   console.dir(error);
-      // });
+    },
+    closeModal() {
+      // this.$emit("事件名稱","想傳遞的數據");
+      this.$emit('close-modal', true);
     },
   },
 };
 </script>
-<style lang="scss" scoped>
-.nav-link span {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  font-size: 35%;
-}
 
-.content {
-  margin-top: 80px;
-}
+<style lang="scss" scoped>
+  .nav-link span {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    font-size: 35%;
+  }
+
+  .content {
+    margin-top: 80px;
+  }
 </style>

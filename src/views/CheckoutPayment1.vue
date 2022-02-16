@@ -29,7 +29,6 @@
         </div>
       </div>
 
-
       <!-- 手機電話 -->
       <div class="row mb-3">
         <label for="form-email" class="col-auto col-form-label">手機</label>
@@ -44,10 +43,12 @@
             v-model="cellphone"
             required
           ></Field>
-          <error-message name="cellphone" class="invalid-feedback"></error-message>
+          <error-message
+            name="cellphone"
+            class="invalid-feedback"
+          ></error-message>
         </div>
       </div>
-
 
       <!-- 市話 -->
       <div class="row mb-3">
@@ -63,11 +64,13 @@
             v-model="telephone"
             required
           ></Field>
-          <error-message name="telephone" class="invalid-feedback"></error-message>
+          <error-message
+            name="telephone"
+            class="invalid-feedback"
+          ></error-message>
         </div>
       </div>
 
-      
       <!-- <hr /> -->
 
       <!-- 信箱 -->
@@ -103,6 +106,72 @@
           </select>
         </div>
       </div>
+
+
+      <!-- 地址 -->
+      <div>
+        <label class="col-form-label mb-1">居住地址:</label>
+        <div class="row mb-3">
+          <label for="formCityOfLiveAddress" class="col-auto col-form-label"
+            >縣市</label
+          >
+          <select
+            class="select col-auto p-1"
+            id="formCityOfLiveAddress"
+            v-model="profileData.liveAddress.city"
+            v-on:change="getRegion($event)"
+          >
+            <option value="縣市" selected disabled>縣市</option>
+            <option
+              v-for="(cityCode, city) in html.liveAddress.selectCity"
+              v-bind:value="[city, cityCode]"
+              :key="city"
+            >
+              {{ city }}
+            </option>
+          </select>
+
+          <label for="formRegionOfLiveAddress" class="col-auto col-form-label"
+            >鄉鎮[市]區</label
+          >
+          <select
+            class="select col-auto p-1"
+            id="formRegionOfLiveAddress"
+            v-model="profileData.liveAddress.region"
+            v-on:change="getRoad($event)"
+          >
+            <option value="鄉鎮[市]區" selected disabled>鄉鎮[市]區</option>
+            <option
+              v-for="region in html.liveAddress.selectRegion"
+              v-bind:value="region"
+              :key="region"
+            >
+              {{ region }}
+            </option>
+          </select>
+
+          <label for="formRoadOfLiveAddress" class="col-auto col-form-label"
+            >路(街)名</label
+          >
+          <select
+            class="select col-auto p-1"
+            id="formRoadOfLiveAddress"
+            v-model="profileData.liveAddress.road"
+          >
+            <option value="路(街)名" selected disabled>路(街)名</option>
+            <option
+              v-for="road in html.liveAddress.selectRoad"
+              v-bind:value="road"
+              :key="road"
+            >
+              {{ road }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+
+
     </Form>
   </div>
 </template>
@@ -121,25 +190,23 @@ export default {
   methods: {
     cellphone_verify(value) {
       const cellphoneRules = /09\d{8}/;
-      return cellphoneRules.test(value)
-        ? true
-        : "手機號碼必須以09為開頭";
+      return cellphoneRules.test(value) ? true : "手機號碼必須以09為開頭";
     },
     telephone1_verify(value) {
       const telephoneRules = /\d{2,3}/;
-      return telephoneRules.test(value)
-        ? true
-        : "市話區碼未符合規則";
+      return telephoneRules.test(value) ? true : "市話區碼未符合規則";
     },
     telephone2_verify(value) {
       const telephoneRules = /\d{4}\-?\d{4}$/;
-      return telephoneRules.test(value)
-        ? true
-        : "市話號碼未符合規則";
+      return telephoneRules.test(value) ? true : "市話號碼未符合規則";
     },
     toCheckoutPayment2() {
-      this.$router.push('/toCheckoutPayment2');
+      this.$router.push("/toCheckoutPayment2");
     },
+    getRegion(){
+
+    },
+    get
   },
 };
 </script>

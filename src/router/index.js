@@ -1,38 +1,38 @@
 import {
   createRouter,
-  createWebHashHistory
+  createWebHashHistory,
 } from 'vue-router';
+import CheckoutPayment2 from '@/components/CheckoutPayment2.vue';
+import CheckoutPayment1 from '@/components/CheckoutPayment1.vue';
 import Home from '../views/Home.vue';
 import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
-import CheckoutPayment1 from '../views/CheckoutPayment1.vue';
-import CheckoutPayment2 from '../views/CheckoutPayment2.vue';
-import CheckoutPayment_Top from '../views/CheckoutPayment_Top.vue';
+import CheckoutPaymentTop from '../views/CheckoutPayment_Top.vue';
 
-
-const routes = [{
+const routes = [
+  {
     path: '/frontendproducts',
     name: 'FrontendProducts',
     component: FrontendProducts,
   },
   {
-    path: '/checkout-payment_top',
-    name: 'CheckoutPayment_Top',
-    component: CheckoutPayment_Top,
+    path: '/',
+    name: 'CheckoutPaymentTop',
+    component: CheckoutPaymentTop,
     children: [
       {
-         // when /checkout-payment_top/checkout-payment1 is matched
-        path: '',  // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
-        // name: 'CheckoutPayment1',
+        // when /checkout-payment_top/checkout-payment1 is matched
+        path: '', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
+        name: 'CheckoutPayment1',
         component: CheckoutPayment1,
       },
       {
-         // when /checkout-payment_top/checkout-payment2 is matched
-        path: 'checkout-payment2',    // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
-        // name: 'CheckoutPayment2',
+        // when /checkout-payment_top/checkout-payment2 is matched
+        path: 'checkout-payment2', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        name: 'CheckoutPayment2',
         component: CheckoutPayment2,
       },
-    ]
+    ],
   },
   {
     path: '/backend',
@@ -40,7 +40,7 @@ const routes = [{
     component: Backend,
   },
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home,
   },
@@ -50,7 +50,7 @@ const routes = [{
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
 ];
 

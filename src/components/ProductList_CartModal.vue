@@ -105,7 +105,7 @@ export default {
     checkout() {
       // 前往結帳頁面
       // this.$router.push('/checkout-payment');//checkout-payment_top
-       this.$router.push('/checkout-payment_top');
+      this.$router.push('/checkout-payment_top');
     },
   },
 };

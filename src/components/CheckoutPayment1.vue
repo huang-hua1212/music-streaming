@@ -23,7 +23,7 @@
             placeholder="xxxx"
             rules="required"
             :class="{ 'is-invalid': errors['name'] }"
-            v-model="user.name"
+            v-model="name"
             required
             autofocus
           ></Field>
@@ -43,7 +43,7 @@
             placeholder="xxxx"
             rules="required|min:8"
             :class="{ 'is-invalid': errors['手機'] }"
-            v-model="user.cellphone"
+            v-model="cellphone"
           ></Field>
           <error-message name="手機" class="invalid-feedback"></error-message>
         </div>
@@ -61,7 +61,7 @@
             placeholder="xxxx"
             rules="required|min:8"
             :class="{ 'is-invalid': errors['市話'] }"
-            v-model="user.telephone"
+            v-model="telephone"
           ></Field>
           <error-message name="市話" class="invalid-feedback"></error-message>
         </div>
@@ -81,7 +81,7 @@
             placeholder="email"
             rules="required|email"
             :class="{ 'is-invalid': errors['email'] }"
-            v-model="user.email"
+            v-model="email"
           ></Field>
           <error-message name="email" class="invalid-feedback"></error-message>
         </div>
@@ -91,71 +91,86 @@
       <div class="row">
         <label class="col-auto col-form-label mb-1">居住地址:</label>
 
-        <div class="mb-3 col-sm-5">
-          <label for="formCityOfLiveAddress" class="col-auto col-form-label"
-            >縣市</label
-          >
-          <Field
-            class="select col-auto p-1"
-            name="addressCity"
-            id="formCityOfLiveAddress"
-            rules="required"
-            as="select"
-          >
-            <!--v-model="profileData.liveAddress.city" v-on:change="getRegion($event)" -->
-            <option value="縣市" selected disabled>縣市</option>
-            <option>
-              <!-- v-for="(cityCode, city) in html.liveAddress.selectCity"
+          <div class="row col-auto">
+            <label
+              for="formCityOfLiveAddress"
+              class="col-auto pe-0 col-form-label"
+              >縣市</label
+            >
+            <div class="col-auto">
+              <Field
+                class="col-5 form-select"
+                name="addressCity"
+                id="formCityOfLiveAddress"
+                rules="required"
+                as="select"
+              >
+                <!--v-model="profileData.liveAddress.city" v-on:change="getRegion($event)" -->
+                <option value="縣市" selected disabled>縣市</option>
+                <option value="高雄市" selected disabled>高雄市</option>
+                <option>
+                  <!-- v-for="(cityCode, city) in html.liveAddress.selectCity"
               v-bind:value="[city, cityCode]"
               :key="city"
               {{ city }} -->
-            </option>
-          </Field>
-
-          <label for="formRegionOfLiveAddress" class="col-auto ms-2 col-form-label"
-            >鄉鎮[市]區</label
-          >
-          <Field
-            name="addressRegion"
-            class="select col-auto p-1"
-            id="formRegionOfLiveAddress"
-            rules="required"
-            placeholder=''
-            v-model="address.region"
-            as="select"
-          >
-            <!--v-model="profileData.liveAddress.region" v-on:change="getRoad($event)" -->
-            <option value="鄉鎮[市]區" selected disabled>鄉鎮[市]區</option>
-            <option>
-              <!-- v-for="region in html.liveAddress.selectRegion"
+                </option>
+              </Field>
+            </div>
+          </div>
+          <div class="row col-auto">
+            <label
+              for="formRegionOfLiveAddress"
+              class="col-auto pe-0 col-form-label"
+              >鄉鎮[市]區</label
+            >
+            <div class="col-auto">
+              <Field
+                name="addressRegion"
+                class="form-select"
+                id="formRegionOfLiveAddress"
+                rules="required"
+                v-model="address.region"
+                as="select"
+              >
+                <!--v-model="profileData.liveAddress.region" v-on:change="getRoad($event)" -->
+                <option value="鄉鎮[市]區" selected disabled>鄉鎮[市]區</option>
+                <option>
+                  <!-- v-for="region in html.liveAddress.selectRegion"
               v-bind:value="region"
               :key="region"
               {{ region }} -->
-            </option>
-          </Field>
+                </option>
+              </Field>
+            </div>
+          </div>
 
-          <label for="formRoadOfLiveAddress" class="col-auto ms-2 col-form-label"
-            >路(街)名</label
-          >
-          <Field
-            name="addressRoad"
-            class="select col-auto p-1"
-            id="formRoadOfLiveAddress"
-            rules="required"
-            placeholder=""
-            v-model="address.road"
-            as="select"
-          >
-            <!-- v-model="profileData.liveAddress.road" -->
-            <option value="路(街)名" selected disabled>路(街)名</option>
-            <option>
-              <!-- v-for="road in html.liveAddress.selectRoad"
-              v-bind:value="road" :key="road" {{ road }}-->
-            </option>
-          </Field>
-          <Field type="text" name="fullAddress" class="col-10 h-50"></Field>
-        </div>
+          <div class="row col-auto">
+            <label
+              for="formRoadOfLiveAddress"
+              class="col-auto me-0 pe-0 col-form-label"
+              >郵遞區號</label
+            >
+            <div class="col-5">
+              <Field
+                type="text"
+                name="addressRoad"
+                class="form-control"
+                id="formRoadOfLiveAddress"
+                rules="required"
+                v-model="address.road"
+              >
+              </Field>
+            </div>
+          </div>
+
       </div>
+      <div class="ms-4 ps-3 w-50 pe-5">
+            <Field
+              type="text"
+              name="fullAddress"
+              class="form-control ms-5 h-100"
+            ></Field>
+          </div>
     </Form>
   </div>
 </template>
@@ -164,18 +179,16 @@
 export default {
   data() {
     return {
-      user: {
-        name: '',
-        cellphone: '',
-        housephone: '',
-        address: {
-          city:'',
-          region:'',
-          road:'',
-          fullAddress:'',
-        },
-        memo: '',
+      name: '',
+      cellphone: '',
+      housephone: '',
+      address: {
+        city: '',
+        region: '',
+        road: '',
+        fullAddress: '',
       },
+      memo: '',
     };
   },
   methods: {
@@ -192,9 +205,9 @@ export default {
       return telephoneRules.test(value) ? true : '市話號碼未符合規則';
     },
     toCheckoutPayment2() {
-      this.$router.push('/CheckoutPayment2');
+      this.$router.push('/checkout-payment2');
     },
-    getRegion() {},
+    // getRegion() {},
   },
 };
 </script>

@@ -219,7 +219,7 @@
       <login-modal ref="callLoginModal"></login-modal>
     </div>
 
-    //Loading ProgressBar
+    <!-- //Loading ProgressBar -->
     <div
       v-show="isShowProgressBar"
       class="spinner-border text-success"

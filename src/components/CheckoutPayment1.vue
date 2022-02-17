@@ -116,10 +116,12 @@
             >鄉鎮[市]區</label
           >
           <Field
-            name="addressDistrict"
+            name="addressRegion"
             class="select col-auto p-1"
             id="formRegionOfLiveAddress"
             rules="required"
+            placeholder=''
+            v-model="address.region"
             as="select"
           >
             <!--v-model="profileData.liveAddress.region" v-on:change="getRoad($event)" -->
@@ -140,6 +142,8 @@
             class="select col-auto p-1"
             id="formRoadOfLiveAddress"
             rules="required"
+            placeholder=""
+            v-model="address.road"
             as="select"
           >
             <!-- v-model="profileData.liveAddress.road" -->
@@ -164,7 +168,12 @@ export default {
         name: '',
         cellphone: '',
         housephone: '',
-        address: '',
+        address: {
+          city:'',
+          region:'',
+          road:'',
+          fullAddress:'',
+        },
         memo: '',
       },
     };

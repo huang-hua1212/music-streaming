@@ -102,14 +102,7 @@ export default {
         ? true
         : '密碼長度至少八碼，必須包含大小寫英文及數字';
     },
-
     login() {
-      //   const emailRule = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-
-      //   // validate ok or not
-      //   if (this.account.username.search(emailRule) === -1) {
-      //     // alert('輸入不符合');
-      //   }
       axios.post(`${url}/admin/signin`, this.account).then((res) => {
         this.closeModal(); // 要先關閉modal才不會有陰影
         const { token, expired } = res.data;

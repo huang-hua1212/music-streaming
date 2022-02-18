@@ -162,10 +162,10 @@
           </table>
 
           <pagination-component
-            :pagination="totalPages"
-            :currentpage="currentPage"
-            :searchproducts="searchProducts"
-            @on-changepage.prevent="onChangePage"
+            v-bind:pagination="totalPages"
+            v-bind:currentpage="currentPage"
+            v-bind:searchproducts="searchProducts"
+            v-on:on-changepage="onChangePage"
           ></pagination-component>
 
           <!-- 暫時 -->

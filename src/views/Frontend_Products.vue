@@ -32,16 +32,12 @@
                   role="button"
                   @click="openCartModal"
                 >
-                  <!-- data-mdb-toggle="dropdown" data-bs-toggle="modal"
-                  data-bs-target="#modalCart"
-                  aria-expanded="false" -->
-                  <!-- <font-awesome-icon icon="plus" size="3x"  style="margin-top: 2px" /> -->
                   <font-awesome-icon icon="cart-shopping" size="1x" />
-                  <div v-if="productsInCart.length">
+                  <div v-if="productsInCartLength">
                     <span
                       class="badge rounded-pill badge-notification bg-danger"
                     >
-                      {{ productsInCart.length }}
+                      {{ productsInCartLength }}
                     </span>
                   </div>
                 </a>
@@ -212,8 +208,7 @@
       <!-- Modal of cart -->
       <productlist-cartmodal
         ref="callCartModal"
-        :productsInCart="productsInCart"
-        @changedProductsInCart="changeProductsInCart"
+        @computProductLength="computProductLength"
       >
       </productlist-cartmodal>
 
@@ -240,23 +235,24 @@ import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
 export default {
   data() {
     return {
-      url: 'https://vue3-course-api.hexschool.io/v2',
+      url: process.env.VUE_APP_API, // 'https://vue3-course-api.hexschool.io/v2',
       path: 'cakeshop',
       temp: {},
       productsToSell: [],
       productsInCart: [],
+      productsInCartLength: 0,
+      cartId: '',
       isLogin: false,
       isShowProgressBar: false,
       account: {
         username: '',
         password: '',
       },
+      test: process.env.VUE_APP_API,
     };
   },
   components: { loginModal, ProductlistCartmodal },
-  watch: {
-    
-  },
+  watch: {},
   created() {
     const cookieToken = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
@@ -264,11 +260,10 @@ export default {
     );
     axios.defaults.headers.common.Authorization = cookieToken;
     this.productsIn();
+    this.computProductLength();
   },
   methods: {
-    changeProductsInCart(productsCart) {
-      this.productsInCart = productsCart;
-    },
+
     openLoginModal() {
       this.$refs.callLoginModal.openModal();
     },
@@ -276,25 +271,42 @@ export default {
       this.$refs.callCartModal.openModal();
     },
     addProduct(temp = this.temp) {
-      this.temp.num += 1;
-      // this.productsToSell[temp.id - 1].num += 1;
-      const tempProductToAdd = this.productsToSell.find(
-        (element) => element.id === temp.id,
-      );
-      tempProductToAdd.num += 1;
-      const tempCopy = JSON.parse(JSON.stringify(temp));
-      if (this.productsInCart.length === 0) {
-        this.productsInCart.push(tempCopy);
-      } else {
-        this.productsInCart = [];
-        this.productsToSell.forEach((element) => {
-          if (element.num > 0) {
-            this.productsInCart.push(element);
-          }
+      const tempInFunction = temp;
+      tempInFunction.num = 1;
+      const cart = {
+        product_id: temp.id,
+        qty: temp.num,
+      };
+      axios
+        .post(`${this.url}/api/${this.path}/cart`, { data: cart })
+        .then(() => {
+          this.$refs.callCartModal.loadProductsInCart();
+          this.computProductLength();
         });
-      }
-
-      
+      // this.temp.num += 1;
+      // // this.productsToSell[temp.id - 1].num += 1;
+      // const tempProductToAdd = this.productsToSell.find(
+      //   (element) => element.id === temp.id,
+      // );
+      // tempProductToAdd.num += 1;
+      // const tempCopy = JSON.parse(JSON.stringify(temp));
+      // if (this.productsInCart.length === 0) {
+      //   this.productsInCart.push(tempCopy);
+      // } else {
+      //   this.productsInCart = [];
+      //   this.productsToSell.forEach((element) => {
+      //     if (element.num > 0) {
+      //       this.productsInCart.push(element);
+      //     }
+      //   });
+      // }
+    },
+    computProductLength() {
+      axios
+        .get(`${this.url}/api/${this.path}/cart`)
+        .then((res) => {
+          this.productsInCartLength = res.data.data.carts.length;
+        });
     },
     productsIn() {
       this.isShowProgressBar = true;
@@ -320,19 +332,17 @@ export default {
     },
 
     login() {
-      axios
-        .post(`${this.url}/admin/signin`, this.account)
-        .then((res) => {
-          const { token, expired } = res.data;
-          document.cookie = `hexToken=${token}; expired=${new Date(
-            expired,
-          )};path=/`;
-          //   console.log(document.cookie);
-          // window.location = "VueSpringClass_hw2.html";
+      axios.post(`${this.url}/admin/signin`, this.account).then((res) => {
+        const { token, expired } = res.data;
+        document.cookie = `hexToken=${token}; expired=${new Date(
+          expired,
+        )};path=/`;
+        //   console.log(document.cookie);
+        // window.location = "VueSpringClass_hw2.html";
 
-          window.location.href = 'VueSpringClass_hw2.html';
-          // window.location.assign ("VueSpringClass_hw2.html");
-        });
+        window.location.href = 'VueSpringClass_hw2.html';
+        // window.location.assign ("VueSpringClass_hw2.html");
+      });
       // .catch((error) => {
       //   console.dir(error);
       // });

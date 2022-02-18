@@ -29,25 +29,32 @@
                 <th>變更</th>
               </thead>
               <tbody>
-                <tr v-for="item in productsInCart" :key="item.id">
+                <tr v-for="item in productsInCart" :key="item.product.id">
                   <td>
-                    {{ item.title }}
+                    {{ item.product.title }}
                   </td>
                   <td>
-                    {{ item.price }}
+                    {{ item.product.price }}
                   </td>
                   <td>
                     <input
                       type="number"
                       style="width: 50px"
-                      :value="item.num"
+                      v-model="item.qty"
+                      @change="changeNumInCart(item)"
                     />
                   </td>
                   <td>
-                    {{ item.num * item.price }}
+                    {{ item.final_total }}
                   </td>
                   <td>
-                    <button type="button" class="btn btn-primary">編輯</button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click.prevent="deleteProduct(item)"
+                    >
+                      刪除
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -57,15 +64,23 @@
         <div class="modal-footer">
           <button
             type="button"
+            class="btn btn-warning"
+            @click.prevent="deleteAllProductsInCart"
+            style="margin-left:0px;"
+          >
+            全部刪除
+          </button>
+          <!-- <button
+            type="button"
             class="btn btn-secondary"
             data-bs-dismiss="modal"
           >
             Close
-          </button>
+          </button> -->
           <button
             type="button"
             class="btn btn-primary"
-            @submit.prevent="checkout"
+            @click.prevent="checkout"
           >
             結帳
           </button>
@@ -77,27 +92,45 @@
 
 <script>
 import Modal from 'bootstrap/js/dist/modal';
+import axios from 'axios';
 
 export default {
-  props: ['productsInCart'],
+  props: ['cartId'],
   data() {
     return {
+      url: 'https://vue3-course-api.hexschool.io/v2',
+      path: 'cakeshop',
+      productsInCart: [],
       modal: {
         cartModal: '',
       },
+      test: '',
     };
-  },
-  watch: {
-    // 監控
-    productsInCart(newValue) {
-      this.$emit('changedProductsInCart', newValue);
-    },
   },
   mounted() {
     this.modal.cartModal = new Modal(this.$refs.cartModal);
     this.modal.cartModal.hide();
+    this.loadProductsInCart();
   },
   methods: {
+    loadProductsInCart() {
+      axios.get(`${this.url}/api/${this.path}/cart`).then((res) => {
+        this.productsInCart = res.data.data.carts;
+        this.$emit('computProductLength', this.productsInCart.length);
+      });
+    },
+    changeNumInCart(item) {
+      this.test = item;
+      const cart = {
+        product_id: item.product_id,
+        qty: item.qty,
+      };
+      axios
+        .put(`${this.url}/api/${this.path}/cart/${item.id}`, { data: cart })
+        .then(() => {
+          this.loadProductsInCart();
+        });
+    },
     openModal() {
       this.modal.cartModal.show();
     },
@@ -106,8 +139,22 @@ export default {
     },
     checkout() {
       // 前往結帳頁面
-      // this.$router.push('/checkout-payment');//checkout-payment_top
+      this.closeModal(); // 記得先關閉Modal
       this.$router.push('/checkout-payment-top');
+    },
+    deleteProduct(item) {
+      axios.delete(`${this.url}/api/${this.path}/cart/${item.id}`).then(() => {
+        this.loadProductsInCart();
+      });
+    },
+    deleteAllProductsInCart() {
+      axios
+        .delete(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`,
+        )
+        .then(() => {
+          this.loadProductsInCart();
+        });
     },
   },
 };

@@ -246,20 +246,21 @@ export default {
   data() {
     return {
       isLoading: false,
+      isShowProgressBar: false,
+      isLogin: false,
       url: process.env.VUE_APP_API, // 'https://vue3-course-api.hexschool.io/v2',
       path: 'cakeshop',
-      temp: {},
       productsToSell: [],
-      productsInCart: [],
+      temp: {},
       productsInCartLength: 0,
-      cartId: '',
-      isLogin: false,
-      isShowProgressBar: false,
       account: {
         username: '',
         password: '',
       },
-      test: process.env.VUE_APP_API,
+      // test: process.env.VUE_APP_API,
+      // productsInCart: [],
+      // cartId: '',
+
     };
   },
   components: { loginModal, ProductlistCartmodal, Loading },
@@ -300,23 +301,6 @@ export default {
           this.$refs.callCartModal.loadProductsInCart();
           this.computProductLength();
         });
-      // this.temp.num += 1;
-      // // this.productsToSell[temp.id - 1].num += 1;
-      // const tempProductToAdd = this.productsToSell.find(
-      //   (element) => element.id === temp.id,
-      // );
-      // tempProductToAdd.num += 1;
-      // const tempCopy = JSON.parse(JSON.stringify(temp));
-      // if (this.productsInCart.length === 0) {
-      //   this.productsInCart.push(tempCopy);
-      // } else {
-      //   this.productsInCart = [];
-      //   this.productsToSell.forEach((element) => {
-      //     if (element.num > 0) {
-      //       this.productsInCart.push(element);
-      //     }
-      //   });
-      // }
     },
     computProductLength() {
       axios.get(`${this.url}/api/${this.path}/cart`).then((res) => {

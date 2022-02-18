@@ -89,7 +89,9 @@ export default {
   },
   watch: {
     // 監控
-    productsInCart() {},
+    productsInCart(newValue) {
+      this.$emit('changedProductsInCart', newValue);
+    },
   },
   mounted() {
     this.modal.cartModal = new Modal(this.$refs.cartModal);
@@ -105,7 +107,7 @@ export default {
     checkout() {
       // 前往結帳頁面
       // this.$router.push('/checkout-payment');//checkout-payment_top
-      this.$router.push('/checkout-payment_top');
+      this.$router.push('/checkout-payment-top');
     },
   },
 };

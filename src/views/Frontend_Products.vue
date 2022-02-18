@@ -211,8 +211,10 @@
 
       <!-- Modal of cart -->
       <productlist-cartmodal
-      ref='callCartModal'
-      :productsInCart="productsInCart" >
+        ref="callCartModal"
+        :productsInCart="productsInCart"
+        @changedProductsInCart="changeProductsInCart"
+      >
       </productlist-cartmodal>
 
       <!-- Modal of personProfile -->
@@ -252,21 +254,21 @@ export default {
     };
   },
   components: { loginModal, ProductlistCartmodal },
+  watch: {
+    
+  },
   created() {
     const cookieToken = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
       '$1',
     );
     axios.defaults.headers.common.Authorization = cookieToken;
-    // this.data = products;
     this.productsIn();
   },
   methods: {
-    // closeLoginModal(isCloseModal) {
-    //   if (isCloseModal) {
-    //     this.modal.loginModal.hide();
-    //   }
-    // },
+    changeProductsInCart(productsCart) {
+      this.productsInCart = productsCart;
+    },
     openLoginModal() {
       this.$refs.callLoginModal.openModal();
     },
@@ -291,6 +293,8 @@ export default {
           }
         });
       }
+
+      
     },
     productsIn() {
       this.isShowProgressBar = true;
@@ -303,32 +307,9 @@ export default {
         }
         this.productsToSell = arrRes;
         this.isShowProgressBar = false;
-
-        // this.productsInStock.sort((A, B) =>
-        //   this.sort.ascending
-        //     ? A[this.sort.sortBy] - B[this.sort.sortBy]
-        //     : B[this.sort.sortBy] - A[this.sort.sortBy]
-        // );
-
-        // // 分頁
-        // // page_size:2個一頁; page_number:第1頁
-        // this.searchValueFunc(this.searchValue, 1);
       });
     },
-    // deleteProduct() {
 
-    // },
-    // editItem() {
-    //     //temp=;
-    // },
-    // confirmEdit() {
-    //     if (!temp.id) {
-    //         temp.id = data.length;
-    //         data.push(temp);
-    //     } else {
-    //         data[temp.id + 1] = temp;
-    //     }
-    // }
     details(item) {
       this.temp = JSON.parse(JSON.stringify(item));
     },
@@ -342,7 +323,6 @@ export default {
       axios
         .post(`${this.url}/admin/signin`, this.account)
         .then((res) => {
-          console.log('success');
           const { token, expired } = res.data;
           document.cookie = `hexToken=${token}; expired=${new Date(
             expired,
@@ -352,10 +332,10 @@ export default {
 
           window.location.href = 'VueSpringClass_hw2.html';
           // window.location.assign ("VueSpringClass_hw2.html");
-        })
-        .catch((error) => {
-          console.dir(error);
         });
+      // .catch((error) => {
+      //   console.dir(error);
+      // });
     },
   },
 };

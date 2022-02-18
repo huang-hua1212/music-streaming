@@ -11,12 +11,12 @@ import CheckoutPaymentTop from '../views/CheckoutPayment_Top.vue';
 
 const routes = [
   {
-    path: '/frontendproducts',
+    path: '/',
     name: 'FrontendProducts',
     component: FrontendProducts,
   },
   {
-    path: '/',
+    path: '/checkout-payment-top',
     name: 'CheckoutPaymentTop',
     component: CheckoutPaymentTop,
     children: [

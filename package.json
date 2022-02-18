@@ -21,6 +21,7 @@
     "vee-validate": "^4.5.8",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
+    "vue-step-progress": "^0.3.7",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

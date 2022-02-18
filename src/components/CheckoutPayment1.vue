@@ -1,20 +1,10 @@
 <template>
-  <!-- <form type="submit" >
-    姓名:<input type="text" v-model="buyerProfile.name" />
-    手機電話:<input type="text" v-model="buyerProfile.cellphone" />
-    家用電話:<input type="text" v-model="buyerProfile.housephone" />
-    住址:<input type="text" v-model="buyerProfile.address" />
-    備註:<textarea type="text" v-model="buyerProfile.memo" >
-    </textarea>
-    <button type="button" @submit.prevent="ensureCheckout()" value="送出"></button>
-  </form> -->
-  <div class="container" style="margin-top: 5%">
+  <div class="container d-flex" style="margin-top: 8%; margin-left:23%;">
     <Form v-slot="{ errors }" id="form" @submit="toCheckoutPayment2">
-      <!--    <hr> -->
       <!-- 姓名 -->
-      <div class="row mb-3">
+      <div class="row mb-4">
         <label for="form-email" class="col-auto col-form-label">姓名</label>
-        <div class="col-sm-5">
+        <div class="col-sm-10 pe-5 ms-2">
           <Field
             type="text"
             name="name"
@@ -32,9 +22,9 @@
       </div>
 
       <!-- 手機電話 -->
-      <div class="row mb-3">
+      <div class="row mb-4">
         <label for="form-email" class="col-auto col-form-label">手機</label>
-        <div class="col-sm-5">
+        <div class="col-sm-10 pe-5 ms-2">
           <Field
             type="text"
             name="手機"
@@ -50,9 +40,9 @@
       </div>
 
       <!-- 市話 -->
-      <div class="row mb-3">
+      <div class="row mb-4">
         <label for="form-email" class="col-auto col-form-label">市話</label>
-        <div class="col-sm-5">
+        <div class="col-sm-10 pe-5 ms-2">
           <Field
             type="text"
             name="市話"
@@ -70,9 +60,9 @@
       <!-- <hr /> -->
 
       <!-- 信箱 -->
-      <div class="row mb-3">
+      <div class="row mb-4">
         <label for="form-name" class="col-auto col-form-label">信箱</label>
-        <div class="col-sm-5">
+        <div class="col-sm-10 pe-5 ms-2">
           <Field
             type="email"
             name="email"
@@ -90,7 +80,6 @@
       <!-- 地址 -->
       <div class="row">
         <label class="col-auto col-form-label mb-1">居住地址:</label>
-
           <div class="row col-auto">
             <label
               for="formCityOfLiveAddress"
@@ -164,7 +153,7 @@
           </div>
 
       </div>
-      <div class="ms-4 ps-3 w-50 pe-5">
+      <div class="ms-4 mt-1 ps-3" style="width:600px;">
             <Field
               type="text"
               name="fullAddress"
@@ -179,6 +168,7 @@
 export default {
   data() {
     return {
+      step: 1,
       name: '',
       cellphone: '',
       housephone: '',

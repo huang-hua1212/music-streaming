@@ -224,17 +224,28 @@
       role="status"
       style="position: absolute; z-index: 100; bottom: 5%; right: 5%"
     ></div>
+
+    <!-- Progress bar -->
+    <div style="position: relative">
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        :is-full-page="true"
+      />
+    </div>
   </div>
 </template>
 <script>
 import axios from 'axios';
 import loginModal from '@/components/LoginModal.vue';
 import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
-// import Modal from 'bootstrap/js/dist/modal';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   data() {
     return {
+      isLoading: false,
       url: process.env.VUE_APP_API, // 'https://vue3-course-api.hexschool.io/v2',
       path: 'cakeshop',
       temp: {},
@@ -251,7 +262,7 @@ export default {
       test: process.env.VUE_APP_API,
     };
   },
-  components: { loginModal, ProductlistCartmodal },
+  components: { loginModal, ProductlistCartmodal, Loading },
   watch: {},
   created() {
     const cookieToken = document.cookie.replace(
@@ -263,7 +274,12 @@ export default {
     this.computProductLength();
   },
   methods: {
-
+    showLoading() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 970);
+    },
     openLoginModal() {
       this.$refs.callLoginModal.openModal();
     },
@@ -271,6 +287,7 @@ export default {
       this.$refs.callCartModal.openModal();
     },
     addProduct(temp = this.temp) {
+      this.showLoading();
       const tempInFunction = temp;
       tempInFunction.num = 1;
       const cart = {
@@ -302,11 +319,9 @@ export default {
       // }
     },
     computProductLength() {
-      axios
-        .get(`${this.url}/api/${this.path}/cart`)
-        .then((res) => {
-          this.productsInCartLength = res.data.data.carts.length;
-        });
+      axios.get(`${this.url}/api/${this.path}/cart`).then((res) => {
+        this.productsInCartLength = res.data.data.carts.length;
+      });
     },
     productsIn() {
       this.isShowProgressBar = true;

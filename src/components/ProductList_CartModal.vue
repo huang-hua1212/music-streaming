@@ -88,16 +88,28 @@
       </div>
     </div>
   </div>
+
+   <!-- Progress bar -->
+    <div style="position: relative">
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        :is-full-page="true"
+      />
+    </div>
 </template>
 
 <script>
 import Modal from 'bootstrap/js/dist/modal';
 import axios from 'axios';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   props: ['cartId'],
   data() {
     return {
+      isLoading: false,
       url: 'https://vue3-course-api.hexschool.io/v2',
       path: 'cakeshop',
       productsInCart: [],
@@ -107,12 +119,19 @@ export default {
       test: '',
     };
   },
+  components: { Loading },
   mounted() {
     this.modal.cartModal = new Modal(this.$refs.cartModal);
     this.modal.cartModal.hide();
     this.loadProductsInCart();
   },
   methods: {
+    showLoading() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 990);
+    },
     loadProductsInCart() {
       axios.get(`${this.url}/api/${this.path}/cart`).then((res) => {
         this.productsInCart = res.data.data.carts;
@@ -143,11 +162,13 @@ export default {
       this.$router.push('/checkout-payment-top');
     },
     deleteProduct(item) {
+      this.showLoading();
       axios.delete(`${this.url}/api/${this.path}/cart/${item.id}`).then(() => {
         this.loadProductsInCart();
       });
     },
     deleteAllProductsInCart() {
+      this.showLoading();
       axios
         .delete(
           `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`,

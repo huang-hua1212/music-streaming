@@ -1,7 +1,4 @@
-import {
-  createRouter,
-  createWebHashHistory,
-} from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import CheckoutPayment2 from '@/components/CheckoutPayment2.vue';
 import CheckoutPayment1 from '@/components/CheckoutPayment1.vue';
 import Home from '../views/Home.vue';
@@ -51,6 +48,21 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+  },
+  // 若使用者輸入的網址為錯誤，或找不到時，有以下兩種解決方法
+  // 1.404頁面
+  // 2.重新導向
+  {
+    // 1.404頁面
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/NotFound.vue'),
+  },
+  {
+    // 2.重新導向
+    path: '/About/:pathMatch(.*)*',
+    redirect: {
+      name: 'FrontendProducts',
+    },
   },
 ];
 

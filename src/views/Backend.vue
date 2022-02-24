@@ -591,12 +591,12 @@ export default {
           ? A[newValue.sortBy] - B[newValue.sortBy]
           : B[newValue.sortBy] - A[newValue.sortBy]));
         // 針對所有products
-        this.pagination(this.elePerPage, 1);
+        this.pagination(this.elePerPage, this.currentPage);
       } else {
         this.productsPagination.sort((A, B) => (newValue.ascending
           ? A[newValue.sortBy] - B[newValue.sortBy]
           : B[newValue.sortBy] - A[newValue.sortBy]));
-        this.pagination(this.elePerPage, 1, this.searchProducts);
+        this.pagination(this.elePerPage, this.currentPage, this.searchProducts);
       }
     },
     // 依靠this.searchValue值的變換而觸發

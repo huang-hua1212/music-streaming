@@ -110,8 +110,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      url: 'https://vue3-course-api.hexschool.io/v2',
-      path: 'cakeshop',
       productsInCart: [],
       modal: {
         cartModal: '',
@@ -133,7 +131,7 @@ export default {
       }, 990);
     },
     loadProductsInCart() {
-      axios.get(`${this.url}/api/${this.path}/cart`).then((res) => {
+      axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`).then((res) => {
         this.productsInCart = res.data.data.carts;
         this.$emit('computProductLength', this.productsInCart.length);
       });
@@ -145,7 +143,7 @@ export default {
         qty: item.qty,
       };
       axios
-        .put(`${this.url}/api/${this.path}/cart/${item.id}`, { data: cart })
+        .put(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`, { data: cart })
         .then(() => {
           this.loadProductsInCart();
         });
@@ -163,7 +161,7 @@ export default {
     },
     deleteProduct(item) {
       this.showLoading();
-      axios.delete(`${this.url}/api/${this.path}/cart/${item.id}`).then(() => {
+      axios.delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`).then(() => {
         this.loadProductsInCart();
       });
     },

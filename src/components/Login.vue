@@ -79,11 +79,9 @@
 <script>
 import axios from 'axios';
 
-const url = 'https://vue3-course-api.hexschool.io/v2'; // 請加入站點
 export default {
   data() {
     return {
-      url: 'https://vue3-course-api.hexschool.io/v2',
       temp: {},
       data: [],
       productsInCart: [],
@@ -103,7 +101,7 @@ export default {
         : '密碼長度至少八碼，必須包含大小寫英文及數字';
     },
     login() {
-      axios.post(`${url}/admin/signin`, this.account).then((res) => {
+      axios.post(`${process.env.VUE_APP_API}/admin/signin`, this.account).then((res) => {
         this.closeModal(); // 要先關閉modal才不會有陰影
         const { token, expired } = res.data;
         document.cookie = `hexToken=${token}; expired=${new Date(

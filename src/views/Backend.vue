@@ -494,8 +494,6 @@ import axios from 'axios';
 import Modal from 'bootstrap/js/dist/modal';
 import paginationComponent from '@/components/Backend_Pagination.vue';
 
-const url = 'https://vue3-course-api.hexschool.io/v2'; // 請加入站點
-const path = 'cakeshop'; // 請加入個人 API Path  //1. vuespringclass-api //2. vuespringclassapi //3.cakeshop
 export default {
   data() {
     return {
@@ -571,7 +569,7 @@ export default {
     axios.defaults.headers.common.Authorization = cookieToken;
 
     // 驗證是否登入
-    axios.post(`${url}/api/user/check`).then(() => {
+    axios.post(`${process.env.VUE_APP_API}/api/user/check`).then(() => {
       // 為了eslint
       this.productsIn();
     });
@@ -670,7 +668,7 @@ export default {
     },
     productsIn() {
       this.isShowProgressBar = true;
-      axios.get(`${url}/api/${path}/admin/products/all`).then((res) => {
+      axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`).then((res) => {
         const resAllKey = Object.keys(res.data.products);
         const resAllValues = Object.values(res.data.products);
         const arrRes = resAllValues;
@@ -705,7 +703,7 @@ export default {
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append('form-to-upload', file);
-      axios.post(`${url}/api/${path}/admin/upload`, formData).then((res) => {
+      axios.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`, formData).then((res) => {
         if (!this.temp.imageUrl) {
           this.temp = {
             ...this.temp,
@@ -759,8 +757,6 @@ export default {
         this.temp.imagesUrl.push(this.tempImgpath);
         this.tempImgpath = '';
       }
-      // console.log(this.tempImgpath);
-      // this.temp.imagesUrl.push(this.tempImgpath);
     },
     confirmEdit() {
       if (!this.temp.id) {
@@ -768,20 +764,14 @@ export default {
         // this.temp.id = new Date().getTime().toString();
         this.productsInStock.push(this.temp);
 
-        axios.post(`${url}/api/${path}/admin/product`, { data: this.temp }).then(() => {
+        axios.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`, { data: this.temp }).then(() => {
           // 為了過eslint，never used的res可以先不加上去
           this.temp = {};
           this.productsIn();
         });
-        //   .catch((err) => {
-        //     // console.dir(err);
-        //   });
       } else {
-        // 修正
-
         const id = this.temp.id.trim();
-
-        axios.put(`${url}/api/${path}/admin/product/${id}`, { data: this.temp }).then(() => {
+        axios.put(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`, { data: this.temp }).then(() => {
           // 為了過eslint，never used的res可以先不加上去
           this.productsInStock.forEach((item, i) => {
             if (item.id === id) {
@@ -823,7 +813,7 @@ export default {
 
     deleteProductInStock(item) {
       const id = item.id.trim();
-      const pathUrl = `${url}/api/${path}/admin/product/${id}`;
+      const pathUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`;
       axios.delete(pathUrl).then(() => {
         // 為了過eslint，never used的res可以先不加上去
         // 方法一 直接從this.productsInStock刪除;

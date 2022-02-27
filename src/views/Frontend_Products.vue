@@ -41,6 +41,7 @@
                     </span>
                   </div>
                 </a>
+
               </div>
             </li>
 
@@ -296,20 +297,20 @@ export default {
         qty: temp.num,
       };
       axios
-        .post(`${this.url}/api/${this.path}/cart`, { data: cart })
+        .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, { data: cart })
         .then(() => {
           this.$refs.callCartModal.loadProductsInCart();
           this.computProductLength();
         });
     },
     computProductLength() {
-      axios.get(`${this.url}/api/${this.path}/cart`).then((res) => {
+      axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`).then((res) => {
         this.productsInCartLength = res.data.data.carts.length;
       });
     },
     productsIn() {
       this.isShowProgressBar = true;
-      axios.get(`${this.url}/api/${this.path}/products/all`).then((res) => {
+      axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`).then((res) => {
         const resAllKey = Object.keys(res.data.products);
         const resAllValues = Object.values(res.data.products);
         const arrRes = resAllValues;
@@ -331,7 +332,7 @@ export default {
     },
 
     login() {
-      axios.post(`${this.url}/admin/signin`, this.account).then((res) => {
+      axios.post(`${process.env.VUE_APP_API}/admin/signin`, this.account).then((res) => {
         const { token, expired } = res.data;
         document.cookie = `hexToken=${token}; expired=${new Date(
           expired,
@@ -347,6 +348,7 @@ export default {
       // });
     },
   },
+
 };
 </script>
 

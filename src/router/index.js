@@ -5,10 +5,16 @@ import Home from '../views/Home.vue';
 import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
 import CheckoutPaymentTop from '../views/CheckoutPayment_Top.vue';
+import FrontEndDesign1 from '../views/FrontEnd_Design1.vue';
 
 const routes = [
   {
     path: '/',
+    name: 'FrontEndDesign1',
+    component: FrontEndDesign1,
+  },
+  {
+    path: '/fffff',
     name: 'FrontendProducts',
     component: FrontendProducts,
   },

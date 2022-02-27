@@ -23,10 +23,22 @@ import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
 // 要在vee-validate之後
+import axios from 'axios';
+import qs from 'qs';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 
+// AXIOS全域導入
+
+// 设置请求参数兼容java参数格式
+axios.interceptors.request.use((config) => {
+  const temp = config;
+  temp.data = qs.stringify(config.data); // qs处理
+  return temp;
+}, (error) => Promise.reject(error));
+
+/// ////
 library.add(fas);
 
 // 定義驗證規則

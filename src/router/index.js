@@ -6,6 +6,7 @@ import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
 import CheckoutPaymentTop from '../views/CheckoutPayment_Top.vue';
 import FrontEndDesign1 from '../views/FrontEnd_Design1.vue';
+import ChartPlaylist from '../views/ChartPlaylist.vue';
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
     path: '/backend',
     name: 'Backend',
     component: Backend,
+  },
+  {
+    path: '/chartPlaylist/:id',
+    name: 'ChartPlaylist',
+    component: ChartPlaylist,
   },
   {
     path: '/home',

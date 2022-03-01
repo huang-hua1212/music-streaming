@@ -148,22 +148,24 @@
         class="carousel slide freshSuggestCarousel container"
         id="carouselLatestSongs"
         data-bs-ride="carousel"
+        data-bs-interval="false"
       >
+      <!-- data-bs-interval="false"停止自動  -->
         <div class="carousel-inner">
           <div
             class="carousel-item"
-            v-for="(item, idx) in squareImagePath"
+            v-for="(item, idx) in latestSongsList"
             :key="item"
             :class="{ active: idx === 0 }"
           >
             <div class="mt-3 freshSuggestImgs row">
               <div
                 class="freshSuggestImg col-sm-3"
-                v-for="path in item"
-                :key="path"
+                v-for="it in item"
+                :key="it"
                 style="border: yellow solid"
               >
-                <img :src="path" />
+                <img :src="it.album.images[1].url" />
               </div>
             </div>
           </div>
@@ -193,9 +195,9 @@
 
     <div
       class="playList-MemorySong ms-auto container"
-      style="border: white solid; height: 320px; margin-top: 4%"
+      style="border: white solid; height: 320px; margin-top: 4%; padding: 0"
     >
-      <h2 style="letter-spacing: 2px">音樂回憶</h2>
+      <h2 style="margin-left: 5px; letter-spacing: 1px">音樂回憶</h2>
     </div>
     <div
       class="news"
@@ -213,17 +215,34 @@
 
     <div
       class="randomLyric"
-      style="border: white solid; height: 320px; margin-top: 4%"
+      style="border: white solid; height: auto; margin-top: 4%"
     >
       <!-- 參考標語 -->
-      <h3>每日歌詞 /作詞者</h3>
-
-      <!-- <h3>Must Read</h3>
-      <h3>Good To Read</h3>
-      <h3>Featured</h3>
-      <div><buttom type="button">Load More</buttom></div>
-      <div>新聞區</div> -->
-      <span><h5>by 作詞者</h5></span>
+      <h2 style="margin-left: 5px; letter-spacing: 1px" hidden>每日歌詞</h2>
+      <div
+        style="margin-top: 6%; max-width: 80%; margin-left: 10%; width: auto"
+      >
+        <h3
+          style="
+            letter-spacing: 4px;
+            white-space: pre-wrap;
+            line-height: 60px;
+            text-align: center;
+          "
+          v-html="dailyLyric.text"
+        ></h3>
+        <h5
+          style="
+            font-style: italic;
+            margin-top: 4%;
+            margin-left: 15%;
+            text-align: right;
+            width: 70%;
+          "
+        >
+          by {{ dailyLyric.writer }}
+        </h5>
+      </div>
     </div>
   </div>
 </template>
@@ -232,11 +251,17 @@
 // 參考
 // 新聞: https://www.pixelmattic.com/blog/best-news-website-designs/
 // carousel參考https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_carousel2&stacked=h
-import axios from "axios";
-import qs from "query-string";
-import "vue-loading-overlay/dist/vue-loading.css";
+import axios from 'axios';
+import qs from 'query-string';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
-const accessToken = "5b50630c7d65f4a374b27ad929e1a073";
+const accessToken = '1429bba043518ec0e509edd12f151731'; // '5b50630c7d65f4a374b27ad929e1a073';
+const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n心之所動 且就隨緣去吧\n\n'
+  + '這一路上走走停停\n順著少年漂流的痕跡\n邁出車站的前一刻\n竟有些猶豫\n\n不禁笑這近鄉情怯'
+  + '\n仍無可避免 而長野的天 依舊那麼暖\n風吹起了從前\n\n從前初識這世間 萬般流連'
+  + '\n看著天邊似在眼前 也甘願赴湯蹈火去走它一遍\n如今走過這世間 萬般流連\n'
+  + '\n翻過歲月不同側臉 措不及防闖入你的笑顏\n\n我曾難自拔於世界之大'
+  + '\n也沉溺於其中夢話';
 export default {
   data() {
     return {
@@ -244,13 +269,13 @@ export default {
       isShowProgressBar: false,
       isLogin: false,
       url: process.env.VUE_APP_API, // 'https://vue3-course-api.hexschool.io/v2',
-      path: "cakeshop",
+      path: 'cakeshop',
       productsToSell: [],
       temp: {},
       productsInCartLength: 0,
       account: {
-        username: "",
-        password: "",
+        username: '',
+        password: '',
       },
       // test: process.env.VUE_APP_API,
       // productsInCart: [],
@@ -258,27 +283,28 @@ export default {
       slide: 0,
       sliding: null,
       imagePath: [
-        "https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80",
-        "https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
-        "https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+        'https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80',
+        'https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+        'https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
       ],
       squareImagePath: [
         [
-          "https://images.pexels.com/photos/8833426/pexels-photo-8833426.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/8832766/pexels-photo-8832766.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/8833492/pexels-photo-8833492.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5544034/pexels-photo-5544034.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          'https://images.pexels.com/photos/8833426/pexels-photo-8833426.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+          'https://images.pexels.com/photos/8832766/pexels-photo-8832766.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+          'https://images.pexels.com/photos/8833492/pexels-photo-8833492.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+          'https://images.pexels.com/photos/5544034/pexels-photo-5544034.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
         ],
         [
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          'https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+          'https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+          'https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+          'https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
         ],
       ],
+      latestSongsList: [],
       dailyLyric: {
-        writer: "",
-        text: "",
+        writer: '',
+        text: '',
       },
       allChart: [],
     };
@@ -286,8 +312,10 @@ export default {
   watch: {},
   created() {
     // this.getLatestSongs();
-    // this.getChart();
-    this.getDailyLyric();
+    this.getChart();
+    // this.getDailyLyric(); // 會耗損API
+    this.testGetDailyLyric();
+    this.getLatestSongs();
   },
   methods: {
     showLoading() {
@@ -328,33 +356,6 @@ export default {
     //       this.productsInCartLength = res.data.data.carts.length;
     //     });
     // },
-    // productsIn() {
-    //   this.isShowProgressBar = true;
-    //   axios
-    //     .get(
-    //       `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`
-    //     )
-    //     .then((res) => {
-    //       const resAllKey = Object.keys(res.data.products);
-    //       const resAllValues = Object.values(res.data.products);
-    //       const arrRes = resAllValues;
-    //       for (let i = 0; i < resAllKey.length; i += 1) {
-    //         arrRes.id = resAllKey[i];
-    //       }
-    //       this.productsToSell = arrRes;
-    //       this.isShowProgressBar = false;
-    //     });
-    // },
-
-    // details(item) {
-    //   this.temp = JSON.parse(JSON.stringify(item));
-    // },
-    // changeImage(key) {
-    //   this.temp.imagesUrl.push(this.temp.imageUrl);
-    //   this.temp.imageUrl = this.temp.imagesUrl[key];
-    //   this.temp.imagesUrl.splice(key, 1);
-    // },
-
     // login() {
     //   axios
     //     .post(`${process.env.VUE_APP_API}/admin/signin`, this.account)
@@ -369,13 +370,13 @@ export default {
     // https://cors-anywhere.herokuapp.com/
     getKKboxAccessToken() {
       const oauth = {
-        grant_type: "client_credentials",
-        client_id: "94bc95aa9cdcd73c8d5e10ce0146e40a",
-        client_secret: "27995ba42851ede2928d759cb2d56d17",
+        grant_type: 'client_credentials',
+        client_id: '94bc95aa9cdcd73c8d5e10ce0146e40a',
+        client_secret: '27995ba42851ede2928d759cb2d56d17',
       };
       axios
         .post(
-          "https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token", // '?grant_type=client_credentials&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
+          'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token', // '?grant_type=client_credentials&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
           qs.stringify(oauth),
           {
             // withCredentials: true,
@@ -385,11 +386,11 @@ export default {
             //   client_secret: '27995ba42851ede2928d759cb2d56d17',
             // },
             headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/x-www-form-urlencoded",
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Accept: 'application/x-www-form-urlencoded',
             },
             crossdomain: true,
-          }
+          },
         )
         .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
         .catch((error) => {
@@ -399,7 +400,7 @@ export default {
     refreshToken() {
       axios
         .post(
-          "https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token?grant_type=authorization_code&code=tES0iTvx8nu--_fFoJFWHA==&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17",
+          'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token?grant_type=authorization_code&code=tES0iTvx8nu--_fFoJFWHA==&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
           {
             withCredentials: true,
             // data: {
@@ -408,13 +409,13 @@ export default {
             //   client_secret: '27995ba42851ede2928d759cb2d56d17',
             // },
             headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/x-www-form-urlencoded",
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Accept: 'application/x-www-form-urlencoded',
               Authorization:
-                "Basic {BASE64_ENCODE(94bc95aa9cdcd73c8d5e10ce0146e40a:27995ba42851ede2928d759cb2d56d17)}",
+                'Basic {BASE64_ENCODE(94bc95aa9cdcd73c8d5e10ce0146e40a:27995ba42851ede2928d759cb2d56d17)}',
             },
             crossdomain: true,
-          }
+          },
         )
         .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
         .catch((error) => {
@@ -424,17 +425,28 @@ export default {
     getLatestSongs() {
       axios
         .get(
-          "https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/new-hits-playlists/DZrC8m29ciOFY2JAm3?territory=TW",
+          'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/new-hits-playlists/DZrC8m29ciOFY2JAm3?territory=TW',
           {
             headers: {
-              Authorization: "Bearer tES0iTvx8nu--_fFoJFWHA==",
-              Accept: "application/json",
-              "content-type": "application/json",
+              Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+              Accept: 'application/json',
+              'content-type': 'application/json',
             },
             crossdomain: true,
-          }
+          },
         )
-        .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
+        .then((res) => {
+          console.log(res);
+          const songList = [...res.data.tracks.data];
+          console.log(songList);
+          for (let i = 0; i < 2; i += 1) {
+            this.latestSongsList.push(songList.slice(i * 4, (i + 1) * 4));
+          }
+          this.latestSongsList = [...this.latestSongsList];
+          this.latestSongsList[0] = [...this.latestSongsList[0]];
+          this.latestSongsList[1] = [...this.latestSongsList[1]];
+          console.log(this.latestSongsList[0][0].album.images[1].url);
+        })
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
         });
@@ -466,62 +478,48 @@ export default {
     getChart() {
       axios
         .get(
-          "https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/charts?territory=TW&limit=10",
+          'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/charts?territory=TW&limit=10',
           {
             headers: {
-              Authorization: "Bearer tES0iTvx8nu--_fFoJFWHA==",
-              Accept: "application/json",
-              "content-type": "application/json",
+              Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+              Accept: 'application/json',
+              'content-type': 'application/json',
             },
             crossdomain: true,
-          }
+          },
         )
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           this.allChart = res.data.data.slice(1, 9);
-          console.log(res.data.data.slice(1, 9));
+          // console.log(res.data.data.slice(1, 9));
         }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
         });
     },
-    // getLyricsFromMusixmatch() {
-    //   const lyricApiUrl = ``;
-    //   axios.get(lyricApiUrl, (res) => {});
-    // },
+    testGetDailyLyric() {
+      const index = testLyricText.indexOf('\n\n');
+      this.dailyLyric.text = testLyricText.slice(0, index + 1);
+      this.dailyLyric.writer = '青峰';
+    },
     getDailyLyric() {
-      const artist = "吳青峰";
+      const artist = '吳青峰';
       const artistIdPath = `https://all-the-cors.herokuapp.com/https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${artist}&page_size=5&apikey=${accessToken}`;
+
+      console.log(Math.floor(Math.random() * 5));
       // getArtristID
       axios
         .get(artistIdPath)
         .then((res1) => {
-          const artistId =
-            res1.data.message.body.artist_list[0].artist.artist_id;
+          const artistId = res1.data.message.body.artist_list[0].artist.artist_id;
           const pageNth = 1;
           console.log(artistId);
+          // const pageSize = 10;
+          // console.log(Math.floor(Math.random() * 5));
+          // console.log(artistId);
           // getSongID
           const songIdApiPath = `https://all-the-cors.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?f_artist_id=${artistId}&f_has_lyrics=1&page_size=4&page=${pageNth}&s_track_rating=ASC&apikey=${accessToken}`;
           this.getSongIdApiPath(songIdApiPath);
-          // axios
-          //   .get(songIdApiPath)
-          //   .then((res2) => {
-          //     const tracksList = res2.data.message.body.track_list;
-          //     console.log("trackList:", tracksList[1]);
-          //     const track = tracksList[1]; // 第幾首歌
-          //     const trackId = track.track.track_id;
-          //     const trackName = track.track_name;
-          //     this.dailyLyric.trackName = trackName;
-
-          //     // getSongLyrics
-          //     const lyricPath = `https://all-the-cors.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${trackId}&apikey=${accessToken}`;
-          //     axios.get(lyricPath).then((res3) => {
-          //       console.log(res3.data.message.body.lyrics.lyrics_body);
-          //     });
-          //   })
-          //   .catch((error) => {
-          //     console.dir(error); // 失敗的話回傳連線異常
-          //   });
         })
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
@@ -532,7 +530,7 @@ export default {
         .get(songIdApiPath)
         .then((res2) => {
           const tracksList = res2.data.message.body.track_list;
-          console.log("trackList:", tracksList[1]);
+          console.log('trackList:', tracksList[1]);
           const track = tracksList[1]; // 第幾首歌
           const trackId = track.track.track_id;
           const trackName = track.track_name;
@@ -542,6 +540,15 @@ export default {
           const lyricPath = `https://all-the-cors.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${trackId}&apikey=${accessToken}`;
           axios.get(lyricPath).then((res3) => {
             console.log(res3.data.message.body.lyrics.lyrics_body);
+            console.log(
+              res3.data.message.body.lyrics.lyrics_body.indexOf('\n\n'),
+            );
+            console.log(
+              res3.data.message.body.lyrics.lyrics_body.slice(
+                0,
+                res3.data.message.body.lyrics.lyrics_body.indexOf('\n\n') + 1,
+              ),
+            );
           });
         })
         .catch((error) => {
@@ -552,18 +559,18 @@ export default {
       console.log(axios.defaults.headers.common);
       // delete axios.defaults.headers.common.Authorization;
       axios
-        .get("https://api.kkbox.com/v1.1/search", {
+        .get('https://api.kkbox.com/v1.1/search', {
           params: {
-            q: "Mayday",
-            type: "track",
-            territory: "TW",
+            q: 'Mayday',
+            type: 'track',
+            territory: 'TW',
             offset: 0,
             limit: 50,
           },
           headers: {
-            Authorization: "Bearer tES0iTvx8nu--_fFoJFWHA==",
-            Accept: "application/json",
-            "content-type": "application/json",
+            Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+            Accept: 'application/json',
+            'content-type': 'application/json',
           },
           crossdomain: true,
         })

@@ -1,18 +1,20 @@
 <template>
-  <div></div>
+  <div class="pageCover"></div>
 </template>
 <script>
-// const playListId = this.$route.params;
 export default {
-  created() {
-    if ('caches' in window) {
-      console.log('支援cache');
-    } else {
-      console.log('不支援cache');
-    }
-    const playListId = this.$route.params.id;
-    console.log(playListId);
+  data(){
+    chartId:'';
   },
+  mounted() {
+    this.chartId = this.$route.params.id;
+
+  },
+  methods:{
+    getChartPlayList(){
+      
+    }
+  }
 };
 
 if ('cache' in window) {
@@ -33,5 +35,7 @@ caches.open('my-cache').then((myCache) => {
     }),
   );
 });
+
+
 // OAUTH2對照錯誤表: https://help.salesforce.com/s/articleView?language=zh_TW&type=5&id=sf.remoteaccess_oauth_flow_errors.htm
 </script>

@@ -49,7 +49,7 @@
             style="margin-left: auto; height: 100%; width: auto"
           />
         </div>
-        <div class="col-6" style="border:white solid;padding-top:2%;">
+        <div class="col-6" style="border:white solid;padding-top:2%;padding-left:0;">
           <p style="font-size:15px; letter-spacing: 1.5px">{{ item.name }}</p>
         </div>
       </div>
@@ -68,7 +68,7 @@
       <div
         class="row pt-3 pb-3"
         style="margin-left: 0%; width: 100%; border: #8adae3 solid; height: 10%"
-        v-for="(item, id) in chartPlayList[0]"
+        v-for="(item, id) in chartPlayList[1]"
         :key="id"
       >
         <h4
@@ -91,13 +91,12 @@
             style="margin-left: auto; height: 100%; width: auto"
           />
         </div>
-        <div class="col-6" style="border:white solid;padding-top:2%;">
-          <p style="font-size:15px; letter-spacing: 1.5px">{{ item.name }}</p>
+        <div class="col-6" style="border:white solid;padding-top:2%;padding-left:0;">
+          <p style="font-size:16px; letter-spacing: 1.5px">{{ item.name }}</p>
         </div>
       </div>
     </div>
 
-   
   </div>
 </template>
 <script>

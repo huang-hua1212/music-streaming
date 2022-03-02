@@ -251,72 +251,58 @@
 // 參考
 // 新聞: https://www.pixelmattic.com/blog/best-news-website-designs/
 // carousel參考https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_carousel2&stacked=h
-import axios from "axios";
-import qs from "query-string";
-import "vue-loading-overlay/dist/vue-loading.css";
+import axios from 'axios';
+import qs from 'query-string';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
-const testLyricText =
-  "我曾將青春翻湧成她\n也曾指尖彈出盛夏\n心之所動 且就隨緣去吧\n\n" +
-  "這一路上走走停停\n順著少年漂流的痕跡\n邁出車站的前一刻\n竟有些猶豫\n\n不禁笑這近鄉情怯" +
-  "\n仍無可避免 而長野的天 依舊那麼暖\n風吹起了從前\n\n從前初識這世間 萬般流連" +
-  "\n看著天邊似在眼前 也甘願赴湯蹈火去走它一遍\n如今走過這世間 萬般流連\n" +
-  "\n翻過歲月不同側臉 措不及防闖入你的笑顏\n\n我曾難自拔於世界之大" +
-  "\n也沉溺於其中夢話";
+const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n心之所動 且就隨緣去吧\n\n'
+  + '這一路上走走停停\n順著少年漂流的痕跡\n邁出車站的前一刻\n竟有些猶豫\n\n不禁笑這近鄉情怯'
+  + '\n仍無可避免 而長野的天 依舊那麼暖\n風吹起了從前\n\n從前初識這世間 萬般流連'
+  + '\n看著天邊似在眼前 也甘願赴湯蹈火去走它一遍\n如今走過這世間 萬般流連\n'
+  + '\n翻過歲月不同側臉 措不及防闖入你的笑顏\n\n我曾難自拔於世界之大'
+  + '\n也沉溺於其中夢話';
 export default {
   data() {
     return {
-      musixmatchAccessToken: "1429bba043518ec0e509edd12f151731",
+      musixmatchAccessToken: '1429bba043518ec0e509edd12f151731',
       musixmatchAccessTokenArray: [
-        "1429bba043518ec0e509edd12f151731",
-        "5b50630c7d65f4a374b27ad929e1a073",
+        '1429bba043518ec0e509edd12f151731',
+        '5b50630c7d65f4a374b27ad929e1a073',
       ],
       isLoading: false,
       isShowProgressBar: false,
       isLogin: false,
       url: process.env.VUE_APP_API, // 'https://vue3-course-api.hexschool.io/v2',
-      path: "cakeshop",
+      path: 'cakeshop',
       productsToSell: [],
       temp: {},
       productsInCartLength: 0,
       account: {
-        username: "",
-        password: "",
+        username: '',
+        password: '',
       },
       // test: process.env.VUE_APP_API,
       // productsInCart: [],
       // cartId: '',
+
       slide: 0,
       sliding: null,
       imagePath: [
-        "https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80",
-        "https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
-        "https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+        'https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80',
+        'https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+        'https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
       ],
-      squareImagePath: [
-        [
-          "https://images.pexels.com/photos/8833426/pexels-photo-8833426.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/8832766/pexels-photo-8832766.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/8833492/pexels-photo-8833492.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5544034/pexels-photo-5544034.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        ],
-        [
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          "https://images.pexels.com/photos/5952232/pexels-photo-5952232.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        ],
-      ],
+
       latestSongsList: [],
       dailyLyric: {
-        writer: "",
-        text: "",
+        writer: '',
+        text: '',
       },
       allChart: [],
     };
   },
   watch: {},
   created() {
-    // this.getLatestSongs();
     this.getChart();
     // this.getDailyLyric(); // 會耗損API
     this.testGetDailyLyric();
@@ -376,13 +362,13 @@ export default {
 
     getKKboxAccessToken() {
       const oauth = {
-        grant_type: "client_credentials",
-        client_id: "94bc95aa9cdcd73c8d5e10ce0146e40a",
-        client_secret: "27995ba42851ede2928d759cb2d56d17",
+        grant_type: 'client_credentials',
+        client_id: '94bc95aa9cdcd73c8d5e10ce0146e40a',
+        client_secret: '27995ba42851ede2928d759cb2d56d17',
       };
       axios
         .post(
-          "https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token", // '?grant_type=client_credentials&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
+          'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token', // '?grant_type=client_credentials&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
           qs.stringify(oauth),
           {
             // withCredentials: true,
@@ -392,11 +378,11 @@ export default {
             //   client_secret: '27995ba42851ede2928d759cb2d56d17',
             // },
             headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/x-www-form-urlencoded",
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Accept: 'application/x-www-form-urlencoded',
             },
             crossdomain: true,
-          }
+          },
         )
         .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
         .catch((error) => {
@@ -406,7 +392,7 @@ export default {
     refreshToken() {
       axios
         .post(
-          "https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token?grant_type=authorization_code&code=tES0iTvx8nu--_fFoJFWHA==&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17",
+          'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token?grant_type=authorization_code&code=tES0iTvx8nu--_fFoJFWHA==&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
           {
             withCredentials: true,
             // data: {
@@ -415,13 +401,13 @@ export default {
             //   client_secret: '27995ba42851ede2928d759cb2d56d17',
             // },
             headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/x-www-form-urlencoded",
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Accept: 'application/x-www-form-urlencoded',
               Authorization:
-                "Basic {BASE64_ENCODE(94bc95aa9cdcd73c8d5e10ce0146e40a:27995ba42851ede2928d759cb2d56d17)}",
+                'Basic {BASE64_ENCODE(94bc95aa9cdcd73c8d5e10ce0146e40a:27995ba42851ede2928d759cb2d56d17)}',
             },
             crossdomain: true,
-          }
+          },
         )
         .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
         .catch((error) => {
@@ -431,15 +417,15 @@ export default {
     getLatestSongs() {
       axios
         .get(
-          "https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/new-hits-playlists/DZrC8m29ciOFY2JAm3?territory=TW",
+          'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/new-hits-playlists/DZrC8m29ciOFY2JAm3?territory=TW',
           {
             headers: {
-              Authorization: "Bearer tES0iTvx8nu--_fFoJFWHA==",
-              Accept: "application/json",
-              "content-type": "application/json",
+              Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+              Accept: 'application/json',
+              'content-type': 'application/json',
             },
             crossdomain: true,
-          }
+          },
         )
         .then((res) => {
           const songList = [...res.data.tracks.data];
@@ -481,15 +467,15 @@ export default {
     getChart() {
       axios
         .get(
-          "https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/charts?territory=TW&limit=10",
+          'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/charts?territory=TW&limit=10',
           {
             headers: {
-              Authorization: "Bearer tES0iTvx8nu--_fFoJFWHA==",
-              Accept: "application/json",
-              "content-type": "application/json",
+              Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+              Accept: 'application/json',
+              'content-type': 'application/json',
             },
             crossdomain: true,
-          }
+          },
         )
         .then((res) => {
           this.allChart = res.data.data.slice(1, 9);
@@ -499,20 +485,19 @@ export default {
         });
     },
     testGetDailyLyric() {
-      const index = testLyricText.indexOf("\n\n");
+      const index = testLyricText.indexOf('\n\n');
       this.dailyLyric.text = testLyricText.slice(0, index + 1);
-      this.dailyLyric.writer = "青峰";
+      this.dailyLyric.writer = '青峰';
     },
     getDailyLyric() {
-      const artist = "吳青峰";
+      const artist = '吳青峰';
       const artistIdPath = `https://all-the-cors.herokuapp.com/https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${artist}&page_size=5&apikey=${this.musixmatchAccessToken}`;
 
       // getArtristID
       axios
         .get(artistIdPath)
         .then((res1) => {
-          const artistId =
-            res1.data.message.body.artist_list[0].artist.artist_id;
+          const artistId = res1.data.message.body.artist_list[0].artist.artist_id;
           const pageNth = 1;
           const pageSize = 10;
           // getSongIDList
@@ -522,14 +507,14 @@ export default {
         })
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
-          //accessToken過期
+          // accessToken過期
           this.changeMusixmatchAccessToken();
           this.getDailyLyric();
         });
     },
-    getSongIdApiPath(songIdApiPath) {
+    getSongIdApiPath(songIdApiPath, pageSize) {
       axios
-        .get(songIdApiPath, pageSize)
+        .get(songIdApiPath)
         .then((res2) => {
           const tracksList = res2.data.message.body.track_list;
           const indexOfSong = Math.floor(Math.random() * pageSize);
@@ -542,14 +527,14 @@ export default {
           const lyricPath = `https://all-the-cors.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${trackId}&apikey=${this.musixmatchAccessToken}`;
           axios.get(lyricPath).then((res3) => {
             const lyricText = res3.data.message.body.lyrics.lyrics_body;
-            const lyricBrakpointIndex = lyricText.indexOf("\n\n");
-            this.dailyLyric.text = lyricText.slice(0, index + 1);
-            this.dailyLyric.writer = "青峰";
+            const lyricBrakpointIndex = lyricText.indexOf('\n\n');
+            this.dailyLyric.text = lyricText.slice(0, lyricBrakpointIndex + 1);
+            this.dailyLyric.writer = '青峰';
           });
         })
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
-          //accessToken過期
+          // accessToken過期
           this.changeMusixmatchAccessToken();
           this.getDailyLyric();
         });
@@ -557,7 +542,7 @@ export default {
     changeMusixmatchAccessToken() {
       // 把不能使用的accessToken放最後，使用index 0的accessToken
       const tempIndex = this.musixmatchAccessTokenArray.indexOf(
-        this.musixmatchAccessToken
+        this.musixmatchAccessToken,
       );
       this.musixmatchAccessTokenArray.splice(tempIndex, 1);
       this.musixmatchAccessTokenArray.push(this.musixmatchAccessToken);

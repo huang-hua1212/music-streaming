@@ -1,9 +1,6 @@
 <template>
   <div class="pageCover">
 
-
-
-
   </div>
 </template>
 <script>
@@ -11,15 +8,13 @@ export default {
   data() {
     return {
 
-
-        
     };
   },
-  mounted(){
+  mounted() {
 
   },
-  methods:{
+  methods: {
 
-  }
+  },
 };
 </script>

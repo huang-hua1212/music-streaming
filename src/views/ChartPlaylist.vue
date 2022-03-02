@@ -79,8 +79,7 @@
         :key="id"
       >
         <h4
-          class="col-1"
-          :class="{ 'ps-0': id > 8 }"
+          class="col-1 ps-0"
           style="
             border: #6614d9 solid;
             padding-right: 0;
@@ -88,7 +87,7 @@
             line-height: 310%;
           "
         >
-          {{ id + 1 }}
+          {{ id + 11 }}
         </h4>
         <div
           class="col-2 picture p-0"

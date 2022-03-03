@@ -113,7 +113,7 @@
   </button>
 
   <!-- 內容Content -->
-  <div class="content text-white">
+  <div class="content text-white" style="margin-bottom: 150px">
     <div
       class="freshSuggest ms-auto"
       style="border: white solid; padding-bottom: 2.5%"
@@ -177,7 +177,7 @@
       <div class="row">
         <div
           class="chartImg col-3"
-          style="border: red solid; padding: 0px; position: relative"
+          style="padding: 0px; position: relative"
           v-for="item in allChart"
           :key="item"
         >
@@ -245,6 +245,19 @@
       </div>
     </div>
   </div>
+
+  <footer
+  class="footer text-white"
+    style="
+      border: white solid;
+      margin-bottom: 0;
+      width: 100%;
+      height: 250px;
+      text-align: center;
+    "
+  >
+    <h1>Footer</h1>
+  </footer>
 </template>
 
 <script>

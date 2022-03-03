@@ -163,7 +163,7 @@
       <button
         type="button"
         class="btn btn-warning"
-        style="padding-right:2%;padding-left:2%;margin-top:6%;margin-left: 61%; letter-spacing: 2px"
+        style="padding-right:2%;padding-left:2%;margin-top:6%;margin-left: 64%; letter-spacing: 2px"
       >
         NEXT
       </button>

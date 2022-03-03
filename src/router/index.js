@@ -12,7 +12,7 @@ import CheckoutPaymentDesign from '../views/CheckoutPayment_Design.vue';
 
 const routes = [
   {
-    path: '/123',
+    path: '/',
     name: 'FrontEndDesign1',
     component: FrontEndDesign1,
   },
@@ -41,7 +41,7 @@ const routes = [
     ],
   },
   {
-    path: '/',
+    path: '/checkout-payment-design',
     name: 'CheckoutPaymentDesign',
     component: CheckoutPaymentDesign,
     children: [

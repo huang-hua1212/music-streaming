@@ -171,7 +171,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   data() {
@@ -179,19 +179,19 @@ export default {
       addressSelectOptionsCities: [],
       addressSelectOptionsDistricts: [],
       step: 2,
-      name: "",
-      email: "",
-      cellphone: "",
-      housephone: "",
+      name: '',
+      email: '',
+      cellphone: '',
+      housephone: '',
       address: {
-        city: "",
-        district: "",
-        road: "",
-        zipcode: "",
-        fullAddress: "",
+        city: '',
+        district: '',
+        road: '',
+        zipcode: '',
+        fullAddress: '',
       },
-      memo: "",
-      data: "",
+      memo: '',
+      data: '',
     };
   },
   mounted() {
@@ -204,7 +204,7 @@ export default {
           return this.addressSelectOptionsCities[i].districts;
         }
       }
-      return "no value";
+      return 'no value';
     },
     addressZip() {
       for (let j = 0; j < this.addressDistrict.length; j += 1) {
@@ -213,7 +213,7 @@ export default {
           return this.addressDistrict[j].zip;
         }
       }
-      return "";
+      return '';
     },
   },
   // watch: {
@@ -235,8 +235,7 @@ export default {
       console.log(districts);
     },
     getCity() {
-      const addressApi =
-        "https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json";
+      const addressApi = 'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json';
       axios
         .get(addressApi)
         .then((res) => {
@@ -250,15 +249,15 @@ export default {
 
     cellphone_verify(value) {
       const cellphoneRules = /09\d{8}/;
-      return cellphoneRules.test(value) ? true : "手機號碼必須以09為開頭";
+      return cellphoneRules.test(value) ? true : '手機號碼必須以09為開頭';
     },
     telephone1_verify(value) {
       const telephoneRules = /\d{2,3}/;
-      return telephoneRules.test(value) ? true : "市話區碼未符合規則";
+      return telephoneRules.test(value) ? true : '市話區碼未符合規則';
     },
     telephone2_verify(value) {
       const telephoneRules = /\d{4}-?\d{4}$/;
-      return telephoneRules.test(value) ? true : "市話號碼未符合規則";
+      return telephoneRules.test(value) ? true : '市話號碼未符合規則';
     },
     toCheckoutPayment2() {
       const data = {
@@ -273,11 +272,11 @@ export default {
       axios
         .post(
           `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`,
-          { data }
+          { data },
         )
         .then(() => {
           this.data = data;
-          this.$router.push("/checkout-payment-top/checkout-payment2");
+          this.$router.push('/checkout-payment-top/checkout-payment2');
         });
     },
     // getRegion() {},

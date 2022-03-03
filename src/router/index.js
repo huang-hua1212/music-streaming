@@ -1,14 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import CheckoutPayment2 from '@/components/CheckoutPayment2.vue';
 import CheckoutPayment1 from '@/components/CheckoutPayment1.vue';
-import CheckoutPaymentDesignStep1 from '@/components/CheckoutPaymentDesign_Step1.vue';
+import CheckoutPaymentDesignStep2 from '@/components/CheckoutPaymentDesign_Step2.vue';
 import Home from '../views/Home.vue';
 import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
 import CheckoutPaymentTop from '../views/CheckoutPayment_Top.vue';
 import FrontEndDesign1 from '../views/FrontEnd_Design1.vue';
 import ChartPlaylist from '../views/ChartPlaylist.vue';
-import CheckoutPaymentDesign1 from '../views/CheckoutPayment_Design1.vue';
+import CheckoutPaymentDesign from '../views/CheckoutPayment_Design.vue';
 
 const routes = [
   {
@@ -42,14 +42,14 @@ const routes = [
   },
   {
     path: '/',
-    name: 'CheckoutPaymentDesign1',
-    component: CheckoutPaymentDesign1,
+    name: 'CheckoutPaymentDesign',
+    component: CheckoutPaymentDesign,
     children: [
       {
         // when /checkout-payment_top/checkout-payment1 is matched
         path: '', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
-        name: 'CheckoutPaymentDesignStep1',
-        component: CheckoutPaymentDesignStep1,
+        name: 'CheckoutPaymentDesignStep2',
+        component: CheckoutPaymentDesignStep2,
       },
       {
         // when /checkout-payment_top/checkout-payment2 is matched

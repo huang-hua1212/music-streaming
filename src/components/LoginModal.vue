@@ -25,7 +25,13 @@
         </div> -->
         <div class="modal-body">
           <div class="box" style="font-family: 'Noto Sans', sans-serif">
-            <Form class="form" v-slot="{ errors }" id="form" @submit="login">
+            <Form
+              ref="form"
+              class="form"
+              v-slot="{ errors }"
+              id="form"
+              @submit="login"
+            >
               <span class="text-center">login</span>
               <div class="warning-hint" :hidden="loginSuccess">
                 <p
@@ -128,9 +134,9 @@ export default {
       // this.$emit('close-modal', isCloseLoginModal);
       this.email = '';
       this.password = '';
-      // this.errors.clear("login");
-      // this.errors.clear("register");
       this.modal.loginModal.hide();
+      // 清空ErrorMessage
+      this.$refs.form.resetForm();
     },
     openModal() {
       this.modal.loginModal.show();

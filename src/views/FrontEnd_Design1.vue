@@ -1,18 +1,61 @@
 <template>
-  <nav class="navbar navbar-expand-sm" >
-    <div
-      class="collapse navbar-collapse navbar-sty"
-      id="navbarText"
-    >
-      <ul class="navbar-nav mr-auto col-auto nav-left" style="font-size:19px;">
+  <nav class="navbar navbar-expand-sm">
+    <div class="collapse navbar-collapse navbar-sty" id="navbarText">
+      <ul class="navbar-nav mr-auto col-auto nav-left" style="font-size: 19px">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
+          <router-link to="/" class="nav-link" href="#">Home</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <router-link
+            to="/"
+            class="nav-link record-shop"
+            href="#"
+            @mouseover="
+              {
+                recordShopDropDown = !recordShopDropDown;
+              }
+            "
+            >Record Shop</router-link
+          >
+          <transition
+            name="fade"
+            class="record-shop-dropdown"
+            v-if="recordShopDropDown"
+            @mouseenter="
+              {
+                recordShopDropDown = true;
+              }
+            "
+            @mouseleave="
+              {
+                recordShopDropDown = false;
+              }
+            "
+          >
+            <ul class="record-shop-dropdown-ul">
+              <li style="margin-top: 8px">
+                <router-link to="/record-shop/">CDs</router-link>
+              </li>
+              <li>
+                <router-link to="/record-shop/CDs">Vinyls</router-link>
+              </li>
+              <li>
+                <router-link to="/record-shop/Vinyls"
+                  >DVDs</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/record-shop/Blu-ray_Disc"
+                  >Blu-ray Disc</router-link
+                >
+              </li>
+            </ul>
+          </transition>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <router-link to="/" class="nav-link" href="#"
+            >Latest News</router-link
+          >
         </li>
       </ul>
       <ul class="nav-right navbar-nav mr-auto col-auto">
@@ -168,7 +211,7 @@
         <span class="visually-hidden">Next</span>
       </button> -->
 
-      <h2 style="letter-spacing: 2px">新歌推薦</h2>
+      <h2 style="letter-spacing: 2px">Latest Songs</h2>
       <div
         class="carousel slide freshSuggestCarousel container"
         id="carouselLatestSongs"
@@ -313,6 +356,7 @@ export default {
         '1429bba043518ec0e509edd12f151731',
         '5b50630c7d65f4a374b27ad929e1a073',
       ],
+      recordShopDropDown: false,
       isLoading: false,
       isShowProgressBar: false,
       isLogin: false,
@@ -591,7 +635,7 @@ export default {
 /*NavBar left部分 */
 nav {
   background-color: #191919;
-  padding-bottom:0 ;
+  padding-bottom: 0;
 }
 .navbar-sty {
   max-width: 75%;
@@ -612,8 +656,9 @@ nav {
   margin-bottom: 50%;
   margin-right: 20px;
 }
-.carousel-control-next,.carousel-control-prev{
-  width:12%
+.carousel-control-next,
+.carousel-control-prev {
+  width: 12%;
 }
 
 // 調整cart的icon的顏色
@@ -636,8 +681,8 @@ nav .navbar-nav li a {
 
 /** nav link hover effect*/
 .nav-left li {
-  padding-left:2px;
-  padding-right:2px;
+  padding-left: 2px;
+  padding-right: 2px;
   cursor: pointer;
   position: relative;
 }
@@ -662,11 +707,12 @@ nav .navbar-nav li a {
 
 /** nav link hover effect*/
 .nav-right .login {
-  padding-left:2px;
-  padding-right:2px;
+  padding-left: 2px;
+  padding-right: 2px;
   cursor: pointer;
   position: relative;
   margin-bottom: 3px;
+  margin-right: 12px;
 }
 
 .nav-right .login::after {
@@ -817,5 +863,24 @@ nav .navbar-nav li a {
   max-width: 100%;
   padding-left: 0;
   padding-right: 0;
+}
+.record-shop-dropdown {
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  z-index: 100;
+  background-color: #222222;
+  position: absolute;
+}
+.nav-item .record-shop:hover ~ .nav-item .record-shop .record-shop-dropdown {
+  opacity: 1;
+}
+
+.record-shop-dropdown li {
+  list-style-type: none;
+  margin-bottom: 13px;
+}
+.record-shop-dropdown {
+  padding-left: 10%;
 }
 </style>

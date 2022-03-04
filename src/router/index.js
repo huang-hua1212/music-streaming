@@ -6,7 +6,6 @@ import Home from '../views/Home.vue';
 import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
 import CheckoutPaymentTop from '../views/CheckoutPayment_Top.vue';
-import FrontEndDesign1 from '../views/FrontEnd_Design1.vue';
 import ChartPlaylist from '../views/ChartPlaylist.vue';
 import CheckoutPaymentDesign from '../views/CheckoutPayment_Design.vue';
 
@@ -14,7 +13,7 @@ const routes = [
   {
     path: '/',
     name: 'FrontEndDesign1',
-    component: FrontEndDesign1,
+    component: () => import('../views/FrontEnd_Design1.vue'),
   },
   {
     path: '/fffff',
@@ -56,6 +55,37 @@ const routes = [
         path: 'checkout-payment2', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
         name: 'CheckoutPayment2',
         component: CheckoutPayment2,
+      },
+    ],
+  },
+  {
+    path: '/record-shop',
+    name: 'RecordShop',
+    component: () => import('../views/RecordShop.vue'),
+    children: [
+      {
+        // when /checkout-payment_top/checkout-payment1 is matched
+        path: '', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
+        name: 'CDs',
+        component: () => import('@/components/CDs.vue'),
+      },
+      {
+        // when /checkout-payment_top/checkout-payment2 is matched
+        path: 'Vinyls', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        name: 'Vinyls',
+        component: () => import('@/components/Vinyls.vue'),
+      },
+      {
+        // when /checkout-payment_top/checkout-payment2 is matched
+        path: 'DVDs', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        name: 'DVDs',
+        component: () => import('@/components/DVDs.vue'),
+      },
+      {
+        // when /checkout-payment_top/checkout-payment2 is matched
+        path: 'Blu-ray_Disc', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        name: 'Blu-ray_Disc',
+        component: () => import('@/components/BluRayDisc.vue'),
       },
     ],
   },

@@ -14,16 +14,11 @@
   >
     <div
       class="col-6 container"
-      style="
-        height: 100%;
-        min-height: 100%;
-        padding-left: 0;
-        padding-right: 0;
-      "
+      style="height: 100%; min-height: 100%; padding-left: 0; padding-right: 0"
     >
       <div
         class="row pt-3 pb-3"
-        style="margin-left: 0%; width: 100%; border: #8adae3 solid; height: 15%"
+        style="margin-left: 0%; width: 100%; border: #8adae3 solid; height: 13%"
         v-for="(item, id) in chartPlayList[0]"
         :key="id"
       >
@@ -34,11 +29,13 @@
             border: #6614d9 solid;
             padding-right: 0;
             margin: 0;
-            line-height: 310%;
+            line-height: 260%;
           "
         >
           {{ id + 1 }}
         </h4>
+
+        <!-- 歌的照片 -->
         <div
           class="col-2 picture p-0"
           style="
@@ -53,7 +50,7 @@
               <font-awesome-icon
                 icon="play"
                 size="2x"
-                style="margin-left: 35%; margin-top: 28%"
+                style="margin-left: 28%; margin-top: 20%"
               />
             </div>
           </a>
@@ -68,37 +65,41 @@
           />
         </div>
 
+        <!-- 歌名 -->
         <div
           class="col-6"
           style="
             border: white solid;
             padding-top: 2%;
             padding-left: 0;
-            margin-left: 2%;
+            margin-left: 0;
           "
         >
           <p style="font-size: 13px; letter-spacing: 1.5px">
             {{ item.name }}
           </p>
         </div>
+
+        <!-- 加入歌單 -->
+        <div class="col-1" style="margin-top: 3.5%">
+          <a class="" style="color: white" href="#" @click.prevent="">
+            <font-awesome-icon icon="plus" size="2x" />
+          </a>
+        </div>
       </div>
     </div>
 
     <div
       class="col-6 container"
-      style="
-        height: 100%;
-        min-height: 100%;
-        padding-left: 0;
-        padding-right: 0;
-      "
+      style="height: 100%; min-height: 100%; padding-left: 0; padding-right: 0"
     >
       <div
         class="row pt-3 pb-3"
-        style="margin-left: 0%; width: 100%; border: #8adae3 solid; height: 15%"
+        style="margin-left: 0%; width: 100%; border: #8adae3 solid; height: 13%"
         v-for="(item, id) in chartPlayList[1]"
         :key="id"
       >
+        <!-- rank顯示 -->
         <h4
           class="col-1"
           :class="{ 'ps-0': id + chartPlayList[1].length + 1 > 9 }"
@@ -106,11 +107,12 @@
             border: #6614d9 solid;
             padding-right: 0;
             margin: 0;
-            line-height: 310%;
+            line-height: 260%;
           "
         >
           {{ id + chartPlayList[1].length + 1 }}
         </h4>
+        <!-- 歌的照片 -->
         <div
           class="col-2 picture p-0"
           style="
@@ -125,7 +127,7 @@
               <font-awesome-icon
                 icon="play"
                 size="2x"
-                style="margin-left: 35%; margin-top: 28%"
+                style="margin-left: 28%; margin-top: 20%"
               />
             </div>
           </a>
@@ -139,29 +141,39 @@
             "
           />
         </div>
-
+        <!-- 歌名 -->
         <div
           class="col-6"
           style="
             border: white solid;
             padding-top: 2%;
             padding-left: 0;
-            margin-left: 2%;
+            margin-left: 0;
           "
         >
           <p style="font-size: 13px; letter-spacing: 1.5px">
             {{ item.name }}
           </p>
         </div>
+
+        <!-- 加入歌單 -->
+        <div class="col-1" style="margin-top: 3.5%">
+          <a class="" style="color: white" href="#" @click.prevent="">
+            <font-awesome-icon icon="plus" size="2x" />
+          </a>
+        </div>
       </div>
     </div>
 
-    <div style="height:40%;border:white solid;">你可能想聽</div>
-
+    <div style="height: 40%; border: white solid">你可能想聽</div>
   </div>
 
-  <div class="currentPlaySong" style="position: fixed;bottom:0;width:100%;">
-    <iframe :src="currentSongHref" allow="autoplay" style="height:100px;width:100%;" />
+  <div class="currentPlaySong" style="position: fixed; bottom: 0; width: 100%">
+    <iframe
+      :src="currentSongHref"
+      allow="autoplay"
+      style="height: 100px; width: 100%"
+    />
   </div>
 </template>
 <script>
@@ -199,19 +211,15 @@ export default {
           this.chartPlayList[1] = [
             ...tempArray.slice(songPside, songPside * 2),
           ];
-
-          console.log(this.chartPlayList[0]);
         })
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
         });
     },
-
     playSong(item) {
       this.currentSong = { ...item };
       const songHref = `https://widget.kkbox.com/v1/?id=${this.currentSong.id}&type=song&terr=TW&lang=TW&autoplay=true`;
       this.currentSongHref = songHref;
-      console.log(this.currentSong);
     },
   },
 };

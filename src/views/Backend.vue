@@ -17,7 +17,6 @@
           </li>
         </ul>
       </div>
-      <!-- <div class='col-6' style='border:black solid'></div> -->
 
       <div>
         <ul class="navbar-nav flex-row">
@@ -537,69 +536,69 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import Modal from "bootstrap/js/dist/modal";
-import paginationComponent from "@/components/Backend_Pagination.vue";
+import axios from 'axios';
+import Modal from 'bootstrap/js/dist/modal';
+import paginationComponent from '@/components/Backend_Pagination.vue';
 
 export default {
   data() {
     return {
       temp: {},
-      tempImgpath: "",
+      tempImgpath: '',
       productsInStock: [],
       productsInCart: [],
       isLogin: true,
       account: {
-        userName: "",
-        password: "",
+        userName: '',
+        password: '',
       },
       sortSelectOptions: [
         {
           id: 0,
-          sortBy: "familiar",
+          sortBy: 'familiar',
           ascending: false,
-          name: "熱門程度優先",
+          name: '熱門程度優先',
         },
         {
           id: 1,
-          sortBy: "origin_price",
+          sortBy: 'origin_price',
           ascending: true,
-          name: "原價由低至高",
+          name: '原價由低至高',
         },
         {
           id: 2,
-          sortBy: "origin_price",
+          sortBy: 'origin_price',
           ascending: false,
-          name: "原價由高至低",
+          name: '原價由高至低',
         },
         {
           id: 3,
-          sortBy: "price",
+          sortBy: 'price',
           ascending: true,
-          name: "售價由低至高",
+          name: '售價由低至高',
         },
         {
           id: 4,
-          sortBy: "price",
+          sortBy: 'price',
           ascending: false,
-          name: "售價由高至低",
+          name: '售價由高至低',
         },
       ],
       isShowProgressBar: false,
       modal: {
-        editModal: "",
+        editModal: '',
       },
       productsPagination: [],
       searchProducts: [],
       currentPage: 1,
       elePerPage: 2,
       totalPages: 0,
-      searchValue: "",
+      searchValue: '',
       sort: {
         id: 1,
-        sortBy: "origin_price",
+        sortBy: 'origin_price',
         ascending: true,
-        name: "原價由低至高",
+        name: '原價由低至高',
       },
     };
   },
@@ -610,7 +609,7 @@ export default {
 
     const cookieToken = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
+      '$1',
     );
     // axios.defaults.headers.common['Authorization']，作為axios的post參數
     axios.defaults.headers.common.Authorization = cookieToken;
@@ -622,9 +621,9 @@ export default {
         // 為了eslint
         this.productsIn();
       })
-      .catch((err) => {
-        //check錯誤，會回到首頁
-        this.$router.push("/");
+      .catch(() => {
+        // check錯誤，會回到首頁
+        this.$router.push('/');
       });
   },
   mounted() {
@@ -634,39 +633,22 @@ export default {
   watch: {
     sort(newValue) {
       // 為了過ESLINT，去掉oldValue參數
-      if (this.searchValue === "") {
-        this.productsInStock.sort((A, B) =>
-          newValue.ascending
-            ? A[newValue.sortBy] - B[newValue.sortBy]
-            : B[newValue.sortBy] - A[newValue.sortBy]
-        );
+      if (this.searchValue === '') {
+        this.productsInStock.sort((A, B) => (newValue.ascending
+          ? A[newValue.sortBy] - B[newValue.sortBy]
+          : B[newValue.sortBy] - A[newValue.sortBy]));
         // 針對所有products
         this.pagination(this.elePerPage, this.currentPage);
       } else {
-        this.productsPagination.sort((A, B) =>
-          newValue.ascending
-            ? A[newValue.sortBy] - B[newValue.sortBy]
-            : B[newValue.sortBy] - A[newValue.sortBy]
-        );
+        this.productsPagination.sort((A, B) => (newValue.ascending
+          ? A[newValue.sortBy] - B[newValue.sortBy]
+          : B[newValue.sortBy] - A[newValue.sortBy]));
         this.pagination(this.elePerPage, this.currentPage, this.searchProducts);
       }
     },
     // 依靠this.searchValue值的變換而觸發
     searchValue(newValue) {
       // 為了過ESLINT，去掉oldValue參數
-      // if (newValue == '') {
-      //     this.pagination(this.elePerPage, 1);
-      // } else {
-      //     var tempSearchResult = [];
-      //     tempSearchResult = this.productsInStock.filter((item) => {
-      //         var productString = newValue.normalize();
-      //         var searchString = item.title.normalize();
-      //         searchString.toLowerCase().includes(productString.toLowerCase());
-      //         return searchString.toLowerCase().includes(productString.toLowerCase());
-      //     });
-      //     this.pagination(this.elePerPage, 1, tempSearchResult);
-      // }
-      // productsIn()=>searchValueFunc()=>pagination()
       // 從第一頁開始，並不用從新productsIN
       this.searchValueFunc(newValue, 1);
       // 傳達定位第一頁
@@ -675,18 +657,11 @@ export default {
   },
   methods: {
     searchValueFunc(newValue, whichpage) {
-      if (newValue === "") {
+      if (newValue === '') {
         // 針對所有productsInStock
         this.pagination(this.elePerPage, whichpage);
         this.searchProducts = [];
       } else {
-        // var tempSearchResult = [];
-        // tempSearchResult = this.productsInStock.filter((item) => {
-        //     var productString = newValue.normalize();
-        //     var searchString = item.title.normalize();
-        //     searchString.toLowerCase().includes(productString.toLowerCase());
-        //     return searchString.toLowerCase().includes(productString.toLowerCase());
-        // });
         this.searchProducts = this.productsInStock.filter((item) => {
           const productString = newValue.normalize();
           const searchString = item.title.normalize();
@@ -708,12 +683,12 @@ export default {
         this.currentPage -= 1;
         this.productsPagination = productsShow.slice(
           pageSize * (pageNum - 1),
-          pageNum * pageSize
+          pageNum * pageSize,
         );
       } else {
         this.productsPagination = productsShow.slice(
           pageSize * (pageNum - 1),
-          pageNum * pageSize
+          pageNum * pageSize,
         );
       }
     },
@@ -732,7 +707,7 @@ export default {
       this.isShowProgressBar = true;
       axios
         .get(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`,
         )
         .then((res) => {
           const resAllKey = Object.keys(res.data.products);
@@ -744,20 +719,15 @@ export default {
           this.productsInStock = arrRes;
           this.isShowProgressBar = false;
 
-          this.productsInStock.sort((A, B) =>
-            this.sort.ascending
-              ? A[this.sort.sortBy] - B[this.sort.sortBy]
-              : B[this.sort.sortBy] - A[this.sort.sortBy]
-          );
+          this.productsInStock.sort((A, B) => (this.sort.ascending
+            ? A[this.sort.sortBy] - B[this.sort.sortBy]
+            : B[this.sort.sortBy] - A[this.sort.sortBy]));
 
           // // 分頁
           // // page_size:2個一頁; page_number:第1頁
           // this.pagination(this.elePerPage, this.currentPage);
           this.searchValueFunc(this.searchValue, 1);
         });
-      // .catch((error) => {
-      //   console.dir(error);
-      // });
     },
     edit(item) {
       this.temp = JSON.parse(JSON.stringify(item));
@@ -770,11 +740,11 @@ export default {
       // 不能上傳太大文件
       const file = e.target.files[0];
       const formData = new FormData();
-      formData.append("form-to-upload", file);
+      formData.append('form-to-upload', file);
       axios
         .post(
           `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`,
-          formData
+          formData,
         )
         .then((res) => {
           if (!this.temp.imageUrl) {
@@ -825,10 +795,10 @@ export default {
           num: 1,
         };
         this.temp.imageUrl.push(this.tempImgpath);
-        this.tempImgpath = "";
+        this.tempImgpath = '';
       } else {
         this.temp.imagesUrl.push(this.tempImgpath);
-        this.tempImgpath = "";
+        this.tempImgpath = '';
       }
     },
     confirmEdit() {
@@ -840,7 +810,7 @@ export default {
         axios
           .post(
             `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`,
-            { data: this.temp }
+            { data: this.temp },
           )
           .then(() => {
             // 為了過eslint，never used的res可以先不加上去
@@ -852,7 +822,7 @@ export default {
         axios
           .put(
             `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`,
-            { data: this.temp }
+            { data: this.temp },
           )
           .then(() => {
             // 為了過eslint，never used的res可以先不加上去
@@ -918,7 +888,7 @@ export default {
     },
     deleteImage(index) {
       if (index === 0) {
-        this.temp.imageUrl = "";
+        this.temp.imageUrl = '';
         const [tmp] = this.temp.imagesUrl;
         this.temp.imagesUrl = tmp; // eslint之方法  correct
         // this.temp.imageUrl = this.temp.imagesUrl[0]; //errors

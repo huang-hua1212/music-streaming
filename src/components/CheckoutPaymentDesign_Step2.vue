@@ -216,31 +216,16 @@ export default {
       return '';
     },
   },
-  // watch: {
-  //   address(newValue) {
-  //     for (let i = 0; i < this.addressSelectOptionsCities.length; i += 1) {
-  //       if (this.addressSelectOptionsCities[i].name === newValue.city) {
-  //         this.addressSelectOptionsDistricts = [
-  //           ...this.addressSelectOptionsCities[i].districts,
-  //         ];
-  //         console.log(this.addressSelectOptionsDistricts);
-  //         break;
-  //       }
-  //     }
-
-  //   },
-  // },
   methods: {
-    getDistricts(districts) {
-      console.log(districts);
-    },
+    // getDistricts(districts) {
+    //   console.log(districts);
+    // },
     getCity() {
       const addressApi = 'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json';
       axios
         .get(addressApi)
         .then((res) => {
           this.addressSelectOptionsCities = [...res.data];
-          console.log(this.addressSelectOptionsCities[0].name);
         })
         .catch((err) => {
           console.dir(err);
@@ -279,7 +264,6 @@ export default {
           this.$router.push('/checkout-payment-top/checkout-payment2');
         });
     },
-    // getRegion() {},
   },
 };
 </script>

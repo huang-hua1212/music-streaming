@@ -615,6 +615,8 @@ nav {
 .carousel-control-next,.carousel-control-prev{
   width:12%
 }
+
+// 調整cart的icon的顏色
 nav .navbar-nav li a {
   color: white;
   text-decoration: none;

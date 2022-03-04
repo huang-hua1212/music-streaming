@@ -1,11 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-sm">
+  <nav class="navbar navbar-expand-sm" >
     <div
       class="collapse navbar-collapse navbar-sty"
       id="navbarText"
-      style="border: red solid"
     >
-      <ul class="navbar-nav mr-auto col-auto">
+      <ul class="navbar-nav mr-auto col-auto nav-left" style="font-size:19px;">
         <li class="nav-item active">
           <a class="nav-link" href="#">Home</a>
         </li>
@@ -16,17 +15,14 @@
           <a class="nav-link" href="#">Pricing</a>
         </li>
       </ul>
-      <ul
-        class="nav-right navbar-nav mr-auto col-auto"
-        style="border: red solid"
-      >
+      <ul class="nav-right navbar-nav mr-auto col-auto">
         <li class="nav-item fs-5">
           <div style="max-width: auto">
             <a
               class="nav-link"
               id="navbarDropdownCart"
               role="button"
-              @click="openCartModal"
+              @click.prevent="openCartModal"
             >
               <font-awesome-icon icon="cart-shopping" size="1x" />
               <div v-if="productsInCartLength">
@@ -37,7 +33,36 @@
             </a>
           </div>
         </li>
-        <li class="nav-item"></li>
+        <li
+          class="nav-item login"
+          style="
+            overflow: hidden;
+            padding-top: 8%;
+            margin-left: 6px;
+            padding-right: 3px;
+          "
+        >
+          <a
+            class="nav-link fs-4"
+            id="navbarDropdownPersonProfile "
+            role="button"
+            aria-expanded="false"
+            v-if="isLogin"
+            href="#"
+          >
+            <i class="bi bi-person-lines-fill"></i>
+            <span>&nbsp;</span>
+          </a>
+
+          <a
+            v-else
+            href="#"
+            @click.prevent="openLoginModal"
+            style="padding-top: 50%; margin-top: 30%; font-size: 19px"
+          >
+            LogIn
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -246,8 +271,13 @@
     </div>
   </div>
 
+  <!-- Modal of Login -->
+  <div class="modal-content">
+    <login-modal ref="callLoginModal"></login-modal>
+  </div>
+
   <footer
-  class="footer text-white"
+    class="footer text-white"
     style="
       border: white solid;
       margin-bottom: 0;
@@ -266,6 +296,7 @@
 // carousel參考https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_carousel2&stacked=h
 import axios from 'axios';
 import qs from 'query-string';
+import loginModal from '@/components/LoginModal.vue';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n心之所動 且就隨緣去吧\n\n'
@@ -294,10 +325,6 @@ export default {
         username: '',
         password: '',
       },
-      // test: process.env.VUE_APP_API,
-      // productsInCart: [],
-      // cartId: '',
-
       slide: 0,
       sliding: null,
       imagePath: [
@@ -314,8 +341,10 @@ export default {
       allChart: [],
     };
   },
+  components: { loginModal },
   watch: {},
   created() {
+    this.computProductLength();
     this.getChart();
     // this.getDailyLyric(); // 會耗損API
     this.testGetDailyLyric();
@@ -329,12 +358,12 @@ export default {
       }, 970);
     },
     /// ///////
-    // openLoginModal() {
-    //   this.$refs.callLoginModal.openModal();
-    // },
-    // openCartModal() {
-    //   this.$refs.callCartModal.openModal();
-    // },
+    openLoginModal() {
+      this.$refs.callLoginModal.openModal();
+    },
+    openCartModal() {
+      this.$refs.callCartModal.openModal();
+    },
     // addProduct(temp = this.temp) {
     //   this.showLoading();
     //   const tempInFunction = temp;
@@ -353,13 +382,13 @@ export default {
     //       this.computProductLength();
     //     });
     // },
-    // computProductLength() {
-    //   axios
-    //     .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
-    //     .then((res) => {
-    //       this.productsInCartLength = res.data.data.carts.length;
-    //     });
-    // },
+    computProductLength() {
+      axios
+        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          this.productsInCartLength = res.data.data.carts.length;
+        });
+    },
     // login() {
     //   axios
     //     .post(`${process.env.VUE_APP_API}/admin/signin`, this.account)
@@ -408,11 +437,6 @@ export default {
           'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token?grant_type=authorization_code&code=tES0iTvx8nu--_fFoJFWHA==&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
           {
             withCredentials: true,
-            // data: {
-            //   grant_type: 'client_credentials',
-            //   client_id: '94bc95aa9cdcd73c8d5e10ce0146e40a',
-            //   client_secret: '27995ba42851ede2928d759cb2d56d17',
-            // },
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
               Accept: 'application/x-www-form-urlencoded',
@@ -452,30 +476,6 @@ export default {
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
         });
-      // axios
-      //   .get(
-      //     'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/search',
-      //     {
-      //       params: {
-      //         q: 'Mayday',
-      //         type: 'track',
-      //         territory: 'TW',
-      //         offset: 0,
-      //         limit: 50,
-      //       },
-      //       headers: {
-
-      //         Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
-      //         Accept: 'application/json',
-      //         'content-type': 'application/json',
-      //       },
-      //       crossdomain: true,
-      //     },
-      //   )
-      //   .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
-      //   .catch((error) => {
-      //     console.dir(error); // 失敗的話回傳連線異常
-      //   });
     },
     getChart() {
       axios
@@ -588,22 +588,16 @@ export default {
 // 參考
 // 新聞: https://www.pixelmattic.com/blog/best-news-website-designs/
 //carousel參考https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_carousel2&stacked=h
+/*NavBar left部分 */
 nav {
   background-color: #191919;
+  padding-bottom:0 ;
 }
 .navbar-sty {
   max-width: 75%;
   margin-left: 12.5%;
 }
-.backOfImg {
-  // 毛玻璃效果
-  filter: blur(10px);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-position: center;
-}
+
 .nav-carousel-inner > .carousel-item img,
 .nav-carousel-inner > .carousel-item a img {
   width: 75%;
@@ -618,18 +612,94 @@ nav {
   margin-bottom: 50%;
   margin-right: 20px;
 }
+.carousel-control-next,.carousel-control-prev{
+  width:12%
+}
 nav .navbar-nav li a {
   color: white;
+  text-decoration: none;
 }
+// nav
 .nav-right {
   max-height: 50px;
   margin-left: auto;
+  // padding-bottom:0;
 }
 .nav-link span {
   position: relative;
   top: -45px;
   right: -50%;
   font-size: 35%;
+}
+
+/** nav link hover effect*/
+.nav-left li {
+  padding-left:2px;
+  padding-right:2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-left li::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 1px;
+  background-color: #ffffff;
+  transition: all 0.3s;
+}
+.nav-left li::after {
+  left: 0;
+  bottom: 0;
+}
+.nav-left li:hover::after {
+  width: 100%;
+}
+// nav left end
+
+/** nav link hover effect*/
+.nav-right .login {
+  padding-left:2px;
+  padding-right:2px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 3px;
+}
+
+.nav-right .login::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 1px;
+
+  background-color: #ffffff;
+  transition: all 0.3s;
+}
+.nav-right .login::after {
+  left: 0;
+  bottom: 0;
+}
+.nav-right .login:hover::after {
+  width: 100%;
+}
+// nav right
+
+/*Modal-Content 部分*/
+.modal-content {
+  margin-top: 80px;
+}
+/*Modal-Content */
+
+.backOfImg {
+  // 毛玻璃效果
+  filter: blur(10px);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-position: center;
 }
 .freshSuggest {
   width: 75%;

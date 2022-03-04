@@ -115,7 +115,11 @@
               <div class="float-end pe-3">
                 <span class="me-3">排序</span>
                 <select v-model="sort" class="p-1">
-                  <option v-for="q in sortSelectOptions" v-bind:value="q" :key="q.id">
+                  <option
+                    v-for="q in sortSelectOptions"
+                    v-bind:value="q"
+                    :key="q.id"
+                  >
                     {{ q.name }}
                   </option>
                 </select>
@@ -147,7 +151,13 @@
                   <p v-else>未啟用</p>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary" @click="edit(item)">編輯</button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="edit(item)"
+                  >
+                    編輯
+                  </button>
 
                   <button
                     type="button"
@@ -182,7 +192,7 @@
         @click="edit({})"
       >
         <!-- <i class="fas fa-plus fa-3x" style="margin-top: 2px"></i> -->
-        <font-awesome-icon icon="plus" size="3x"  style="margin-top: 2px" />
+        <font-awesome-icon icon="plus" size="3x" style="margin-top: 2px" />
         <!-- <i class="fas fa-plus fa-3x" style="margin-top: 2px"></i> -->
       </a>
     </div>
@@ -223,7 +233,9 @@
                       type="checkbox"
                       id="isActivated"
                     />
-                    <label class="form-check-label" for="isActivated">是否啟用</label>
+                    <label class="form-check-label" for="isActivated"
+                      >是否啟用</label
+                    >
                   </div>
                 </div>
 
@@ -307,7 +319,12 @@
                 </div>
                 <div class="col-6 ms-3 mt-2">
                   <label for="content">說明</label>
-                  <textarea id="content" rows="3" cols="82" v-model="temp.content"></textarea>
+                  <textarea
+                    id="content"
+                    rows="3"
+                    cols="82"
+                    v-model="temp.content"
+                  ></textarea>
                 </div>
                 <br />
 
@@ -319,9 +336,20 @@
                       <div class="col-4">
                         <label
                           for="fileUpload"
-                          class="imgUpload btn btn-primary btn-block rounded-pill shadow px-5"
-                          ><i class="fa fa-upload mr-2 me-2"></i><span class="me-2">照片上傳</span>
-                          <input id="fileUpload" type="file" @change="uploadImage($event)" />
+                          class="
+                            imgUpload
+                            btn btn-primary btn-block
+                            rounded-pill
+                            shadow
+                            px-5
+                          "
+                          ><i class="fa fa-upload mr-2 me-2"></i
+                          ><span class="me-2">照片上傳</span>
+                          <input
+                            id="fileUpload"
+                            type="file"
+                            @change="uploadImage($event)"
+                          />
                         </label>
                       </div>
                       <div class="col-7 ms-5 px-0">
@@ -356,7 +384,11 @@
                       >
                         <img
                           v-bind:src="temp.imageUrl"
-                          style="border: dashed grey; height: 120px; width: auto"
+                          style="
+                            border: dashed grey;
+                            height: 120px;
+                            width: auto;
+                          "
                         />
                         <a class="nav-link" @click="deleteImage(0)">
                           <span>
@@ -372,7 +404,11 @@
                       >
                         <img
                           v-bind:src="url"
-                          style="border: dashed grey; height: 120px; width: auto"
+                          style="
+                            border: dashed grey;
+                            height: 120px;
+                            width: auto;
+                          "
                         />
                         <a class="nav-link" @click="deleteImage(index + 1)">
                           <span>
@@ -453,12 +489,23 @@
               </div>
 
               <div class="mx-auto col-8">
-                <button type="button" class="btn btn-secondary col-12" id="">登入</button>
+                <button type="button" class="btn btn-secondary col-12" id="">
+                  登入
+                </button>
               </div>
 
               <div class="mx-auto col-8 row mt-1">
                 <div class="col-4 ps-0">
-                  <a class="nav-item nav-link text-start ps-0 pt-0 text-secondary" href="#">
+                  <a
+                    class="
+                      nav-item nav-link
+                      text-start
+                      ps-0
+                      pt-0
+                      text-secondary
+                    "
+                    href="#"
+                  >
                     忘記密碼
                   </a>
                 </div>
@@ -490,69 +537,69 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-import paginationComponent from '@/components/Backend_Pagination.vue';
+import axios from "axios";
+import Modal from "bootstrap/js/dist/modal";
+import paginationComponent from "@/components/Backend_Pagination.vue";
 
 export default {
   data() {
     return {
       temp: {},
-      tempImgpath: '',
+      tempImgpath: "",
       productsInStock: [],
       productsInCart: [],
       isLogin: true,
       account: {
-        userName: '',
-        password: '',
+        userName: "",
+        password: "",
       },
       sortSelectOptions: [
         {
           id: 0,
-          sortBy: 'familiar',
+          sortBy: "familiar",
           ascending: false,
-          name: '熱門程度優先',
+          name: "熱門程度優先",
         },
         {
           id: 1,
-          sortBy: 'origin_price',
+          sortBy: "origin_price",
           ascending: true,
-          name: '原價由低至高',
+          name: "原價由低至高",
         },
         {
           id: 2,
-          sortBy: 'origin_price',
+          sortBy: "origin_price",
           ascending: false,
-          name: '原價由高至低',
+          name: "原價由高至低",
         },
         {
           id: 3,
-          sortBy: 'price',
+          sortBy: "price",
           ascending: true,
-          name: '售價由低至高',
+          name: "售價由低至高",
         },
         {
           id: 4,
-          sortBy: 'price',
+          sortBy: "price",
           ascending: false,
-          name: '售價由高至低',
+          name: "售價由高至低",
         },
       ],
       isShowProgressBar: false,
       modal: {
-        editModal: '',
+        editModal: "",
       },
       productsPagination: [],
       searchProducts: [],
       currentPage: 1,
       elePerPage: 2,
       totalPages: 0,
-      searchValue: '',
+      searchValue: "",
       sort: {
         id: 1,
-        sortBy: 'origin_price',
+        sortBy: "origin_price",
         ascending: true,
-        name: '原價由低至高',
+        name: "原價由低至高",
       },
     };
   },
@@ -563,19 +610,22 @@ export default {
 
     const cookieToken = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      '$1',
+      "$1"
     );
     // axios.defaults.headers.common['Authorization']，作為axios的post參數
     axios.defaults.headers.common.Authorization = cookieToken;
 
     // 驗證是否登入
-    axios.post(`${process.env.VUE_APP_API}/api/user/check`).then(() => {
-      // 為了eslint
-      this.productsIn();
-    });
-    //   .catch((err) => {
-    //     console.dir(err);
-    //   });
+    axios
+      .post(`${process.env.VUE_APP_API}/api/user/check`)
+      .then(() => {
+        // 為了eslint
+        this.productsIn();
+      })
+      .catch((err) => {
+        //check錯誤，會回到首頁
+        this.$router.push("/");
+      });
   },
   mounted() {
     this.modal.editmodal = new Modal(this.$refs.editmodal);
@@ -584,16 +634,20 @@ export default {
   watch: {
     sort(newValue) {
       // 為了過ESLINT，去掉oldValue參數
-      if (this.searchValue === '') {
-        this.productsInStock.sort((A, B) => (newValue.ascending
-          ? A[newValue.sortBy] - B[newValue.sortBy]
-          : B[newValue.sortBy] - A[newValue.sortBy]));
+      if (this.searchValue === "") {
+        this.productsInStock.sort((A, B) =>
+          newValue.ascending
+            ? A[newValue.sortBy] - B[newValue.sortBy]
+            : B[newValue.sortBy] - A[newValue.sortBy]
+        );
         // 針對所有products
         this.pagination(this.elePerPage, this.currentPage);
       } else {
-        this.productsPagination.sort((A, B) => (newValue.ascending
-          ? A[newValue.sortBy] - B[newValue.sortBy]
-          : B[newValue.sortBy] - A[newValue.sortBy]));
+        this.productsPagination.sort((A, B) =>
+          newValue.ascending
+            ? A[newValue.sortBy] - B[newValue.sortBy]
+            : B[newValue.sortBy] - A[newValue.sortBy]
+        );
         this.pagination(this.elePerPage, this.currentPage, this.searchProducts);
       }
     },
@@ -621,7 +675,7 @@ export default {
   },
   methods: {
     searchValueFunc(newValue, whichpage) {
-      if (newValue === '') {
+      if (newValue === "") {
         // 針對所有productsInStock
         this.pagination(this.elePerPage, whichpage);
         this.searchProducts = [];
@@ -637,7 +691,9 @@ export default {
           const productString = newValue.normalize();
           const searchString = item.title.normalize();
           searchString.toLowerCase().includes(productString.toLowerCase());
-          return searchString.toLowerCase().includes(productString.toLowerCase());
+          return searchString
+            .toLowerCase()
+            .includes(productString.toLowerCase());
         });
         this.pagination(this.elePerPage, whichpage, this.searchProducts);
       }
@@ -650,9 +706,15 @@ export default {
       if (pageNum > this.totalPages) {
         pageNum -= 1;
         this.currentPage -= 1;
-        this.productsPagination = productsShow.slice(pageSize * (pageNum - 1), pageNum * pageSize);
+        this.productsPagination = productsShow.slice(
+          pageSize * (pageNum - 1),
+          pageNum * pageSize
+        );
       } else {
-        this.productsPagination = productsShow.slice(pageSize * (pageNum - 1), pageNum * pageSize);
+        this.productsPagination = productsShow.slice(
+          pageSize * (pageNum - 1),
+          pageNum * pageSize
+        );
       }
     },
     // whichPage為目標頁面
@@ -668,25 +730,31 @@ export default {
     },
     productsIn() {
       this.isShowProgressBar = true;
-      axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`).then((res) => {
-        const resAllKey = Object.keys(res.data.products);
-        const resAllValues = Object.values(res.data.products);
-        const arrRes = resAllValues;
-        for (let i = 0; i < resAllKey.length; i += 1) {
-          arrRes.id = resAllKey[i];
-        }
-        this.productsInStock = arrRes;
-        this.isShowProgressBar = false;
+      axios
+        .get(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`
+        )
+        .then((res) => {
+          const resAllKey = Object.keys(res.data.products);
+          const resAllValues = Object.values(res.data.products);
+          const arrRes = resAllValues;
+          for (let i = 0; i < resAllKey.length; i += 1) {
+            arrRes.id = resAllKey[i];
+          }
+          this.productsInStock = arrRes;
+          this.isShowProgressBar = false;
 
-        this.productsInStock.sort((A, B) => (this.sort.ascending
-          ? A[this.sort.sortBy] - B[this.sort.sortBy]
-          : B[this.sort.sortBy] - A[this.sort.sortBy]));
+          this.productsInStock.sort((A, B) =>
+            this.sort.ascending
+              ? A[this.sort.sortBy] - B[this.sort.sortBy]
+              : B[this.sort.sortBy] - A[this.sort.sortBy]
+          );
 
-        // // 分頁
-        // // page_size:2個一頁; page_number:第1頁
-        // this.pagination(this.elePerPage, this.currentPage);
-        this.searchValueFunc(this.searchValue, 1);
-      });
+          // // 分頁
+          // // page_size:2個一頁; page_number:第1頁
+          // this.pagination(this.elePerPage, this.currentPage);
+          this.searchValueFunc(this.searchValue, 1);
+        });
       // .catch((error) => {
       //   console.dir(error);
       // });
@@ -702,22 +770,27 @@ export default {
       // 不能上傳太大文件
       const file = e.target.files[0];
       const formData = new FormData();
-      formData.append('form-to-upload', file);
-      axios.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`, formData).then((res) => {
-        if (!this.temp.imageUrl) {
-          this.temp = {
-            ...this.temp,
-            imageUrl: [],
-            imagesUrl: [],
+      formData.append("form-to-upload", file);
+      axios
+        .post(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`,
+          formData
+        )
+        .then((res) => {
+          if (!this.temp.imageUrl) {
+            this.temp = {
+              ...this.temp,
+              imageUrl: [],
+              imagesUrl: [],
 
-            num: 1,
-            // 新增欄位AAA:60,
-          };
-          this.temp.imageUrl.push(res.data.imageUrl);
-        } else {
-          this.temp.imagesUrl.push(res.data.imageUrl);
-        }
-      });
+              num: 1,
+              // 新增欄位AAA:60,
+            };
+            this.temp.imageUrl.push(res.data.imageUrl);
+          } else {
+            this.temp.imagesUrl.push(res.data.imageUrl);
+          }
+        });
     },
     // 方法二:處理base64
     // uploadImage(e) {
@@ -752,10 +825,10 @@ export default {
           num: 1,
         };
         this.temp.imageUrl.push(this.tempImgpath);
-        this.tempImgpath = '';
+        this.tempImgpath = "";
       } else {
         this.temp.imagesUrl.push(this.tempImgpath);
-        this.tempImgpath = '';
+        this.tempImgpath = "";
       }
     },
     confirmEdit() {
@@ -764,27 +837,37 @@ export default {
         // this.temp.id = new Date().getTime().toString();
         this.productsInStock.push(this.temp);
 
-        axios.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`, { data: this.temp }).then(() => {
-          // 為了過eslint，never used的res可以先不加上去
-          this.temp = {};
-          this.productsIn();
-        });
+        axios
+          .post(
+            `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`,
+            { data: this.temp }
+          )
+          .then(() => {
+            // 為了過eslint，never used的res可以先不加上去
+            this.temp = {};
+            this.productsIn();
+          });
       } else {
         const id = this.temp.id.trim();
-        axios.put(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`, { data: this.temp }).then(() => {
-          // 為了過eslint，never used的res可以先不加上去
-          this.productsInStock.forEach((item, i) => {
-            if (item.id === id) {
-              this.productsInStock[i] = this.temp;
-              this.temp = {};
-              // 每次更新完要做一次分頁
-              // this.pagination(this.elePerPage, this.currentPage);
+        axios
+          .put(
+            `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`,
+            { data: this.temp }
+          )
+          .then(() => {
+            // 為了過eslint，never used的res可以先不加上去
+            this.productsInStock.forEach((item, i) => {
+              if (item.id === id) {
+                this.productsInStock[i] = this.temp;
+                this.temp = {};
+                // 每次更新完要做一次分頁
+                // this.pagination(this.elePerPage, this.currentPage);
 
-              // 每次更新完要做一次分頁，並判斷searchValue是否為空，若空則全productsInStock分頁，若非則根據searchValue分頁
-              this.searchValueFunc(this.searchValue, this.currentPage);
-            }
+                // 每次更新完要做一次分頁，並判斷searchValue是否為空，若空則全productsInStock分頁，若非則根據searchValue分頁
+                this.searchValueFunc(this.searchValue, this.currentPage);
+              }
+            });
           });
-        });
         //   .catch((err) => {
         //     // console.dir(err);
         //   });
@@ -835,7 +918,7 @@ export default {
     },
     deleteImage(index) {
       if (index === 0) {
-        this.temp.imageUrl = '';
+        this.temp.imageUrl = "";
         const [tmp] = this.temp.imagesUrl;
         this.temp.imagesUrl = tmp; // eslint之方法  correct
         // this.temp.imageUrl = this.temp.imagesUrl[0]; //errors

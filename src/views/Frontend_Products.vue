@@ -40,6 +40,7 @@
                       {{ productsInCartLength }}
                     </span>
                   </div>
+
                 </a>
 
               </div>

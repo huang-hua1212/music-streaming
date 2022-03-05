@@ -12,6 +12,11 @@ import CheckoutPaymentDesign from '../views/CheckoutPayment_Design.vue';
 const routes = [
   {
     path: '/',
+    name: 'BackEndDesign',
+    component: () => import('../views/BackEnd_Design.vue'),
+  },
+  {
+    path: '/222',
     name: 'FrontEndDesign1',
     component: () => import('../views/FrontEnd_Design1.vue'),
   },

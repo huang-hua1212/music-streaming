@@ -1,126 +1,21 @@
 <template>
-<nav class="navbar navbar-expand-sm">
-    <div class="collapse navbar-collapse navbar-sty" id="navbarText">
-      <ul class="navbar-nav mr-auto col-auto nav-left" style="font-size: 19px">
-        <li class="nav-item active">
-          <router-link to="/" class="nav-link" href="#">Home</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link
-            to="/"
-            class="nav-link record-shop"
-            href="#"
-            @mouseover="
-              {
-                recordShopDropDown = !recordShopDropDown;
-              }
-            "
-            >Record Shop</router-link
-          >
-          <transition
-            name="fade"
-            class="record-shop-dropdown"
-            v-if="recordShopDropDown"
-            @mouseenter="
-              {
-                recordShopDropDown = true;
-              }
-            "
-            @mouseleave="
-              {
-                recordShopDropDown = false;
-              }
-            "
-          >
-            <ul class="record-shop-dropdown-ul">
-              <li style="margin-top: 8px">
-                <router-link to="/record-shop/">CDs</router-link>
-              </li>
-              <li>
-                <router-link to="/record-shop/CDs">Vinyls</router-link>
-              </li>
-              <li>
-                <router-link to="/record-shop/Vinyls"
-                  >DVDs</router-link
-                >
-              </li>
-              <li>
-                <router-link to="/record-shop/Blu-ray_Disc"
-                  >Blu-ray Disc</router-link
-                >
-              </li>
-            </ul>
-          </transition>
-        </li>
-        <li class="nav-item">
-          <router-link to="/" class="nav-link" href="#"
-            >Latest News</router-link
-          >
-        </li>
-      </ul>
-      <ul class="nav-right navbar-nav mr-auto col-auto">
-        <li class="nav-item fs-5">
-          <div style="max-width: auto">
-            <a
-              class="nav-link"
-              id="navbarDropdownCart"
-              role="button"
-              @click.prevent="openCartModal"
-            >
-              <font-awesome-icon icon="cart-shopping" size="1x" />
-              <div v-if="productsInCartLength">
-                <span class="badge rounded-pill badge-notification bg-danger">
-                  {{ productsInCartLength }}
-                </span>
-              </div>
-            </a>
-          </div>
-        </li>
-        <li
-          class="nav-item login"
-          style="
-            overflow: hidden;
-            padding-top: 8%;
-            margin-left: 6px;
-            padding-right: 3px;
-          "
-        >
-          <a
-            class="nav-link fs-4"
-            id="navbarDropdownPersonProfile "
-            role="button"
-            aria-expanded="false"
-            v-if="isLogin"
-            href="#"
-          >
-            <i class="bi bi-person-lines-fill"></i>
-            <span>&nbsp;</span>
-          </a>
 
-          <a
-            v-else
-            href="#"
-            @click.prevent="openLoginModal"
-            style="padding-top: 50%; margin-top: 30%; font-size: 19px"
-          >
-            LogIn
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<navbar-black></navbar-black>
 
 <router-view/>
 
 </template>
 
 <script>
+import NavbarBlack from '@/components/NavbarBlack.vue';
+
 export default {
   data() {
     return {
 
     };
   },
+  components: { NavbarBlack },
 };
 </script>
 <style lang="scss" scoped>

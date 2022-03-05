@@ -4,11 +4,11 @@
   <div class="text-white">
     <div><h5>Condition Filter:</h5></div>
     <div
-      class="container"
+      class="conditionFilter container"
       style="max-width: 70%; margin-left: 15%; margin-top: 4%; font-size: 17px"
     >
       <!-- <h5>出版年份(Release Date:)</h5> -->
-      <div class="row">
+      <div class="row ">
         <div
           class="yearTitle col-auto"
           style="
@@ -21,18 +21,15 @@
           Gender
         </div>
         <div
-          class="yearItem col-auto active"
-          style="border: white solid; margin-left: 1%"
-        >
-          All
-        </div>
-        <div
           class="yearItem col-auto"
-          style="border: white solid; margin-left: 1%"
+          style="margin-left: 1%;"
+          :class="{ active: item.isActive }"
           v-for="item in conditionFilter.gender"
           :key="item"
         >
-          {{ item }}
+          <a href="#" @click.prevent="activate(conditionFilter.gender, item)">{{
+            item.name
+          }}</a>
         </div>
       </div>
 
@@ -49,18 +46,13 @@
           Language
         </div>
         <div
-          class="yearItem col-auto active"
-          style="border: white solid; margin-left: 1%"
-        >
-          All
-        </div>
-        <div
           class="yearItem col-auto"
-          style="border: white solid; margin-left: 1%"
+          style="margin-left: 1%"
+          :class="{ active: item.isActive }"
           v-for="item in conditionFilter.language"
           :key="item"
         >
-          {{ item }}
+          <a href="#" @click.prevent="activate(conditionFilter.language, item)">{{ item.name }}</a>
         </div>
       </div>
 
@@ -72,18 +64,13 @@
           Release Year
         </div>
         <div
-          class="yearItem col-auto active"
-          style="border: white solid; margin-left: 1%"
-        >
-          All
-        </div>
-        <div
           class="yearItem col-auto"
-          style="border: white solid; margin-left: 1%"
+          style="margin-left: 1%"
+          :class="{ active: item.isActive }"
           v-for="item in conditionFilter.yearList"
           :key="item"
         >
-          {{ item }}
+          <a href="#" @click.prevent="activate(conditionFilter.yearList, item)">{{ item.name }}</a>
         </div>
       </div>
       <div class="row mt-3">
@@ -100,19 +87,13 @@
         </div>
         <div class="col-auto row" style="max-width: 83%">
           <div
-            class="yearItem col-auto active"
-            style="border: white solid; margin-left: 1%; margin-bottom: 2%"
-          >
-            All
-          </div>
-
-          <div
             class="yearItem col-auto"
-            style="border: white solid; margin-left: 1%; margin-bottom: 2%"
+            style="margin-left: 1%; margin-bottom: 2%"
+            :class="{ active: item.isActive }"
             v-for="item in conditionFilter.genre"
             :key="item"
           >
-            {{ item }}
+            <a href="#" @click.prevent="activate(conditionFilter.genre, item)">{{ item.name }}</a>
           </div>
         </div>
       </div>
@@ -165,8 +146,8 @@
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the bulk of
-              the card's content.
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
             </p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
@@ -188,8 +169,8 @@
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the bulk of
-              the card's content.
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
             </p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
@@ -210,8 +191,8 @@
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the bulk of
-              the card's content.
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
             </p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
@@ -232,8 +213,8 @@
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the bulk of
-              the card's content.
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
             </p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
@@ -254,8 +235,8 @@
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the bulk of
-              the card's content.
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
             </p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
@@ -269,23 +250,88 @@
 export default {
   data() {
     return {
+      conditionIsActive: {},
       conditionFilter: {
-        yearList: [],
+        yearList: [{ name: 'All', isActive: true }],
         genre: [
-          'Indie Collection',
-          'Bossa Nova',
-          'BLUES',
-          'K-POP',
-          'R&B',
-          'Classical',
-          'Metal Rock',
-          'Punk Rock',
-          'House',
-          'Rap',
-          'Folk',
+          {
+            name: 'All',
+            isActive: true,
+          },
+          {
+            name: 'Indie Collection',
+            isActive: false,
+          },
+          {
+            name: 'Bossa Nova',
+            isActive: false,
+          },
+          {
+            name: 'BLUES',
+            isActive: false,
+          },
+          {
+            name: 'K-POP',
+            isActive: false,
+          },
+          {
+            name: 'R&B',
+            isActive: false,
+          },
+          {
+            name: 'Classical',
+            isActive: false,
+          },
+          {
+            name: 'Metal Rock',
+            isActive: false,
+          },
+          {
+            name: 'Punk Rock',
+            isActive: false,
+          },
+          {
+            name: 'House',
+            isActive: false,
+          },
+          {
+            name: 'Rap',
+            isActive: false,
+          },
+          {
+            name: 'Folk',
+            isActive: false,
+          },
         ],
-        gender: ['Male', 'Female', 'Group'],
-        language: ['華語', '英文', '韓文', '廣東話', '西班牙語'],
+        gender: [
+          {
+            name: 'All',
+            isActive: true,
+          },
+          { name: 'Male', isActive: false },
+          {
+            name: 'Female',
+            isActive: false,
+          },
+          {
+            name: 'Group',
+            isActive: false,
+          },
+        ],
+        language: [
+          { name: 'All', isActive: true },
+          { name: '華語', isActive: false },
+          { name: '英文', isActive: false },
+          {
+            name: '韓文',
+            isActive: false,
+          },
+          { name: '廣東話', isActive: false },
+          {
+            name: '西班牙語',
+            isActive: false,
+          },
+        ],
       },
     };
   },
@@ -297,18 +343,40 @@ export default {
       const nowYear = new Date(Date.now()).getFullYear();
       console.log(nowYear);
       for (let i = 0; i < 10; i += 1) {
+        const yearObject = { name: '', isActive: false };
         const year = nowYear - i;
-        this.conditionFilter.yearList.push(year);
-        console.log(year);
+        yearObject.name = year;
+        this.conditionFilter.yearList.push(yearObject);
       }
-      console.log(this.conditionFilter.yearList);
+    },
+    activate(array, item) {
+      array.forEach((el) => {
+        const ele = el;
+        if (ele.name === item.name) {
+          ele.isActive = true;
+        } else {
+          ele.isActive = false;
+        }
+      });
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-.card{
+.card {
   background-color: #191919;
   color: white;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+.conditionFilter .active{
+  background-color: rgb(255, 255, 0);
+  border-radius: 3px;
+  & a{
+    color: black;
+    font-weight: bold;
+  }
 }
 </style>

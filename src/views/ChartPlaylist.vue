@@ -246,6 +246,7 @@ caches.open('my-cache').then((myCache) => {
 // OAUTH2對照錯誤表: https://help.salesforce.com/s/articleView?language=zh_TW&type=5&id=sf.remoteaccess_oauth_flow_errors.htm
 </script>
 <style lang="scss" scoped>
+
 .picture {
   width: 14.75%;
 }

@@ -52,31 +52,43 @@
     </div>
   </nav>
   <div class="content" style="margin-top: 5%">
-    <div class="container" style="border: white solid; max-width: 80%">
+    <div class="container" style="border: white solid; max-width: 75%">
       <div class="row">
         <div class="col-3" style="border: pink solid"></div>
-        <div class="col-9" style="border: yellow solid;padding:0;">
-          <table style="width:100%">
-            <thead style="width: 100%; border: green solid">
-              <tr>
-                <th colspan="2">The table header</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="width: 100%; border: green solid">
-                <td>The table body</td>
-                <td>with two columns</td>
-              </tr>
-              <tr style="width: 100%; border: green solid">
-                <td>The table body</td>
-                <td>with two columns</td>
-              </tr>
-              <tr style="width: 100%; border: green solid">
-                <td>The table body</td>
-                <td>with two columns</td>
-              </tr>
-            </tbody>
-          </table>
+        <div
+          class="col-9 text-white container"
+          style="border: yellow solid; padding: 0"
+        >
+          <ul style="border: white solid">
+            <li class="row"  style="margin: 0;">
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-4" style="border:pink solid;">123</div>
+            </li>
+            <li class="row"  style="margin: 0;">
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-4" style="border:pink solid;">123</div>
+            </li>
+            <li class="row"  style="margin: 0;">
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-4" style="border:pink solid;">123</div>
+            </li>
+            <li class="row"  style="margin: 0;">
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-2" style="border:pink solid;">123</div>
+              <div class="col-4" style="border:pink solid;">123</div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -184,4 +196,9 @@ nav .navbar-nav li a {
   color: white;
   text-decoration: none;
 }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
 </style>

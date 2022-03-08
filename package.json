@@ -21,6 +21,7 @@
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "jquery": "^3.6.0",
+    "lodash": "^4.17.21",
     "qs": "^6.10.3",
     "query-string": "^7.1.1",
     "vee-validate": "^4.5.8",

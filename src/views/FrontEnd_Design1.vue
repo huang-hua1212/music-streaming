@@ -289,30 +289,13 @@ export default {
       }, 970);
     },
     /// ///////
-    openLoginModal() {
-      this.$refs.callLoginModal.openModal();
-    },
-    openCartModal() {
-      this.$refs.callCartModal.openModal();
-    },
-    // addProduct(temp = this.temp) {
-    //   this.showLoading();
-    //   const tempInFunction = temp;
-    //   tempInFunction.num = 1;
-    //   const cart = {
-    //     product_id: temp.id,
-    //     qty: temp.num,
-    //   };
-    //   axios
-    //     .post(
-    //       `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`,
-    //       { data: cart }
-    //     )
-    //     .then(() => {
-    //       this.$refs.callCartModal.loadProductsInCart();
-    //       this.computProductLength();
-    //     });
+    // openLoginModal() {
+    //   this.$refs.callLoginModal.openModal();
     // },
+    // openCartModal() {
+    //   this.$refs.callCartModal.openModal();
+    // },
+
     computProductLength() {
       axios
         .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)

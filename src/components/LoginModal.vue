@@ -129,8 +129,6 @@ export default {
   },
   methods: {
     closeModal() {
-      console.log('closemodal');
-      // this.modal.is_openLoginModal = isCloseLoginModal; // 關閉modal
       // this.$emit('close-modal', isCloseLoginModal);
       this.email = '';
       this.password = '';
@@ -161,7 +159,8 @@ export default {
             expired,
           )};path=/`;
           this.loginSuccess = true;
-          this.$router.push('/backend');
+          // this.$router.push('/backend');
+          this.$router.push('/');
         })
         .catch((err) => {
           console.log(err);

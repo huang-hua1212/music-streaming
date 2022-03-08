@@ -82,41 +82,65 @@
             </li>
             <li
               class="row"
-              style="margin: 0; border: yellow dashed; padding-bottom: 13px"
+              style="
+                margin: 0;
+                border: yellow dashed;
+                padding-top: 13px;
+                padding-bottom: 13px;
+              "
             >
               <p
-                class="col-3"
+                class="col-3 m-0"
                 style="
+                font-size:14px;
                   border: pink solid;
                   padding-bottom: 12px;
                   padding-top: 12px;.
-                  margin-top: 1%;
-                  margin-bottom: 0;
+
                 "
               >
                 AC/DC: LIVE AC/DC: LIVEAC/DC: LIVEAC/DC: LIVE
               </p>
               <p
-                class="col-2"
-                style="border: pink solid; margin-top: 1%; margin-bottom: 0"
+                class="col-2 m-0"
+                style="
+                font-size:14px;
+                border: pink solid;
+                  padding-bottom: 12px;
+                  padding-top: 12px;.
+                  "
               >
                 Price
               </p>
               <p
-                class="col-2"
-                style="border: pink solid; margin-top: 1%; margin-bottom: 0"
+                class="col-2 m-0"
+                style="
+                font-size:14px;
+                border: pink solid;
+                  padding-bottom: 12px;
+                  padding-top: 12px;.
+                 "
               >
                 In Stock
               </p>
               <p
-                class="col-2"
-                style="border: pink solid; margin-top: 1%; margin-bottom: 0"
+                class="col-2 m-0"
+                style="
+                font-size:14px;
+                border: pink solid;
+                  padding-bottom: 12px;
+                  padding-top: 12px;.
+                  "
               >
                 Available
               </p>
               <div
-                class="col-3 row"
-                style="border: pink solid; margin-top: 1%; margin-left: 0"
+                class="col-3 row m-0"
+                style="border: pink solid;
+                  padding-bottom: 12px;
+                  padding-top: 12px;.
+                  margin-top: 0;
+                 "
               >
                 <div
                   class="col-3 p-0"
@@ -124,6 +148,7 @@
                     background-color: #ffeb0b;
                     border-radius: 3px;
                     margin-left: 20%;
+                    height: 48px;
                   "
                 >
                   <a
@@ -149,6 +174,7 @@
                     background-color: #c0392b;
                     border-radius: 3px;
                     margin-left: 13%;
+                    height: 48px;
                   "
                 >
                   <a
@@ -234,7 +260,7 @@
               </div>
 
               <div class="row">
-                <div class="col-6 ms-3 mt-2">
+                <div class="col-5 ms-3 mt-2">
                   <label for="category">分類</label>
                   <br />
                   <select
@@ -244,14 +270,10 @@
                     v-model="temp.category"
                   >
                     <option disabled selected>分類選擇</option>
-                    <option value="流行">流行</option>
-                    <option value="民謠">民謠</option>
-                    <option value="搖滾樂">搖滾樂</option>
-                    <option value="藍調">藍調</option>
-                    <option value="古典">古典</option>
-                    <option value="饒舌">饒舌</option>
-                    <option value="蛋糕">蛋糕</option>
-                    <option value="甜甜圈">甜甜圈</option>
+                    <option value="CDs">CDs</option>
+                    <option value="DVDs">DVDs</option>
+                    <option value="Vinyls">Vinyls</option>
+                    <option value="BluRayDisc">BluRayDisc</option>
                   </select>
                 </div>
                 <div class="col-5 mt-2">
@@ -270,7 +292,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-6 ms-3 mt-2">
+                <div class="col-5 ms-3 mt-2">
                   <label for="originPrice">原價</label>
                   <input
                     type="number"
@@ -290,7 +312,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-6 ms-3 mt-2">
+                <div class="col-5 ms-3 mt-2">
                   <label for="inventory">庫存量</label>
                   <input
                     type="number"
@@ -298,6 +320,78 @@
                     id="inventory"
                     v-model.number="temp.inventory"
                   />
+                </div>
+              </div>
+              <br />
+              <hr />
+              <div class="row">
+                <div class="col-5 ms-3 mt-2">
+                  <label for="gender">歌手性別</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="gender"
+                    v-model="temp.gender"
+                  >
+                    <option disabled selected>選擇</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Group">Group</option>
+                  </select>
+                </div>
+                <div class="col-5 ms-3 mt-2">
+                  <label for="lauguage">語言</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="language"
+                    v-model="temp.language"
+                  >
+                    <option disabled selected>選擇</option>
+                    <option value="華語">華語</option>
+                    <option value="英文">英文</option>
+                    <option value="韓文">韓文</option>
+                    <option value="廣東話">廣東話</option>
+                    <option value="西班牙語">西班牙語</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-5 ms-3 mt-2">
+                  <label for="gender">出版年份</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="releaseYear"
+                    v-model="temp.releaseYear"
+                  >
+                    <option disabled selected>選擇</option>
+                    <option v-for="it in yearList" :key="it" value="it">
+                      {{ it }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-5 ms-3 mt-2">
+                  <label for="musicStyle">音樂風格</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="musicStyle"
+                    v-model="temp.musicStyle"
+                  >
+                    <option disabled selected>選擇</option>
+                    <option value="Indie Collection">Indie Collection</option>
+                    <option value="Bossa Nova">Bossa Nova</option>
+                    <option value="BLUES">BLUES</option>
+                    <option value="K-POP">K-POP</option>
+                    <option value="R&B">R&B</option>
+                    <option value="Classical">Classical</option>
+                    <option value="Metal Rock">Metal Rock</option>
+                    <option value="Punk Rock">Punk Rock</option>
+                    <option value="House">House</option>
+                    <option value="Rap">Rap</option>
+                    <option value="Folk">Folk</option>
+                  </select>
                 </div>
               </div>
               <br />
@@ -342,6 +436,7 @@
                         <input
                           id="fileUpload"
                           type="file"
+                          ref="files"
                           @change="uploadImage($event)"
                         />
                       </label>
@@ -494,15 +589,45 @@ export default {
       },
 
       personMenuDropDown: false,
+      yearList: [],
     };
   },
   created() {
-    this.productsIn();
+    // this.checkLogin();
   },
   mounted() {
     this.modal.editmodal = new Modal(this.$refs.editmodal);
   },
   methods: {
+    // checkLogin() {
+    //   const cookieToken = document.cookie.replace(
+    //     /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+    //     '$1',
+    //   );
+    //   // axios.defaults.headers.common['Authorization']，作為axios的post參數
+    //   axios.defaults.headers.common.Authorization = cookieToken;
+
+    //   // 驗證是否登入
+    //   axios
+    //     .post(
+    //       `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
+    //     )
+    //     .then(() => {
+    //       // 為了eslint
+    //       this.productsIn();
+    //       this.getYearList();
+    //     })
+    //     .catch(() => {
+    //       // check錯誤，會回到首頁
+    //       this.$router.push('/');
+    //     });
+    // },
+    getYearList() {
+      const nowYear = new Date(Date.now()).getFullYear();
+      for (let i = 0; i < 10; i += 1) {
+        this.yearList.push(nowYear - i);
+      }
+    },
     logout() {
       const url = `${process.env.VUE_APP_API}/logout`;
       axios
@@ -517,12 +642,10 @@ export default {
     },
     productsIn(page = 1) {
       const changeToPage = page;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products?page=${changeToPage}`;
+      const url = `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products?page=${changeToPage}`;
       axios
         .get(url)
-        .then((res) => {
-          console.log(res);
-        })
+        .then(() => {})
         .catch((err) => {
           console.log(err);
         });
@@ -530,6 +653,98 @@ export default {
     edit(item) {
       this.temp = JSON.parse(JSON.stringify(item));
       this.modal.editmodal.show();
+    },
+    editModalReturn(it) {
+      this.temp = it;
+    },
+    // 上傳照片
+    uploadImage(file) {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
+      const formData = new FormData();
+      formData.append('form-to-upload', file);
+      axios
+        .post(url, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data', // 更改成 FormData 的格式
+          },
+        })
+        .then((res) => {
+          if (!this.temp.imageUrl) {
+            this.temp.imageUrl = [];
+            this.temp.imageUrl.push(res.data.imageUrl);
+          } else {
+            this.temp.imagesUrl.push(res.data.imageUrl);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    uploadImage_byUrl() {
+      if (!this.temp.imageUrl) {
+        this.temp = {
+          ...this.temp,
+          imageUrl: [],
+          imagesUrl: [],
+          is_enabled: false,
+          num: 1,
+        };
+        this.temp.imageUrl.push(this.tempImgpath);
+        this.tempImgpath = '';
+      } else {
+        this.temp.imagesUrl.push(this.tempImgpath);
+        this.tempImgpath = '';
+      }
+    },
+    deleteImage(index) {
+      if (index === 0) {
+        this.temp.imageUrl = '';
+        const [tmp] = this.temp.imagesUrl;
+        this.temp.imagesUrl = tmp; // eslint之方法  correct
+        // this.temp.imageUrl = this.temp.imagesUrl[0]; //errors
+        this.temp.imagesUrl.splice(0, 1);
+      } else {
+        this.temp.imagesUrl.splice(index - 1, 1);
+      }
+    },
+    confirmEdit() {
+      if (!this.temp.id) {
+        // 更新
+        // this.temp.id = new Date().getTime().toString();
+        this.productsInStock.push(this.temp);
+
+        axios
+          .post(
+            `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`,
+            { data: this.temp },
+          )
+          .then(() => {
+            // 為了過eslint，never used的res可以先不加上去
+            this.temp = {};
+            this.productsIn();
+          });
+      } else {
+        const id = this.temp.id.trim();
+        axios
+          .put(
+            `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`,
+            { data: this.temp },
+          )
+          .then(() => {
+            // 為了過eslint，never used的res可以先不加上去
+            this.productsInStock.forEach((item, i) => {
+              if (item.id === id) {
+                this.productsInStock[i] = this.temp;
+                this.temp = {};
+                // 每次更新完要做一次分頁
+                // this.pagination(this.elePerPage, this.currentPage);
+              }
+            });
+          });
+        //   .catch((err) => {
+        //     // console.dir(err);
+        //   });
+      }
     },
   },
 };

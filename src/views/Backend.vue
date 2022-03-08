@@ -328,6 +328,7 @@
                 <br />
 
                 <hr />
+
                 <div class="col-11 ms-3 mt-2" id="imgUpload">
                   <!-- <label>照片上傳</label> -->
                   <div class="container">
@@ -347,6 +348,7 @@
                           <input
                             id="fileUpload"
                             type="file"
+                            ref="files"
                             @change="uploadImage($event)"
                           />
                         </label>
@@ -418,6 +420,7 @@
                     </div>
                   </div>
                 </div>
+
               </form>
             </div>
           </div>
@@ -611,7 +614,6 @@ export default {
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
       '$1',
     );
-    // axios.defaults.headers.common['Authorization']，作為axios的post參數
     axios.defaults.headers.common.Authorization = cookieToken;
 
     // 驗證是否登入
@@ -707,7 +709,7 @@ export default {
       this.isShowProgressBar = true;
       axios
         .get(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`,
+          `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`,
         )
         .then((res) => {
           const resAllKey = Object.keys(res.data.products);
@@ -736,16 +738,20 @@ export default {
     nonEdit() {
       this.temp = {};
     },
-    uploadImage(e) {
+    uploadImage() {
       // 不能上傳太大文件
-      const file = e.target.files[0];
+      // const file = e.target.files[0];
+      const file = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('form-to-upload', file);
+      const url = 'https://all-the-cors.herokuapp.com/https://vue3-course-api.hexschool.io/v2/api/cakeshop/admin/upload';
+      // const originalUrl = `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
       axios
-        .post(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`,
-          formData,
-        )
+        .post(url, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data', // 更改成 FormData 的格式
+          },
+        })
         .then((res) => {
           if (!this.temp.imageUrl) {
             this.temp = {
@@ -760,6 +766,9 @@ export default {
           } else {
             this.temp.imagesUrl.push(res.data.imageUrl);
           }
+        })
+        .catch((err) => {
+          console.log(err.response);
         });
     },
     // 方法二:處理base64
@@ -809,7 +818,7 @@ export default {
 
         axios
           .post(
-            `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`,
+            `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`,
             { data: this.temp },
           )
           .then(() => {

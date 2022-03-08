@@ -103,6 +103,7 @@
       </ul>
     </div>
   </nav>
+
   <!-- Modal of Login -->
   <div class="modal-content">
     <login-modal ref="callLoginModal"></login-modal>

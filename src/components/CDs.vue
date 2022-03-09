@@ -183,7 +183,12 @@
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p> -->
-            <a href="#" class="btn btn-add-cart" @click.prevent="addProduct(item)">add cart</a>
+            <a
+              href="#"
+              class="btn btn-add-cart"
+              @click.prevent="addProduct(item)"
+              >add cart</a
+            >
           </div>
         </div>
       </div>
@@ -364,24 +369,56 @@ export default {
   },
   created() {
     this.checkLogin();
-    this.computProductLength();
+    // this.test();
+    // this.computProductLength();
   },
   methods: {
-    addProduct(temp = this.temp) {
-      console.log(temp);
+    test(id, qty = 1) {
+      const productId = '-MxdTw8U-VJVybjr1Dd6';
+      // const cart = {
+      //   product_id: productId,
+      //   qty: 1,
+      // };
+
+      const data = {
+        product_id: productId,
+        qty,
+      };
+      axios
+        .post(
+          'https://all-the-cors.herokuapp.com/https://vue3-course-api.hexschool.io/v2/api/record-shop/cart',
+          {
+            data: JSON.stringify(data),
+          },
+        )
+        .then(() => {
+          // this.$refs.callCartModal.loadProductsInCart();
+          this.computProductLength();
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+    addProduct(temp) {
       // this.showLoading();
       const tempInFunction = temp;
       tempInFunction.num = 1;
-      console.log(tempInFunction);
-      const cart = {
-        product_id: temp.id,
-        qty: temp.num,
-      };
-      console.log(temp.id);
+       const cart = {
+         product_id: temp.id,
+         qty: temp.num,
+       };
+      console.log(JSON.stringify({
+        data: {
+          product_id: temp.id,
+          qty: temp.num,
+        },
+      }));
       axios
         .post(
           `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`,
-          { data: cart },
+          {
+            data: cart,
+          },
         )
         .then(() => {
           // this.$refs.callCartModal.loadProductsInCart();

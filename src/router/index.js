@@ -64,7 +64,7 @@ const routes = [
     ],
   },
   {
-    path: '/record-shop',
+    path: '/',
     name: 'RecordShop',
     component: () => import('../views/RecordShop.vue'),
     children: [

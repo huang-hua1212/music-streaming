@@ -134,10 +134,7 @@
       margin-left: 5%;
     "
   >
-    <div
-      class="row recordDisplay"
-      style="height: auto; border: yellow solid; border-top: pink dashed"
-    >
+    <div class="row recordDisplay" style="height: auto">
       <!-- <div
         class="col-auto"
         style="
@@ -171,18 +168,22 @@
           padding: 0;
         "
         v-for="item in data"
-        :key=item.id
+        :key="item.id"
       >
         <div class="card" style="width: 100%">
-          <img class="card-img-top" alt="Card image cap" :src = "item.imageUrl"/>
+          <img class="card-img-top" alt="Card image cap" :src="item.imageUrl" />
           <div class="card-body">
-            <p class="card-title" style="text-align: center; font-size: 17px;">{{item.title}}</p>
-            <p class="card-title" style="text-align: center;">{{item.singer}}</p>
-            <p class="card-text" id="money">
+            <p class="card-title" style="text-align: center; font-size: 17px">
+              {{ item.title }}
+            </p>
+            <p class="card-title" style="text-align: center">
+              {{ item.singer }}
+            </p>
+            <!-- <p class="card-text" id="money">
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            </p> -->
+            <a href="#" class="btn btn-add-cart" @click.prevent="addProduct(item)">add cart</a>
           </div>
         </div>
       </div>
@@ -254,10 +255,20 @@
       </div> -->
     </div>
   </div>
+
+  <!-- Modal of cart -->
+  <productlist-cartmodal
+    ref="callCartModal"
+    @computProductLength="computProductLength"
+  >
+  </productlist-cartmodal>
 </template>
 
 <script>
 import axios from 'axios';
+import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
+// import Loading from 'vue-loading-overlay';
+// import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   data() {
@@ -348,10 +359,46 @@ export default {
       },
     };
   },
+  components: {
+    ProductlistCartmodal,
+  },
   created() {
     this.checkLogin();
+    this.computProductLength();
   },
   methods: {
+    addProduct(temp = this.temp) {
+      console.log(temp);
+      // this.showLoading();
+      const tempInFunction = temp;
+      tempInFunction.num = 1;
+      console.log(tempInFunction);
+      const cart = {
+        product_id: temp.id,
+        qty: temp.num,
+      };
+      console.log(temp.id);
+      axios
+        .post(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`,
+          { data: cart },
+        )
+        .then(() => {
+          // this.$refs.callCartModal.loadProductsInCart();
+          this.computProductLength();
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+    computProductLength() {
+      axios
+        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          this.productsInCartLength = res.data.data.carts.length;
+          console.log(res);
+        });
+    },
     checkLogin() {
       const cookieToken = document.cookie.replace(
         /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
@@ -365,8 +412,7 @@ export default {
         .post(
           `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
         )
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.getYearList();
           this.productsIn();
         })
@@ -381,7 +427,6 @@ export default {
       axios
         .get(url)
         .then((res) => {
-          console.log(res.data.products);
           this.data = res.data.products.filter((ele) => ele.category === 'CDs');
           // const resAllKey = Object.keys(res.data.products);
           // const resAllValues = Object.values(res.data.products);
@@ -398,7 +443,6 @@ export default {
     },
     getYearList() {
       const nowYear = new Date(Date.now()).getFullYear();
-      console.log(nowYear);
       for (let i = 0; i < 10; i += 1) {
         const yearObject = { name: '', isActive: false };
         const year = nowYear - i;
@@ -435,5 +479,11 @@ a {
     color: black;
     font-weight: bold;
   }
+}
+.btn-add-cart {
+  margin-top: 30px;
+  margin-left: 33%;
+  color: rgb(59, 56, 56);
+  background-color: #ffd20a;
 }
 </style>

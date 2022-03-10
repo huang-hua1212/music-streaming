@@ -374,7 +374,6 @@ export default {
       this.$emit('uploadImage', file);
     },
     uploadImage_byUrl() {
-      console.log(this.tempImgpath);
       this.$emit('uploadImage_byUrl', this.tempImgpath);
     },
     confirmEdit() {

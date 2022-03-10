@@ -745,7 +745,6 @@ export default {
       const formData = new FormData();
       formData.append('form-to-upload', file);
       const url = 'https://all-the-cors.herokuapp.com/https://vue3-course-api.hexschool.io/v2/api/cakeshop/admin/upload';
-      // const originalUrl = `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
       axios
         .post(url, formData, {
           headers: {

@@ -1,8 +1,8 @@
 <template>
 
-<navbar-black></navbar-black>
+<navbar-black ref="callNavModal"></navbar-black>
 
-<router-view/>
+<router-view @computeProductLength = "computeProductLength"/>
 
 </template>
 
@@ -13,7 +13,6 @@ import axios from 'axios';
 export default {
   data() {
     return {
-
     };
   },
   created() {
@@ -21,6 +20,9 @@ export default {
   },
   components: { NavbarBlack },
   methods: {
+    computeProductLength() {
+      this.$refs.callNavModal.addProduct();
+    },
     checkLogin() {
       const cookieToken = document.cookie.replace(
         /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,

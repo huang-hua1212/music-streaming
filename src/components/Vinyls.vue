@@ -349,7 +349,8 @@ export default {
     };
   },
   created() {
-    this.checkLogin();
+    this.getYearList();
+    this.productsIn();
   },
   methods: {
     checkLogin() {

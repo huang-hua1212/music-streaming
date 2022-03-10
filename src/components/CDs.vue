@@ -7,7 +7,6 @@
       class="conditionFilter container"
       style="max-width: 70%; margin-left: 15%; margin-top: 4%; font-size: 17px"
     >
-      <!-- <h5>出版年份(Release Date:)</h5> -->
       <div class="row">
         <div
           class="yearTitle col-auto"
@@ -32,7 +31,6 @@
           }}</a>
         </div>
       </div>
-
       <div class="row mt-3">
         <div
           class="yearTitle col-auto"
@@ -262,16 +260,15 @@
   </div>
 
   <!-- Modal of cart -->
-  <productlist-cartmodal
+  <!-- <productlist-cartmodal
     ref="callCartModal"
-    @computProductLength="computProductLength"
   >
-  </productlist-cartmodal>
+  </productlist-cartmodal> -->
 </template>
 
 <script>
 import axios from 'axios';
-import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
+// import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
 // import Loading from 'vue-loading-overlay';
 // import 'vue-loading-overlay/dist/vue-loading.css';
 
@@ -364,55 +361,50 @@ export default {
       },
     };
   },
-  components: {
-    ProductlistCartmodal,
-  },
+  // components: {
+  //   ProductlistCartmodal,
+  // },
   created() {
-    this.checkLogin();
-    // this.test();
-    // this.computProductLength();
+    this.getYearList();
+    this.productsIn();
+    this.computProductLength();
   },
   methods: {
-    test(id, qty = 1) {
-      const productId = '-MxdTw8U-VJVybjr1Dd6';
-      // const cart = {
-      //   product_id: productId,
-      //   qty: 1,
-      // };
+    // 測試 加入購物車API
+    // test(id, qty = 1) {
+    //   const productId = '-MxdTw8U-VJVybjr1Dd6';
+    //   // const cart = {
+    //   //   product_id: productId,
+    //   //   qty: 1,
+    //   // };
 
-      const data = {
-        product_id: productId,
-        qty,
-      };
-      axios
-        .post(
-          'https://all-the-cors.herokuapp.com/https://vue3-course-api.hexschool.io/v2/api/record-shop/cart',
-          {
-            data: JSON.stringify(data),
-          },
-        )
-        .then(() => {
-          // this.$refs.callCartModal.loadProductsInCart();
-          this.computProductLength();
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    },
+    //   const data = {
+    //     product_id: productId,
+    //     qty,
+    //   };
+    //   axios
+    //     .post(
+    //       'https://all-the-cors.herokuapp.com/https://vue3-course-api.hexschool.io/v2/api/record-shop/cart',
+    //       {
+    //         data: JSON.stringify(data),
+    //       },
+    //     )
+    //     .then(() => {
+    //       // this.$refs.callCartModal.loadProductsInCart();
+    //       this.computProductLength();
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.response);
+    //     });
+    // },
     addProduct(temp) {
       // this.showLoading();
       const tempInFunction = temp;
       tempInFunction.num = 1;
-       const cart = {
-         product_id: temp.id,
-         qty: temp.num,
-       };
-      console.log(JSON.stringify({
-        data: {
-          product_id: temp.id,
-          qty: temp.num,
-        },
-      }));
+      const cart = {
+        product_id: temp.id,
+        qty: temp.num,
+      };
       axios
         .post(
           `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`,
@@ -420,7 +412,8 @@ export default {
             data: cart,
           },
         )
-        .then(() => {
+        .then((res) => {
+          console.log(res);
           // this.$refs.callCartModal.loadProductsInCart();
           this.computProductLength();
         })
@@ -433,7 +426,7 @@ export default {
         .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
           this.productsInCartLength = res.data.data.carts.length;
-          console.log(res);
+          this.$emit('computeProductLength', this.productsInCartLength);
         });
     },
     checkLogin() {
@@ -486,6 +479,7 @@ export default {
         yearObject.name = year;
         this.conditionFilter.yearList.push(yearObject);
       }
+      console.log(this.conditionFilter.yearList);
     },
     activate(array, item) {
       array.forEach((el) => {

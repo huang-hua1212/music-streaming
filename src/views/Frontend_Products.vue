@@ -297,9 +297,8 @@ export default {
         product_id: temp.id,
         qty: temp.num,
       };
-      console.log(JSON.stringify(cart));
       axios
-        .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, JSON.stringify({ data: JSON.stringify(cart) }))
+        .post(`${process.env.VUE_APP_API}/api/cakeshop/cart`, { data: cart })
         .then(() => {
           this.$refs.callCartModal.loadProductsInCart();
           this.computProductLength();

@@ -11,6 +11,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalLabel">購物車</h5>
+          <div style="float: left; margin-left: 2px;">123</div>
           <button
             type="button"
             class="btn-close"
@@ -66,7 +67,7 @@
             type="button"
             class="btn btn-warning"
             @click.prevent="deleteAllProductsInCart"
-            style="margin-left:0px;"
+            style="margin-left: 0px"
           >
             全部刪除
           </button>
@@ -89,14 +90,14 @@
     </div>
   </div>
 
-   <!-- Progress bar -->
-    <div style="position: relative">
-      <loading
-        v-model:active="isLoading"
-        :can-cancel="true"
-        :is-full-page="true"
-      />
-    </div>
+  <!-- Progress bar -->
+  <div style="position: relative">
+    <loading
+      v-model:active="isLoading"
+      :can-cancel="true"
+      :is-full-page="true"
+    />
+  </div>
 </template>
 
 <script>
@@ -131,6 +132,7 @@ export default {
       }, 990);
     },
     loadProductsInCart() {
+      console.log('觸發loadProductsInCart');
       axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`).then((res) => {
         this.productsInCart = res.data.data.carts;
         this.$emit('computProductLength', this.productsInCart.length);
@@ -143,7 +145,10 @@ export default {
         qty: item.qty,
       };
       axios
-        .put(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`, { data: cart })
+        .put(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`,
+          { data: cart },
+        )
         .then(() => {
           this.loadProductsInCart();
         });
@@ -161,9 +166,13 @@ export default {
     },
     deleteProduct(item) {
       this.showLoading();
-      axios.delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`).then(() => {
-        this.loadProductsInCart();
-      });
+      axios
+        .delete(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`,
+        )
+        .then(() => {
+          this.loadProductsInCart();
+        });
     },
     deleteAllProductsInCart() {
       this.showLoading();

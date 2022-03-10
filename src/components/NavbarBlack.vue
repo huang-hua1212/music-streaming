@@ -33,14 +33,14 @@
             "
           >
             <ul class="record-shop-dropdown-ul">
-              <router-link to="/record-shop/">
+              <router-link to="/record-shop/cds">
                 <li style="margin-top: 8px">CDs</li>
               </router-link>
-              <router-link to="/record-shop/Vinyls">
+              <router-link to="/record-shop/vinyls">
                 <li>Vinyls</li></router-link
               >
-              <router-link to="/record-shop/DVDs"> <li>DVDs</li></router-link>
-              <router-link to="/record-shop/Blu-ray_Disc">
+              <router-link to="/record-shop/dvds"> <li>DVDs</li></router-link>
+              <router-link to="/record-shop/blu-ray_disc">
                 <li>Blu-ray Disc</li>
               </router-link>
             </ul>
@@ -104,14 +104,22 @@
     </div>
   </nav>
 
+  <!-- Modal of cart -->
+  <productlist-cartmodal
+    ref="callCartModal"
+    @computProductLength="computProductLength"
+  >
+  </productlist-cartmodal>
+
   <!-- Modal of Login -->
   <div class="modal-content">
     <login-modal ref="callLoginModal"></login-modal>
   </div>
 </template>
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import loginModal from '@/components/LoginModal.vue';
+import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
 
 export default {
   data() {
@@ -122,20 +130,20 @@ export default {
       productsInCartLength: 0,
     };
   },
-  components: { loginModal },
+  components: { loginModal, ProductlistCartmodal },
   methods: {
+    addProduct() {
+      this.$refs.callCartModal.loadProductsInCart();
+    },
     openLoginModal() {
       this.$refs.callLoginModal.openModal();
     },
     openCartModal() {
       this.$refs.callCartModal.openModal();
     },
-    computProductLength() {
-      axios
-        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
-        .then((res) => {
-          this.productsInCartLength = res.data.data.carts.length;
-        });
+    // 由ProductList_CartModal做cart之更動時，向NavBlack的數量做更動
+    computProductLength(totalProducts) {
+      this.productsInCartLength = totalProducts;
     },
   },
 };

@@ -64,31 +64,31 @@ const routes = [
     ],
   },
   {
-    path: '/',
+    path: '/record-shop',
     name: 'RecordShop',
     component: () => import('../views/RecordShop.vue'),
     children: [
       {
         // when /checkout-payment_top/checkout-payment1 is matched
-        path: '', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
+        path: 'CDs', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
         name: 'CDs',
         component: () => import('@/components/CDs.vue'),
       },
       {
         // when /checkout-payment_top/checkout-payment2 is matched
-        path: 'Vinyls', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        path: 'vinyls', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
         name: 'Vinyls',
         component: () => import('@/components/Vinyls.vue'),
       },
       {
         // when /checkout-payment_top/checkout-payment2 is matched
-        path: 'DVDs', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        path: 'dvds', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
         name: 'DVDs',
         component: () => import('@/components/DVDs.vue'),
       },
       {
         // when /checkout-payment_top/checkout-payment2 is matched
-        path: 'Blu-ray_Disc', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        path: 'blu-ray_disc', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
         name: 'Blu-ray_Disc',
         component: () => import('@/components/BluRayDisc.vue'),
       },
@@ -121,17 +121,25 @@ const routes = [
   // 1.404頁面
   // 2.重新導向
   {
+    path: '/',
+    name: 'Test',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue'),
+  },
+  {
     // 1.404頁面
     path: '/:pathMatch(.*)*',
     component: () => import('../views/NotFound.vue'),
   },
-  {
-    // 2.重新導向
-    path: '/About/:pathMatch(.*)*',
-    redirect: {
-      name: 'FrontendProducts',
-    },
-  },
+  // {
+  //   // 2.重新導向
+  //   path: '/About/:pathMatch(.*)*',
+  //   redirect: {
+  //     name: 'FrontendProducts',
+  //   },
+  // },
 ];
 
 const router = createRouter({

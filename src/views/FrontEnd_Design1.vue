@@ -158,6 +158,30 @@
     >
       <h2 style="margin-left: 5px; letter-spacing: 1px">音樂回憶</h2>
     </div>
+
+    <div
+      class="playList-MemorySong ms-auto container"
+      style="
+        border: white solid;
+        height: 260px;
+        margin-top: 4%;
+        padding: 0;
+        overflow: hidden;
+      "
+    >
+      <h2 style="margin-left: 5px; letter-spacing: 1px">最新MV</h2>
+      <div class="carousel-video row" style="border: pink solid; height: 100%">
+        <div
+          class="col-3 perVideo"
+          style="margin-left: 4%; height: auto; border: yellow solid"
+          v-for="item in videoList"
+          :key="item.id"
+        >
+          <img :src="item.thumbnail[0]" />
+        </div>
+      </div>
+    </div>
+
     <div
       class="news"
       style="border: white solid; height: 320px; margin-top: 4%"
@@ -238,6 +262,8 @@ const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n�
 export default {
   data() {
     return {
+      youtubeApiKeyArray: ['AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8'],
+      youtubeApiKey: 'AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8',
       musixmatchAccessToken: '1429bba043518ec0e509edd12f151731',
       musixmatchAccessTokenArray: [
         '1429bba043518ec0e509edd12f151731',
@@ -245,17 +271,17 @@ export default {
       ],
       recordShopDropDown: false,
       isLoading: false,
-      isShowProgressBar: false,
-      isLogin: false,
+      // isShowProgressBar: false,
+      // isLogin: false,
       url: process.env.VUE_APP_API, // 'https://vue3-course-api.hexschool.io/v2',
-      path: 'cakeshop',
+      // path: 'cakeshop',
       productsToSell: [],
       temp: {},
-      productsInCartLength: 0,
-      account: {
-        username: '',
-        password: '',
-      },
+      // productsInCartLength: 0,
+      // account: {
+      //   username: '',
+      //   password: '',
+      // },
       slide: 0,
       sliding: null,
       imagePath: [
@@ -263,24 +289,42 @@ export default {
         'https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
         'https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
       ],
-
       latestSongsList: [],
       dailyLyric: {
         writer: '',
         text: '',
       },
       allChart: [],
+      videoList: [],
     };
   },
   components: { NavbarBlack },
   watch: {},
   created() {
-    this.computProductLength();
+    // 全部皆呼叫axios，但都不具相關性，故可以
     this.getChart();
     // this.getDailyLyric(); // 會耗損API
     this.testGetDailyLyric();
     this.getLatestSongs();
+    this.getLatestVideo();
   },
+  // 測試是否可加入add cart
+  // mounted() {
+  //   const cart = {
+  //     product_id: '-MxgttucXGOaEpbPHrdR',
+  //     qty: 1,
+  //   };
+  //   axios
+  //     .post('https://vue3-course-api.hexschool.io/v2/api/record-shop/cart', {
+  //       data: cart,
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response);
+  //     });
+  // },
   methods: {
     showLoading() {
       this.isLoading = true;
@@ -288,34 +332,6 @@ export default {
         this.isLoading = false;
       }, 970);
     },
-    /// ///////
-    // openLoginModal() {
-    //   this.$refs.callLoginModal.openModal();
-    // },
-    // openCartModal() {
-    //   this.$refs.callCartModal.openModal();
-    // },
-
-    computProductLength() {
-      axios
-        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
-        .then((res) => {
-          this.productsInCartLength = res.data.data.carts.length;
-        });
-    },
-    // login() {
-    //   axios
-    //     .post(`${process.env.VUE_APP_API}/admin/signin`, this.account)
-    //     .then((res) => {
-    //       const { token, expired } = res.data;
-    //       document.cookie = `hexToken=${token}; expired=${new Date(
-    //         expired
-    //       )};path=/`;
-    //       window.location.href = "VueSpringClass_hw2.html";
-    //     });
-    // },
-    // https://cors-anywhere.herokuapp.com/
-
     getKKboxAccessToken() {
       const oauth = {
         grant_type: 'client_credentials',
@@ -476,6 +492,60 @@ export default {
       this.musixmatchAccessTokenArray = [...this.musixmatchAccessTokenArray];
       const tempaAccessToken = this.musixmatchAccessTokenArray[0]; // prefer destruct array!!!
       this.musixmatchAccessToken = tempaAccessToken;
+    },
+    changeYoutubeApiKey() {
+      // 把不能使用的accessToken放最後，使用index 0的accessToken
+      const tempIndex = this.youtubeApiKeyArray.indexOf(this.youtubeApiKey);
+      this.youtubeApiKeyArray.splice(tempIndex, 1);
+      this.youtubeApiKeyArray.push(this.youtubeApiKey);
+      this.youtubeApiKeyArray = [...this.musixmatchAccessTokenArray];
+      const tempaApiKey = this.youtubeApiKeyArray[0]; // prefer destruct array!!!
+      this.youtubeApiKey = tempaApiKey;
+    },
+    // from youtube
+    getLatestVideo() {
+      // API KEY2 : AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc
+      const url = 'https://all-the-cors.herokuapp.com/https://www.googleapis.com/youtube/v3/search';
+      const API_KEY = this.youtubeApiKey; // you must replace API_KEY
+      // curl \
+      //   'https://youtube.googleapis.com/youtube/v3/search?channelId=UCEf_Bc-KVd7onSeifS3py9g&maxResults=25&order=date&key=[YOUR_API_KEY]' \
+      //   --header 'Authorization: Bearer [YOUR_ACCESS_TOKEN]' \
+      //   --header 'Accept: application/json' \
+      //   --compressed
+      axios
+        .get(url, {
+          params: {
+            channelId: 'UCEf_Bc-KVd7onSeifS3py9g',
+            order: 'date',
+            maxResults: 25, // 預設為五筆資料，可以設定1~50
+            key: API_KEY, // 使用 API 只能取得公開的播放清單
+          },
+        })
+        .then((res) => {
+          this.videoList = res.data.items;
+          this.videoList.map((ele) => this.getThumbnail(ele));
+          console.log(this.videoList);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          this.changeYoutubeApiKey();
+          this.getLatestVideo();
+        });
+    },
+    //     youtube 照片
+    //     https://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
+    // https://img.youtube.com/vi/<insert-youtube-video-id-here>/1.jpg
+    // https://img.youtube.com/vi/<insert-youtube-video-id-here>/2.jpg
+    // https://img.youtube.com/vi/<insert-youtube-video-id-here>/3.jpg
+    getThumbnail(objOrigin) {
+      const obj = objOrigin;
+      const url = `https://img.youtube.com/vi/${obj.id.videoId}`;
+      obj.thumbnail = [];
+      for (let i = 0; i < 4; i += 1) {
+        obj.thumbnail.push(`${url}/${i}.jpg`);
+      }
+      return obj;
     },
   },
 };
@@ -654,5 +724,57 @@ export default {
   padding-left: 0;
   padding-right: 0;
 }
-
+// Latest- VideoList
+// Latest- VideoList
+// Latest- VideoList// Latest- VideoList// Latest- VideoList
+.perVideo img {
+  width: 100%;
+  height: auto;
+  padding: 0 0;
+  margin: 0 0;
+}
+.horizontal-grid {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 500px;
+}
+// .horizontal-grid-1,
+// .horizontal-grid-2 {
+//   display: flex;
+// }
+/* // for triangle view of elements */
+// .horizontal-grid-1 {
+//   margin-left: 160px;
+// }
+.elements {
+  // border: 1px solid #e2e2e2;
+  // border-radius: 16px;
+  // padding: 16px;
+  // margin: 32px 0 0 32px;
+  // flex: 0 0 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* // scroll animation keyframes */
+@keyframes scroll {
+  100% {
+    transform: translate(0px);
+  }
+  0% {
+    transform: translate(-1760px);
+  }
+}
+.grid-animation {
+  animation: scroll 10s linear infinite;
+}
+.grid-animation:hover,
+.grid-animation-reverse:hover {
+  animation-play-state: paused;
+}
+.elements:hover {
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2) !important;
+  transform: scale(0.97);
+}
 </style>

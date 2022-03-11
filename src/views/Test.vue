@@ -85,9 +85,6 @@ export default {
   display: flex;
 }
 /* // for triangle view of elements */
-.horizontal-grid-1 {
-  margin-left: 160px;
-}
 .elements {
   border: 1px solid #e2e2e2;
   border-radius: 16px;
@@ -101,17 +98,16 @@ export default {
 /* // scroll animation keyframes */
 @keyframes scroll {
   100% {
-    transform: translate(0px);
+    transform: translate(-1760px);
   }
   0% {
-    transform: translate(-1760px);
+    transform: translate(0px);
   }
 }
 .grid-animation {
   animation: scroll 10s linear infinite;
 }
-.grid-animation:hover,
-.grid-animation-reverse:hover {
+.grid-animation:hover {
   animation-play-state: paused;
 }
 .elements:hover {

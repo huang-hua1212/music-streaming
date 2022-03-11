@@ -264,17 +264,26 @@
     ref="callCartModal"
   >
   </productlist-cartmodal> -->
+  <!-- Progress bar -->
+    <div style="position: relative">
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        :is-full-page="true"
+      />
+    </div>
 </template>
 
 <script>
 import axios from 'axios';
 // import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
-// import Loading from 'vue-loading-overlay';
+import Loading from 'vue-loading-overlay';
 // import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   data() {
     return {
+      isLoading: false,
       data: [],
       conditionIsActive: {},
       conditionFilter: {
@@ -361,15 +370,19 @@ export default {
       },
     };
   },
-  // components: {
-  //   ProductlistCartmodal,
-  // },
+  components: { Loading },
   created() {
     this.getYearList();
     this.productsIn();
     this.computProductLength();
   },
   methods: {
+    showLoading() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 970);
+    },
     // 測試 加入購物車API
     // test(id, qty = 1) {
     //   const productId = '-MxdTw8U-VJVybjr1Dd6';
@@ -398,7 +411,6 @@ export default {
     //     });
     // },
     addProduct(temp) {
-      // this.showLoading();
       const tempInFunction = temp;
       tempInFunction.num = 1;
       const cart = {
@@ -413,6 +425,7 @@ export default {
           },
         )
         .then((res) => {
+          this.showLoading();
           console.log(res);
           // this.$refs.callCartModal.loadProductsInCart();
           this.computProductLength();

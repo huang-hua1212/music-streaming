@@ -51,15 +51,15 @@ const routes = [
     children: [
       {
         // when /checkout-payment_top/checkout-payment1 is matched
-        path: '', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
+        path: 'checkout-payment-designstep2', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
         name: 'CheckoutPaymentDesignStep2',
         component: CheckoutPaymentDesignStep2,
       },
       {
         // when /checkout-payment_top/checkout-payment2 is matched
-        path: 'checkout-payment2', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
-        name: 'CheckoutPayment2',
-        component: CheckoutPayment2,
+        path: 'checkout-payment-designstep1', // 這裡代表 /checkout-payment_top/checkout-payment2 顯示的內容就是這個子元件
+        name: 'CheckoutPaymentDesignStep1',
+        component: () => import(/* webpackChunkName: "about" */ '../components/CheckoutPaymentDesign_Step1.vue'),
       },
     ],
   },

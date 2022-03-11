@@ -104,7 +104,7 @@
 import Modal from 'bootstrap/js/dist/modal';
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
+// import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   props: ['cartId'],
@@ -162,7 +162,7 @@ export default {
     checkout() {
       // 前往結帳頁面
       this.closeModal(); // 記得先關閉Modal
-      this.$router.push('/checkout-payment-top');
+      this.$router.push('/checkout-payment-design/checkout-payment-designstep1');
     },
     deleteProduct(item) {
       this.showLoading();

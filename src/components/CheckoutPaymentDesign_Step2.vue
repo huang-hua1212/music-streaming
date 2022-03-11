@@ -194,6 +194,9 @@ export default {
       data: '',
     };
   },
+  created() {
+    this.$emit('changeCurrentStep', 2);
+  },
   mounted() {
     this.getCity();
   },

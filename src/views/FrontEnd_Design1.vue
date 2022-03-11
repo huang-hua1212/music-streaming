@@ -163,17 +163,28 @@
       class="playList-MemorySong ms-auto container"
       style="
         border: white solid;
-        height: 260px;
+        height: 320px;
         margin-top: 4%;
         padding: 0;
         overflow: hidden;
       "
     >
       <h2 style="margin-left: 5px; letter-spacing: 1px">最新MV</h2>
-      <div class="carousel-video row" style="border: pink solid; height: 100%">
+      <div
+        class="carousel-video grid-animation"
+        style="display: flex; height: 80%"
+      >
         <div
-          class="col-3 perVideo"
-          style="margin-left: 4%; height: auto; border: yellow solid"
+          class="perVideo elements"
+          style="float: left; margin-left: 4%; border: yellow solid"
+          v-for="item in videoList"
+          :key="item.id"
+        >
+          <img :src="item.thumbnail[0]" />
+        </div>
+        <div
+          class="perVideo elements"
+          style="float: left; margin-left: 4%; border: yellow solid"
           v-for="item in videoList"
           :key="item.id"
         >
@@ -229,6 +240,15 @@
     </div>
   </div>
 
+    <!-- Loading Circle -->
+    <div style="position: relative">
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        :is-full-page="true"
+      />
+    </div>
+
   <footer
     class="footer text-white"
     style="
@@ -252,6 +272,7 @@ import qs from 'query-string';
 // import loginModal from '@/components/LoginModal.vue';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import NavbarBlack from '@/components/NavbarBlack.vue';
+// import Loading from 'vue-loading-overlay';
 
 const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n心之所動 且就隨緣去吧\n\n'
   + '這一路上走走停停\n順著少年漂流的痕跡\n邁出車站的前一刻\n竟有些猶豫\n\n不禁笑這近鄉情怯'
@@ -727,49 +748,29 @@ export default {
 // Latest- VideoList
 // Latest- VideoList
 // Latest- VideoList// Latest- VideoList// Latest- VideoList
+.perVideo{
+  flex: 0 0 320px;
+  padding: 0;
+}
 .perVideo img {
   width: 100%;
   height: auto;
   padding: 0 0;
   margin: 0 0;
 }
-.horizontal-grid {
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 500px;
-}
-// .horizontal-grid-1,
-// .horizontal-grid-2 {
-//   display: flex;
-// }
-/* // for triangle view of elements */
-// .horizontal-grid-1 {
-//   margin-left: 160px;
-// }
-.elements {
-  // border: 1px solid #e2e2e2;
-  // border-radius: 16px;
-  // padding: 16px;
-  // margin: 32px 0 0 32px;
-  // flex: 0 0 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 /* // scroll animation keyframes */
 @keyframes scroll {
   100% {
-    transform: translate(0px);
+    transform: translate(-1760px);
   }
   0% {
-    transform: translate(-1760px);
+    transform: translate(0px);
   }
 }
 .grid-animation {
-  animation: scroll 10s linear infinite;
+  animation: scroll 25s linear infinite;
 }
-.grid-animation:hover,
-.grid-animation-reverse:hover {
+.grid-animation:hover {
   animation-play-state: paused;
 }
 .elements:hover {

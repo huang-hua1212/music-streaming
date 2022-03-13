@@ -126,7 +126,7 @@
     class="content container"
     style="
       border: white solid;
-      height: 800px;
+      height: auto;
       padding-top: 40px;
       max-width: 90%;
       margin-left: 5%;

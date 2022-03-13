@@ -70,7 +70,7 @@ const routes = [
     children: [
       {
         // when /checkout-payment_top/checkout-payment1 is matched
-        path: 'CDs', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
+        path: 'cds', // 這裡空白代表 /checkout-payment_top 顯示的內容就是這個子元件
         name: 'CDs',
         component: () => import('@/components/CDs.vue'),
       },
@@ -93,6 +93,11 @@ const routes = [
         component: () => import('@/components/BluRayDisc.vue'),
       },
     ],
+  },
+  {
+    path: '/record-shop-main',
+    name: 'RecordShopMain',
+    component: () => import('../views/RecordShopMain.vue'),
   },
   {
     path: '/backend',

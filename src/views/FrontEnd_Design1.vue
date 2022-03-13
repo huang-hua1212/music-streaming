@@ -72,10 +72,10 @@
   </button>
 
   <!-- 內容Content -->
-  <div class="content text-white" style="margin-bottom: 150px">
+  <div class="content text-white" style="margin-bottom: 0px">
     <div
       class="freshSuggest ms-auto"
-      style="border: white solid; padding-bottom: 2.5%"
+      style="border: white solid;"
     >
       <!-- <button
         class="carousel-control-prev"
@@ -101,8 +101,9 @@
         ></span>
         <span class="visually-hidden">Next</span>
       </button> -->
-
-      <h2 style="letter-spacing: 2px">Latest Songs</h2>
+      <h3 style="margin-left: 10px;
+          margin-top: 15px;
+          margin-bottom: 8px;letter-spacing: 2px">Latest Songs</h3>
       <div
         class="carousel slide freshSuggestCarousel container"
         id="carouselLatestSongs"
@@ -122,7 +123,7 @@
                 class="freshSuggestImg col-sm-3"
                 v-for="it in item"
                 :key="it"
-                style="border: yellow solid"
+                style="border: #212120 solid"
               >
                 <img :src="it.album.images[1].url" />
               </div>
@@ -130,6 +131,25 @@
           </div>
         </div>
       </div>
+      <div class="carousel-indicators">
+      <button
+        type="button"
+        data-bs-target="#carouselLatestSongs"
+        data-bs-slide-to="0"
+        aria-current="true"
+        aria-label="Slide 1"
+        @click = "changeLatestSongCarousel(0)"
+        :class = "{ active: latestSongCarouselIdx === 0}"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselLatestSongs"
+        data-bs-slide-to="1"
+        aria-label="Slide 2"
+        @click = "changeLatestSongCarousel(1)"
+        :class = "{ active: latestSongCarouselIdx === 1}"
+      ></button>
+    </div>
     </div>
 
     <div class="chartList ms-auto container">
@@ -140,7 +160,6 @@
           v-for="item in allChart"
           :key="item"
         >
-          <!-- {{ item.title }} -->
           <router-link :to="`/ChartPlaylist/${item.id}`">
             <div class="overlapPanel">
               <h3>{{ item.title }}</h3>
@@ -152,35 +171,53 @@
       </div>
     </div>
 
-    <div
+    <!-- <div
       class="playList-MemorySong ms-auto container"
       style="border: white solid; height: 320px; margin-top: 4%; padding: 0"
     >
       <h2 style="margin-left: 5px; letter-spacing: 1px">音樂回憶</h2>
-    </div>
+    </div> -->
 
     <div
       class="playList-MemorySong ms-auto container"
       style="
         border: white solid;
-        height: 320px;
+        height: 350px;
         margin-top: 4%;
         padding: 0;
+        padding-bottom: 30px;
         overflow: hidden;
       "
     >
-      <h2 style="margin-left: 5px; letter-spacing: 1px">最新MV</h2>
+      <h3
+        style="
+          margin-left: 10px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+          letter-spacing: 1px;
+        "
+      >
+        Latest MV
+      </h3>
       <div
         class="carousel-video grid-animation"
-        style="display: flex; height: 80%"
+        style="display: flex; height: 80%; margin-bottom: 2%;"
       >
         <div
           class="perVideo elements"
-          style="float: left; margin-left: 4%; border: yellow solid"
+          style="float: left; margin-left: 4%"
           v-for="item in videoList"
           :key="item.id"
         >
-          <img :src="item.thumbnail[0]" />
+          <iframe
+            id="player"
+            type="text/html"
+            width="100%"
+            height="100%"
+            :src="item.iframeSrc"
+            frameborder="0"
+          ></iframe>
+          <!-- <img :src="item.thumbnail[0]" /> -->
         </div>
         <div
           class="perVideo elements"
@@ -188,16 +225,22 @@
           v-for="item in videoList"
           :key="item.id"
         >
-          <img :src="item.thumbnail[0]" />
+          <iframe
+            id="player"
+            type="text/html"
+            width="100%"
+            height="100%"
+            :src="item.iframeSrc"
+            frameborder="0"
+          ></iframe>
+          <!-- <img :src="item.thumbnail[0]" /> -->
         </div>
       </div>
     </div>
-
-    <div
+    <!-- <div
       class="news"
       style="border: white solid; height: 320px; margin-top: 4%"
     >
-      <!-- 參考標語 -->
       <h3>Don't miss</h3>
       <h3>Must Read</h3>
       <h3>Good To Read</h3>
@@ -205,8 +248,7 @@
       <div><buttom type="button">Load More</buttom></div>
       <h4>新聞區</h4>
       <h5>新聞區</h5>
-    </div>
-
+    </div> -->
     <div
       class="randomLyric"
       style="border: white solid; height: auto; margin-top: 4%"
@@ -240,26 +282,37 @@
     </div>
   </div>
 
-    <!-- Loading Circle -->
-    <div style="position: relative">
-      <loading
-        v-model:active="isLoading"
-        :can-cancel="true"
-        :is-full-page="true"
-      />
-    </div>
+  <!-- <iframe id="player" type="text/html" width="100%" height="360"
+  src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
+  frameborder="0"></iframe> -->
+
+  <!-- Loading Circle -->
+  <div style="position: relative">
+    <loading
+      v-model:active="isLoading"
+      :can-cancel="true"
+      :is-full-page="true"
+    />
+  </div>
 
   <footer
     class="footer text-white"
     style="
-      border: white solid;
+      margin-top: 10%;
       margin-bottom: 0;
       width: 100%;
-      height: 250px;
+      height: 120px;
       text-align: center;
+      padding: 2%;
     "
   >
-    <h1>Footer</h1>
+    <img
+      style="width: 100px; height: 40px"
+      src="https://storage.googleapis.com/vue-course-api.appspot.com/record-shop/1647107643454.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=kqRZZ03yHPmRgXpQb6LdfwfDPUU8qcfStNPiCsglNAomY%2BncZLFA9zAp8nGEJFyF8ada8XAWBxcVxV9NmqC3vx8LsQISVkalgAoM3Syzx4u%2BasVYFB7LjqHJ20EevMHd5WWFr2rq4tr4gVl84MpRRC9kCf%2BDpTKGNwoEwmANlVTs1ZARLB1gPz3Skua%2BCpYPVWVj2Em8TAzNMq4%2B7NjpRD%2Fx9Z3PWOxQ20d0GAlg%2BTt7d18BIahDFjzEGru0LHydr5EI%2F%2BFEF8ZzzFx0T2KFKMSp7XtphZEUlPep73T%2BXO9K86HEWIbxE5hy7Q7OOzYpRanRXNcNx%2Bl4FBJDfY4%2B0w%3D%3D"
+    />
+    <div>
+      <h5>Copyright © 2022 hua</h5>
+    </div>
   </footer>
 </template>
 
@@ -283,8 +336,8 @@ const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n�
 export default {
   data() {
     return {
-      youtubeApiKeyArray: ['AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8'],
-      youtubeApiKey: 'AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8',
+      youtubeApiKeyArray: ['AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8', 'AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc'],
+      youtubeApiKey: 'AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc',
       musixmatchAccessToken: '1429bba043518ec0e509edd12f151731',
       musixmatchAccessTokenArray: [
         '1429bba043518ec0e509edd12f151731',
@@ -294,15 +347,8 @@ export default {
       isLoading: false,
       // isShowProgressBar: false,
       // isLogin: false,
-      url: process.env.VUE_APP_API, // 'https://vue3-course-api.hexschool.io/v2',
-      // path: 'cakeshop',
       productsToSell: [],
       temp: {},
-      // productsInCartLength: 0,
-      // account: {
-      //   username: '',
-      //   password: '',
-      // },
       slide: 0,
       sliding: null,
       imagePath: [
@@ -317,6 +363,7 @@ export default {
       },
       allChart: [],
       videoList: [],
+      latestSongCarouselIdx: 0,
     };
   },
   components: { NavbarBlack },
@@ -329,24 +376,10 @@ export default {
     this.getLatestSongs();
     this.getLatestVideo();
   },
-  // 測試是否可加入add cart
-  // mounted() {
-  //   const cart = {
-  //     product_id: '-MxgttucXGOaEpbPHrdR',
-  //     qty: 1,
-  //   };
-  //   axios
-  //     .post('https://vue3-course-api.hexschool.io/v2/api/record-shop/cart', {
-  //       data: cart,
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response);
-  //     });
-  // },
   methods: {
+    changeLatestSongCarousel(it) {
+      this.latestSongCarouselIdx = it;
+    },
     showLoading() {
       this.isLoading = true;
       setTimeout(() => {
@@ -515,6 +548,7 @@ export default {
       this.musixmatchAccessToken = tempaAccessToken;
     },
     changeYoutubeApiKey() {
+      // 呼叫 changeYoutubeApiKey
       // 把不能使用的accessToken放最後，使用index 0的accessToken
       const tempIndex = this.youtubeApiKeyArray.indexOf(this.youtubeApiKey);
       this.youtubeApiKeyArray.splice(tempIndex, 1);
@@ -533,19 +567,21 @@ export default {
       //   --header 'Authorization: Bearer [YOUR_ACCESS_TOKEN]' \
       //   --header 'Accept: application/json' \
       //   --compressed
+      // smtown UCEf_Bc-KVd7onSeifS3py9g
       axios
         .get(url, {
           params: {
-            channelId: 'UCEf_Bc-KVd7onSeifS3py9g',
+            channelId: 'UCweOkPb1wVVH0Q0Tlj4a5Pw',
             order: 'date',
-            maxResults: 25, // 預設為五筆資料，可以設定1~50
+            maxResults: 30, // 預設為五筆資料，可以設定1~50
             key: API_KEY, // 使用 API 只能取得公開的播放清單
           },
         })
         .then((res) => {
-          this.videoList = res.data.items;
-          this.videoList.map((ele) => this.getThumbnail(ele));
-          console.log(this.videoList);
+          this.videoList = res.data.items.slice(9, 20);
+          // this.videoList.map((ele) => this.getThumbnail(ele));
+          this.videoList.map((ele) => this.getIframeSrc(ele));
+          // console.log(this.videoList);
           console.log(res);
         })
         .catch((err) => {
@@ -562,10 +598,20 @@ export default {
     getThumbnail(objOrigin) {
       const obj = objOrigin;
       const url = `https://img.youtube.com/vi/${obj.id.videoId}`;
+      // const url2 = `http://www.youtube.com/embed/${origin.id.videoId}?enablejsapi=1&origin=http://example.com`;
       obj.thumbnail = [];
+      // obj.iframeSrc = [];
       for (let i = 0; i < 4; i += 1) {
         obj.thumbnail.push(`${url}/${i}.jpg`);
+        // obj.iframeSrc.push(url2);
       }
+      return obj;
+    },
+    getIframeSrc(objOrigin) {
+      const obj = objOrigin;
+      const url = `http://www.youtube.com/embed/${obj.id.videoId}?enablejsapi=1&origin=http://example.com`;
+      obj.iframeSrc = '';
+      obj.iframeSrc = url;
       return obj;
     },
   },
@@ -748,7 +794,7 @@ export default {
 // Latest- VideoList
 // Latest- VideoList
 // Latest- VideoList// Latest- VideoList// Latest- VideoList
-.perVideo{
+.perVideo {
   flex: 0 0 320px;
   padding: 0;
 }
@@ -768,7 +814,7 @@ export default {
   }
 }
 .grid-animation {
-  animation: scroll 25s linear infinite;
+  animation: scroll 26s linear infinite;
 }
 .grid-animation:hover {
   animation-play-state: paused;
@@ -777,5 +823,14 @@ export default {
   cursor: pointer;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2) !important;
   transform: scale(0.97);
+}
+.footer {
+  background-color: #000000;
+}
+
+//latest song carousel
+.content  .carousel-indicators{
+  position: relative;
+  margin-top: 20px;
 }
 </style>

@@ -3,11 +3,11 @@
     <div class="collapse navbar-collapse navbar-sty" id="navbarText">
       <ul class="navbar-nav mr-auto col-auto nav-left" style="font-size: 19px">
         <li class="nav-item active">
-          <router-link to="/" class="nav-link" href="#">Home</router-link>
+          <router-link to="/home" class="nav-link" href="#">Home</router-link>
         </li>
         <li class="nav-item">
           <router-link
-            to="/"
+            to="/record-shop-main"
             class="nav-link record-shop"
             href="#"
             @mouseover="
@@ -40,7 +40,7 @@
                 <li>Vinyls</li></router-link
               >
               <router-link to="/record-shop/dvds"> <li>DVDs</li></router-link>
-              <router-link to="/record-shop/blu-ray_disc">
+              <router-link to="/record-shop/blu-ray_discs">
                 <li>Blu-ray Disc</li>
               </router-link>
             </ul>

@@ -29,6 +29,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+// lazy load
+// import VueLazyLoad from 'vue3-lazyload'
 // AXIOS全域導入
 
 // 设置请求参数兼容java参数格式
@@ -55,7 +57,7 @@ configure({
 // 設定預設語系
 setLocale('zh_TW');
 
-const app = createApp(App).use().use(store).use(router);
+const app = createApp(App).use().use(store).use(router); // 新增use(VueLazyLoad)
 
 // 註冊 vee-validate 三個全域元件
 app.component('Form', Form);

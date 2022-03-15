@@ -75,7 +75,7 @@
   <div class="content text-white" style="margin-bottom: 0px">
     <div
       class="freshSuggest ms-auto"
-      style="border: white solid;"
+      style = 'border: white solid;'
     >
       <!-- <button
         class="carousel-control-prev"
@@ -101,9 +101,11 @@
         ></span>
         <span class="visually-hidden">Next</span>
       </button> -->
-      <h3 style="margin-left: 10px;
+      <p style="margin-left:2%;
+      font-size: 5vh;
           margin-top: 15px;
-          margin-bottom: 8px;letter-spacing: 2px">Latest Songs</h3>
+          margin-bottom: 1%;letter-spacing: 2px;
+          font-style:oblique;">Latest Songs</p>
       <div
         class="carousel slide freshSuggestCarousel container"
         id="carouselLatestSongs"
@@ -153,6 +155,12 @@
     </div>
 
     <div class="chartList ms-auto container">
+      <p style="
+          margin-top: 5%;
+          font-size: 5vh;
+          margin-bottom: 1%;
+          letter-spacing: 2px;
+          font-style:oblique;">Hottest Charts</p>
       <div class="row">
         <div
           class="chartImg col-3"
@@ -162,7 +170,7 @@
         >
           <router-link :to="`/ChartPlaylist/${item.id}`">
             <div class="overlapPanel">
-              <h3>{{ item.title }}</h3>
+              <p style = 'font-size: 5vh;'>{{ item.title }}</p>
               <hr />
             </div>
           </router-link>
@@ -189,16 +197,18 @@
         overflow: hidden;
       "
     >
-      <h3
+      <p
         style="
-          margin-left: 10px;
-          margin-top: 15px;
-          margin-bottom: 15px;
+          margin-left: 1%;
+          margin-top: 2%;
+          font-size: 5vh;
+          margin-bottom: 1%;
           letter-spacing: 1px;
+          font-style:oblique;
         "
       >
         Latest MV
-      </h3>
+      </p>
       <div
         class="carousel-video grid-animation"
         style="display: flex; height: 80%; margin-bottom: 2%;"
@@ -221,7 +231,7 @@
         </div>
         <div
           class="perVideo elements"
-          style="float: left; margin-left: 4%; border: yellow solid"
+          style="float: left; margin-left: 4%;"
           v-for="item in videoList"
           :key="item.id"
         >
@@ -258,26 +268,28 @@
       <div
         style="margin-top: 6%; max-width: 80%; margin-left: 10%; width: auto"
       >
-        <h3
+        <p
           style="
             letter-spacing: 4px;
             white-space: pre-wrap;
-            line-height: 60px;
+            line-height: 10vh;
             text-align: center;
+            font-size: 4vh;
           "
           v-html="dailyLyric.text"
-        ></h3>
-        <h5
+        ></p>
+        <p
           style="
             font-style: italic;
             margin-top: 4%;
             margin-left: 15%;
             text-align: right;
             width: 70%;
+            font-size: 3.5vh;
           "
         >
           by {{ dailyLyric.writer }}
-        </h5>
+        </p>
       </div>
     </div>
   </div>
@@ -723,9 +735,9 @@ export default {
   opacity: 0.8;
   justify-content: center;
 }
-.overlapPanel h3 {
+.overlapPanel p {
   margin-left: 5%;
-  margin-top: 68%;
+  margin-top: 55%;
 }
 .overlapPanel hr {
   margin-top: 0;

@@ -136,7 +136,7 @@
             :class="{ 'is-invalid': errors['郵遞區號'] }"
             v-model="addressZip"
           ></Field>
-          <label for="zipcode" class="form__label">郵遞區號</label>
+          <!-- <label for="zipcode" class="form__label">郵遞區號</label> -->
           <error-message
             name="郵遞區號"
             class="invalid-feedback"
@@ -164,6 +164,7 @@
         type="button"
         class="btn btn-warning"
         style="padding-right:2%;padding-left:2%;margin-top:6%;margin-left: 64%; letter-spacing: 2px"
+        @click = 'toCheckPaymentStep3'
       >
         NEXT
       </button>
@@ -172,7 +173,10 @@
 </template>
 <script>
 import axios from 'axios';
+// import mitt from 'mitt';
+import cookie from 'json-cookie';
 
+// const emitter = mitt();
 export default {
   data() {
     return {
@@ -192,6 +196,7 @@ export default {
       },
       memo: '',
       data: '',
+      currentStep: 2,
     };
   },
   created() {
@@ -212,7 +217,6 @@ export default {
     addressZip() {
       for (let j = 0; j < this.addressDistrict.length; j += 1) {
         if (this.addressDistrict[j].name === this.address.district) {
-          console.log(this.addressDistrict[j].zip);
           return this.addressDistrict[j].zip;
         }
       }
@@ -220,6 +224,23 @@ export default {
     },
   },
   methods: {
+    toCheckPaymentStep3() {
+      const buyerProfile = {
+        name: this.name,
+        email: this.email,
+        cellphone: this.cellphone,
+        housephone: this.housephone,
+        address: {
+          city: this.address.city,
+          district: this.address.district,
+          road: this.address.road,
+          zipcode: this.zipcode,
+          fullAddress: this.address.fullAddress,
+        },
+      };
+      cookie.set('json-profile', buyerProfile);
+      this.$router.push('/checkout-payment-design/checkout-payment-designstep3');
+    },
     // getDistricts(districts) {
     //   console.log(districts);
     // },

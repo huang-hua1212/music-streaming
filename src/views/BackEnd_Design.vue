@@ -9,7 +9,7 @@
           <router-link to="/" class="nav-link" href="#">Orders</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/" class="nav-link" href="#">Aticles</router-link>
+          <router-link to="/" class="nav-link" href="#">Articles</router-link>
         </li>
       </ul>
       <ul class="nav-right navbar-nav mr-auto col-auto">
@@ -211,14 +211,14 @@
       title="新增資料"
       data-placement="left"
       href="#"
-      @click="edit({})"
+      @click.prevent="openEditProductModal({aa: 123,})"
     >
       <p style="color: white; margin-bottom: 0%; padding: 10px">Add Product</p>
     </a>
   </div>
 
   <!-- Modal of Edit -->
-  <div class="modal fade" id="modalEdit" tabindex="-1" ref="editmodal">
+  <!-- <div class="modal fade" id="modalEdit" tabindex="-1" ref="editmodal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -418,7 +418,6 @@
 
               <hr />
               <div class="col-11 ms-3 mt-2" id="imgUpload">
-                <!-- <label>照片上傳</label> -->
                 <div class="container">
                   <div class="row">
                     <div class="col-4">
@@ -465,7 +464,6 @@
 
                 <div class="container mt-3">
                   <div class="row">
-                    <!-- <div class='col-auto ms-3 mt-2'> -->
                     <div
                       v-if="temp.imageUrl"
                       class="col-auto ms-3 mt-3 px-0 py-0 rounded"
@@ -523,7 +521,8 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <backend-edit-product-modal ref='callEditModal'></backend-edit-product-modal>
 
   <div
     v-show="isShowProgressBar"
@@ -537,7 +536,7 @@
 </template>
 <script>
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
+import BackendEditProductModal from '@/components/BackendEditProductModal.vue';
 
 export default {
   data() {
@@ -572,9 +571,9 @@ export default {
         },
       ],
       isShowProgressBar: false,
-      modal: {
-        editModal: '',
-      },
+      // modal: {
+      //   editModal: '',
+      // },
       productsPagination: [],
       searchProducts: [],
       currentPage: 1,
@@ -592,36 +591,45 @@ export default {
       yearList: [],
     };
   },
+  components: {
+    BackendEditProductModal,
+  },
   created() {
-    // this.checkLogin();
+    this.getYearList();
+    this.checkLogin();
   },
   mounted() {
-    this.modal.editmodal = new Modal(this.$refs.editmodal);
+    // this.modal.editmodal = new Modal(this.$refs.editmodal);
   },
   methods: {
-    // checkLogin() {
-    //   const cookieToken = document.cookie.replace(
-    //     /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-    //     '$1',
-    //   );
-    //   // axios.defaults.headers.common['Authorization']，作為axios的post參數
-    //   axios.defaults.headers.common.Authorization = cookieToken;
+    checkLogin() {
+      const cookieToken = document.cookie.replace(
+        /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+        '$1',
+      );
+      // axios.defaults.headers.common['Authorization']，作為axios的post參數
+      axios.defaults.headers.common.Authorization = cookieToken;
 
-    //   // 驗證是否登入
-    //   axios
-    //     .post(
-    //       `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
-    //     )
-    //     .then(() => {
-    //       // 為了eslint
-    //       this.productsIn();
-    //       this.getYearList();
-    //     })
-    //     .catch(() => {
-    //       // check錯誤，會回到首頁
-    //       this.$router.push('/');
-    //     });
-    // },
+      // 驗證是否登入
+      axios
+        .post(
+          `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
+        )
+        .then(() => {
+          // 為了eslint
+          this.productsIn();
+          this.getYearList();
+        })
+        .catch(() => {
+          // check錯誤，會回到首頁
+          this.$router.push('/');
+        });
+    },
+    openEditProductModal(temp) {
+      // console.log(this.$refs.callEditModal);
+      this.$refs.callEditModal.editProduct(temp);
+      this.$refs.callEditModal.openModal();
+    },
     getYearList() {
       const nowYear = new Date(Date.now()).getFullYear();
       for (let i = 0; i < 10; i += 1) {
@@ -669,6 +677,7 @@ export default {
           },
         })
         .then((res) => {
+          console.log(res);
           if (!this.temp.imageUrl) {
             this.temp.imageUrl = [];
             this.temp.imageUrl.push(res.data.imageUrl);
@@ -677,7 +686,7 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.dir(err);
         });
     },
     uploadImage_byUrl() {
@@ -715,13 +724,15 @@ export default {
 
         axios
           .post(
-            `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`,
+            `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`,
             { data: this.temp },
           )
           .then(() => {
             // 為了過eslint，never used的res可以先不加上去
             this.temp = {};
             this.productsIn();
+          }).catch((err) => {
+            console.log(err.response);
           });
       } else {
         const id = this.temp.id.trim();

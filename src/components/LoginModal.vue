@@ -160,7 +160,7 @@ export default {
           )};path=/`;
           this.loginSuccess = true;
           // this.$router.push('/backend');
-          this.$router.push('/');
+          this.$router.push('/backend');
         })
         .catch((err) => {
           console.log(err);

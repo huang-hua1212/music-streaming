@@ -21,9 +21,8 @@
                   <input
                     class="form-control"
                     id="productName"
+                    v-model = 'tempData.title'
                     placeholder="商品名稱"
-                    :value="temp.title"
-                    @input="update('title', $event.target.value)"
                   />
                 </div>
                 <div class="form-check form-switch col-3 ms-4 pt-5">
@@ -31,10 +30,9 @@
                     class="form-check-input"
                     true-value="1"
                     false="0"
+                    v-model = 'tempData.is_enabled'
                     type="checkbox"
                     id="isActivated"
-                    :value="temp.is_enabled"
-                    @input="update('is_enabled', $event.target.value)"
                   />
                   <label class="form-check-label" for="isActivated"
                     >是否啟用</label
@@ -48,10 +46,9 @@
                   <br />
                   <select
                     class="form-select"
+                    v-model = 'tempData.category'
                     aria-label="Default select example"
                     id="category"
-                    :value="temp.category"
-                    @input="update('category', $event.target.value)"
                   >
                     <option disabled selected>分類選擇</option>
                     <option value="CDs">CDs</option>
@@ -66,9 +63,8 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    v-model= 'tempData.unit'
                     id="productUnit"
-                    :value="temp.unit"
-                    @input="update('unit', $event.target.value)"
                   >
                     <option disabled selected>單位選擇</option>
                     <option value="張">張</option>
@@ -82,9 +78,8 @@
                   <input
                     type="number"
                     class="form-control"
+                    v-model= 'tempData.origin_price'
                     id="originPrice"
-                    :value="temp.origin_price"
-                    @input="update('origin_price', $event.target.value)"
                   />
                 </div>
                 <div class="col-5 mt-2">
@@ -92,9 +87,8 @@
                   <input
                     type="number"
                     class="form-control"
+                    v-model= 'tempData.price'
                     id="price"
-                    :value="temp.price"
-                    @input="update('price', $event.target.value)"
                   />
                 </div>
               </div>
@@ -104,9 +98,8 @@
                   <input
                     type="number"
                     class="form-control"
+                    v-model= 'tempData.inventory'
                     id="inventory"
-                    :value="temp.inventory"
-                    @input="update('inventory', $event.target.value)"
                   />
                 </div>
               </div>
@@ -118,9 +111,8 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    v-model= 'tempData.gender'
                     id="gender"
-                    :value="temp.gender"
-                    @input="update('gender', $event.target.value)"
                   >
                     <option disabled selected>選擇</option>
                     <option value="Male">Male</option>
@@ -133,9 +125,8 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    v-model= 'tempData.language'
                     id="language"
-                    :value="temp.language"
-                    @input="update('language', $event.target.value)"
                   >
                     <option disabled selected>選擇</option>
                     <option value="華語">華語</option>
@@ -152,9 +143,8 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    v-model= 'tempData.releaseYear'
                     id="releaseYear"
-                    :value="temp.releaseYear"
-                    @input="update('releaseYear', $event.target.value)"
                   >
                     <option disabled selected>選擇</option>
                     <option v-for="it in yearList" :key="it" value="it">
@@ -167,9 +157,8 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    v-model= 'tempData.musicStyle'
                     id="musicStyle"
-                    :value="temp.musicStyle"
-                    @input="update('musicStyle', $event.target.value)"
                   >
                     <option disabled selected>選擇</option>
                     <option value="Indie Collection">Indie Collection</option>
@@ -192,10 +181,9 @@
                 <label for="description">商品描述</label>
                 <textarea
                   id="description"
+                  v-model= 'tempData.description'
                   rows="3"
                   cols="82"
-                  :value="temp.description"
-                  @input="update('description', $event.target.value)"
                 ></textarea>
               </div>
               <div class="col-6 ms-3 mt-2">
@@ -204,8 +192,7 @@
                   id="content"
                   rows="3"
                   cols="82"
-                  :value="temp.content"
-                  @input="update('content', $event.target.value)"
+                  v-model= 'tempData.content'
                 ></textarea>
               </div>
               <br />
@@ -231,7 +218,6 @@
                           id="fileUpload"
                           type="file"
                           ref="files"
-                          @change="uploadImage()"
                         />
                       </label>
                     </div>
@@ -248,7 +234,7 @@
                           class="btn btn-outline-secondary"
                           type="button"
                           id="button-addon2"
-                          @click="uploadImage_byUrl()"
+                          @click='uploadImage_byUrl()'
                         >
                           新增
                         </button>
@@ -259,15 +245,11 @@
 
                 <div class="container mt-3">
                   <div class="row">
-                    <!-- <div class='col-auto ms-3 mt-2'> -->
-                    <!-- v-if="temp.imageUrl" -->
                     <div
-                      v-if="temp.imageUrl"
                       class="col-auto ms-3 mt-3 px-0 py-0 rounded"
                       id="deleteBtn"
                     >
                       <img
-                        :src="temp.imageUrl"
                         style="border: dashed grey; height: 120px; width: auto"
                       />
                       <a class="nav-link" @click="deleteImage(0)">
@@ -278,12 +260,9 @@
                     </div>
                     <div
                       class="col-auto ms-3 mt-3 px-0 py-0 rounded"
-                      v-for="(url, index) in temp.imagesUrl"
                       id="deleteBtn"
-                      :key="index + 1"
                     >
                       <img
-                        v-bind:src="url"
                         style="border: dashed grey; height: 120px; width: auto"
                       />
                       <a class="nav-link" @click="deleteImage(index + 1)">
@@ -328,7 +307,22 @@ export default {
   props: ['temp'],
   data() {
     return {
-      tempData: {},
+      tempData: {
+        title: '',
+        is_enabled: 0,
+        category: '',
+        unit: '',
+        origin_price: 0,
+        price: 0,
+        inventory: 0,
+        gender: '',
+        language: '',
+        releaseYear: '',
+        musicStyle: '',
+        description: '',
+        // imageUrl: [],
+        // imagesUrl: [],
+      },
       tempImgpath: '',
       productsInStock: [],
       modal: {
@@ -341,6 +335,11 @@ export default {
   created() {
     this.getYearList();
     // this.productsIn();
+  },
+  mounted() {
+    this.modal.editModal = new Modal(this.$refs.editmodal);
+    this.checkLogin();
+    // this.modal.editModal.hide();
   },
   computed: {
     local() {
@@ -363,10 +362,33 @@ export default {
         } : this.temp;
     },
   },
-  mounted() {
-    this.modal.editModal = new Modal(this.$refs.editmodal);
-  },
   methods: {
+    editProduct(tempProduct) {
+      console.log(tempProduct);
+    },
+    checkLogin() {
+      const cookieToken = document.cookie.replace(
+        /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+        '$1',
+      );
+      // axios.defaults.headers.common['Authorization']，作為axios的post參數
+      axios.defaults.headers.common.Authorization = cookieToken;
+
+      // 驗證是否登入
+      axios
+        .post(
+          `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
+        )
+        .then(() => {
+          // 為了eslint
+          this.productsIn();
+          this.getYearList();
+        })
+        .catch(() => {
+          // check錯誤，會回到首頁
+          this.$router.push('/');
+        });
+    },
     uploadImage() {
       // 不能上傳太大文件
       const file = this.$refs.files.files[0];
@@ -374,10 +396,26 @@ export default {
       this.$emit('uploadImage', file);
     },
     uploadImage_byUrl() {
-      this.$emit('uploadImage_byUrl', this.tempImgpath);
+      if (!this.tempData.imageUrl) {
+        this.tempData.imageUrl = [];
+        this.tempData.imagesUrl = [];
+        this.tempData.imageUrl.push(this.tempImgpath);
+        this.tempImgpath = '';
+      } else {
+        this.tempData.imagesUrl.push(this.tempImgpath);
+        this.tempImgpath = '';
+      }
     },
     confirmEdit() {
-      this.$emit('confirmedit');
+      // this.$emit('confirmedit');
+      axios.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`, { data: this.temp })
+        .then(() => {
+          this.tempData = {};
+          this.productsIn();
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     },
     getYearList() {
       const now = new Date(Date.now()).getFullYear();
@@ -388,8 +426,6 @@ export default {
     },
     closeModal() {
       this.modal.editModal.hide();
-      // 清空ErrorMessage
-      //   this.$refs.form.resetForm();
     },
     openModal() {
       this.modal.editModal.show();

@@ -64,6 +64,11 @@ const routes = [
         name: 'CheckoutPaymentDesignStep3',
         component: () => import('../components/CheckoutPaymentDesign_Step3.vue'),
       },
+      {
+        path: 'checkout-payment-designstep4',
+        name: 'CheckoutPaymentDesignStep4',
+        component: () => import('../components/CheckoutPaymentDesign_Step4.vue'),
+      },
     ],
   },
   {
@@ -103,7 +108,7 @@ const routes = [
     component: () => import('../views/RecordShopMain.vue'),
   },
   {
-    path: '/backend',
+    path: '/backend_origin',
     name: 'Backend',
     component: Backend,
   },

@@ -16,7 +16,7 @@ export default {
     };
   },
   created() {
-    this.checkLogin();
+    // this.checkLogin();
   },
   components: { NavbarBlack },
   methods: {

@@ -383,33 +383,6 @@ export default {
         this.isLoading = false;
       }, 970);
     },
-    // 測試 加入購物車API
-    // test(id, qty = 1) {
-    //   const productId = '-MxdTw8U-VJVybjr1Dd6';
-    //   // const cart = {
-    //   //   product_id: productId,
-    //   //   qty: 1,
-    //   // };
-
-    //   const data = {
-    //     product_id: productId,
-    //     qty,
-    //   };
-    //   axios
-    //     .post(
-    //       'https://all-the-cors.herokuapp.com/https://vue3-course-api.hexschool.io/v2/api/record-shop/cart',
-    //       {
-    //         data: JSON.stringify(data),
-    //       },
-    //     )
-    //     .then(() => {
-    //       // this.$refs.callCartModal.loadProductsInCart();
-    //       this.computProductLength();
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.response);
-    //     });
-    // },
     addProduct(temp) {
       const tempInFunction = temp;
       tempInFunction.num = 1;
@@ -442,28 +415,28 @@ export default {
           this.$emit('computeProductLength', this.productsInCartLength);
         });
     },
-    checkLogin() {
-      const cookieToken = document.cookie.replace(
-        /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-        '$1',
-      );
-      // axios.defaults.headers.common['Authorization']，作為axios的post參數
-      axios.defaults.headers.common.Authorization = cookieToken;
+    // checkLogin() {
+    //   const cookieToken = document.cookie.replace(
+    //     /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+    //     '$1',
+    //   );
+    //   // axios.defaults.headers.common['Authorization']，作為axios的post參數
+    //   axios.defaults.headers.common.Authorization = cookieToken;
 
-      // 驗證是否登入
-      axios
-        .post(
-          `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
-        )
-        .then(() => {
-          this.getYearList();
-          this.productsIn();
-        })
-        .catch(() => {
-          // check錯誤，會回到首頁
-          this.$router.push('/');
-        });
-    },
+    //   // 驗證是否登入
+    //   axios
+    //     .post(
+    //       `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
+    //     )
+    //     .then(() => {
+    //       this.getYearList();
+    //       this.productsIn();
+    //     })
+    //     .catch(() => {
+    //       // check錯誤，會回到首頁
+    //       this.$router.push('/');
+    //     });
+    // },
     productsIn(page = 1) {
       const changeToPage = page;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${changeToPage}`;

@@ -182,7 +182,8 @@
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p> -->
-            <a href="#" class="btn btn-add-cart">add cart</a>
+            <a href="#" class="btn btn-add-cart"
+            @click.prevent="addProduct(item)">add cart</a>
           </div>
         </div>
       </div>
@@ -353,29 +354,6 @@ export default {
     this.productsIn();
   },
   methods: {
-    checkLogin() {
-      const cookieToken = document.cookie.replace(
-        /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-        '$1',
-      );
-      // axios.defaults.headers.common['Authorization']，作為axios的post參數
-      axios.defaults.headers.common.Authorization = cookieToken;
-
-      // 驗證是否登入
-      axios
-        .post(
-          `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
-        )
-        .then((res) => {
-          console.log(res);
-          this.getYearList();
-          this.productsIn();
-        })
-        .catch(() => {
-          // check錯誤，會回到首頁
-          this.$router.push('/');
-        });
-    },
     productsIn(page = 1) {
       const changeToPage = page;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${changeToPage}`;
@@ -395,6 +373,30 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+        });
+    },
+    addProduct(temp) {
+      const tempInFunction = temp;
+      tempInFunction.num = 1;
+      const cart = {
+        product_id: temp.id,
+        qty: temp.num,
+      };
+      axios
+        .post(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`,
+          {
+            data: cart,
+          },
+        )
+        .then((res) => {
+          this.showLoading();
+          console.log(res);
+          // this.$refs.callCartModal.loadProductsInCart();
+          this.computProductLength();
+        })
+        .catch((err) => {
+          console.log(err.response);
         });
     },
     getYearList() {

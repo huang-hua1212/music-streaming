@@ -136,7 +136,6 @@
             :class="{ 'is-invalid': errors['郵遞區號'] }"
             v-model="addressZip"
           ></Field>
-          <!-- <label for="zipcode" class="form__label">郵遞區號</label> -->
           <error-message
             name="郵遞區號"
             class="invalid-feedback"
@@ -217,6 +216,7 @@ export default {
     addressZip() {
       for (let j = 0; j < this.addressDistrict.length; j += 1) {
         if (this.addressDistrict[j].name === this.address.district) {
+          // this.address.zipcode = this.addressDistrict[j].zip;
           return this.addressDistrict[j].zip;
         }
       }
@@ -234,7 +234,7 @@ export default {
           city: this.address.city,
           district: this.address.district,
           road: this.address.road,
-          zipcode: this.zipcode,
+          zipcode: this.addressZip,
           fullAddress: this.address.fullAddress,
         },
       };
@@ -273,7 +273,7 @@ export default {
         user: {
           name: this.name,
           email: this.email,
-          tel: this.cellphone,
+          tell: this.cellphone,
           address: this.address.fullAddress,
         },
         message: this.memo,

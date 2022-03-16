@@ -349,7 +349,7 @@ export default {
     };
   },
   created() {
-    this.checkLogin();
+    // this.checkLogin();
   },
   methods: {
     checkLogin() {

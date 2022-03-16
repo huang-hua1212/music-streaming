@@ -128,14 +128,14 @@ const routes = [
   // 若使用者輸入的網址為錯誤，或找不到時，有以下兩種解決方法
   // 1.404頁面
   // 2.重新導向
-  {
-    path: '/',
-    name: 'Test',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue'),
-  },
+  // {
+  //   path: '/',
+  //   name: 'Test',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue'),
+  // },
   {
     // 1.404頁面
     path: '/:pathMatch(.*)*',

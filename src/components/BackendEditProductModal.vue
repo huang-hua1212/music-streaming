@@ -10,6 +10,7 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            @click.prevent = 'closeModal'
           ></button>
         </div>
         <div class="modal-body">
@@ -21,7 +22,7 @@
                   <input
                     class="form-control"
                     id="productName"
-                    v-model = 'tempData.title'
+                    v-model="tempData.title"
                     placeholder="商品名稱"
                   />
                 </div>
@@ -30,13 +31,11 @@
                     class="form-check-input"
                     true-value="1"
                     false="0"
-                    v-model = 'tempData.is_enabled'
+                    v-model="tempData.is_enabled"
                     type="checkbox"
                     id="isActivated"
                   />
-                  <label class="form-check-label" for="isActivated"
-                    >是否啟用</label
-                  >
+                  <label class="form-check-label" for="isActivated">是否啟用</label>
                 </div>
               </div>
 
@@ -46,7 +45,7 @@
                   <br />
                   <select
                     class="form-select"
-                    v-model = 'tempData.category'
+                    v-model="tempData.category"
                     aria-label="Default select example"
                     id="category"
                   >
@@ -63,7 +62,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    v-model= 'tempData.unit'
+                    v-model="tempData.unit"
                     id="productUnit"
                   >
                     <option disabled selected>單位選擇</option>
@@ -78,18 +77,13 @@
                   <input
                     type="number"
                     class="form-control"
-                    v-model= 'tempData.origin_price'
+                    v-model="tempData.origin_price"
                     id="originPrice"
                   />
                 </div>
                 <div class="col-5 mt-2">
                   <label for="price">售價</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model= 'tempData.price'
-                    id="price"
-                  />
+                  <input type="number" class="form-control" v-model="tempData.price" id="price" />
                 </div>
               </div>
               <div class="row">
@@ -98,7 +92,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    v-model= 'tempData.inventory'
+                    v-model="tempData.inventory"
                     id="inventory"
                   />
                 </div>
@@ -111,7 +105,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    v-model= 'tempData.gender'
+                    v-model="tempData.gender"
                     id="gender"
                   >
                     <option disabled selected>選擇</option>
@@ -125,7 +119,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    v-model= 'tempData.language'
+                    v-model="tempData.language"
                     id="language"
                   >
                     <option disabled selected>選擇</option>
@@ -143,7 +137,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    v-model= 'tempData.releaseYear'
+                    v-model="tempData.releaseYear"
                     id="releaseYear"
                   >
                     <option disabled selected>選擇</option>
@@ -157,7 +151,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    v-model= 'tempData.musicStyle'
+                    v-model="tempData.musicStyle"
                     id="musicStyle"
                   >
                     <option disabled selected>選擇</option>
@@ -181,19 +175,14 @@
                 <label for="description">商品描述</label>
                 <textarea
                   id="description"
-                  v-model= 'tempData.description'
+                  v-model="tempData.description"
                   rows="3"
                   cols="82"
                 ></textarea>
               </div>
               <div class="col-6 ms-3 mt-2">
                 <label for="content">說明</label>
-                <textarea
-                  id="content"
-                  rows="3"
-                  cols="82"
-                  v-model= 'tempData.content'
-                ></textarea>
+                <textarea id="content" rows="3" cols="82" v-model="tempData.content"></textarea>
               </div>
               <br />
 
@@ -205,20 +194,9 @@
                     <div class="col-4">
                       <label
                         for="fileUpload"
-                        class="
-                          imgUpload
-                          btn btn-primary btn-block
-                          rounded-pill
-                          shadow
-                          px-5
-                        "
-                        ><i class="fa fa-upload mr-2 me-2"></i
-                        ><span class="me-2">照片上傳</span>
-                        <input
-                          id="fileUpload"
-                          type="file"
-                          ref="files"
-                        />
+                        class="imgUpload btn btn-primary btn-block rounded-pill shadow px-5"
+                        ><i class="fa fa-upload mr-2 me-2"></i><span class="me-2">照片上傳</span>
+                        <input id="fileUpload" type="file" ref="files" />
                       </label>
                     </div>
                     <div class="col-7 ms-5 px-0">
@@ -234,7 +212,7 @@
                           class="btn btn-outline-secondary"
                           type="button"
                           id="button-addon2"
-                          @click='uploadImage_byUrl()'
+                          @click="uploadImage_byUrl()"
                         >
                           新增
                         </button>
@@ -246,30 +224,69 @@
                 <div class="container mt-3">
                   <div class="row">
                     <div
-                      class="col-auto ms-3 mt-3 px-0 py-0 rounded"
-                      id="deleteBtn"
+                      v-if="tempData.imageUrl"
+                      class="picture ms-3 mt-3 ps-0 pe-0 pb-0 rounded"
+                      style="
+                        flot: left;
+                        border: yellow solid;
+                        height: 25vh;
+                        width: auto;
+                        position: relative;
+                        overflow: hidden;
+                      "
                     >
-                      <img
-                        style="border: dashed grey; height: 120px; width: auto"
-                      />
-                      <a class="nav-link" @click="deleteImage(0)">
-                        <span>
-                          <i class="fas fa-times-circle"></i>
-                        </span>
+                      <a href="#" style="overflow: hidden" @click.prevent="deleteImage(0)">
+                        <div class="overlapPanel" style="padding: 0">
+                          <div
+                            style="
+                              text-align: center;
+                              margin-top: 10vh;
+                              font-size: 3vh;
+                              color: black;
+                              font-weight: bold;
+                            "
+                          >
+                            DELETE
+                          </div>
+                        </div>
                       </a>
+                      <img
+                        v-bind:src="tempData.imageUrl"
+                        style="border: dashed grey; height: 100%; width: auto"
+                      />
                     </div>
                     <div
-                      class="col-auto ms-3 mt-3 px-0 py-0 rounded"
-                      id="deleteBtn"
+                      class="picture ms-3 mt-3 ps-0 pe-0 pb-0 rounded"
+                      style="
+                        flot: left;
+                        border: yellow solid;
+                        height: 25vh;
+                        width: auto;
+                        position: relative;
+                        overflow: hidden;
+                      "
+                      v-for="(url, index) in tempData.imagesUrl"
+                      :key="index + 1"
                     >
-                      <img
-                        style="border: dashed grey; height: 120px; width: auto"
-                      />
-                      <a class="nav-link" @click="deleteImage(index + 1)">
-                        <span>
-                          <i class="fas fa-times-circle"></i>
-                        </span>
+                      <a href="#" style="overflow: hidden" @click.prevent="deleteImage(index + 1)">
+                        <div class="overlapPanel" style="padding: 0">
+                          <p
+                            style="
+                              text-align: center;
+                              margin-top: 10vh;
+                              font-size: 3vh;
+                              color: black;
+                              font-weight: bold;
+                            "
+                          >
+                            DELETE
+                          </p>
+                        </div>
                       </a>
+                      <img
+                        v-bind:src="url"
+                        style="border: dashed grey; height: 100%; width: auto"
+                      />
                     </div>
                   </div>
                 </div>
@@ -278,13 +295,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            取消
-          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
           <button
             type="button"
             class="btn btn-primary"
@@ -301,7 +312,7 @@
 <script>
 import Modal from 'bootstrap/js/dist/modal';
 import axios from 'axios';
-import { cloneDeep, tap, set } from 'lodash';
+// import { cloneDeep, tap, set } from 'lodash';
 
 export default {
   props: ['temp'],
@@ -359,29 +370,36 @@ export default {
           content: '',
           imageUrl: [],
           imagesUrl: [],
-        } : this.temp;
+        }
+        : this.temp;
     },
   },
   methods: {
     editProduct(tempProduct) {
-      console.log(tempProduct);
+      if (Object.keys(tempProduct).length === 0) {
+        // this.tempData = this.tempData;
+        // console.log('空字串');
+        // console.log(tempProduct);
+      } else {
+        // console.log('非空字串');
+        // console.log(tempProduct);
+        this.tempData = tempProduct;
+      }
+      // console.log(tempProduct);
     },
     checkLogin() {
       const cookieToken = document.cookie.replace(
         /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1',
       );
-      // axios.defaults.headers.common['Authorization']，作為axios的post參數
       axios.defaults.headers.common.Authorization = cookieToken;
 
       // 驗證是否登入
       axios
-        .post(
-          `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
-        )
+        .post(`https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`)
         .then(() => {
           // 為了eslint
-          this.productsIn();
+          // this.productsIn();
           this.getYearList();
         })
         .catch(() => {
@@ -392,7 +410,6 @@ export default {
     uploadImage() {
       // 不能上傳太大文件
       const file = this.$refs.files.files[0];
-
       this.$emit('uploadImage', file);
     },
     uploadImage_byUrl() {
@@ -407,15 +424,59 @@ export default {
       }
     },
     confirmEdit() {
-      // this.$emit('confirmedit');
-      axios.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`, { data: this.temp })
-        .then(() => {
-          this.tempData = {};
-          this.productsIn();
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
+      if (!this.tempData.id) {
+        axios
+          .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`, {
+            data: this.temp,
+          })
+          .then(() => {
+            this.tempData = {
+              title: '',
+              is_enabled: 0,
+              category: '',
+              unit: '',
+              origin_price: 0,
+              price: 0,
+              inventory: 0,
+              gender: '',
+              language: '',
+              releaseYear: '',
+              musicStyle: '',
+              description: '',
+            };
+            // this.productsIn();
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      } else {
+        // console.log(this.tempData);
+        axios
+          .put(
+            `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempData.id}`,
+            { data: this.tempData },
+          )
+          .then(() => {
+            this.tempData = {
+              title: '',
+              is_enabled: 0,
+              category: '',
+              unit: '',
+              origin_price: 0,
+              price: 0,
+              inventory: 0,
+              gender: '',
+              language: '',
+              releaseYear: '',
+              musicStyle: '',
+              description: '',
+            };
+            // this.productsIn();
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      }
     },
     getYearList() {
       const now = new Date(Date.now()).getFullYear();
@@ -426,28 +487,30 @@ export default {
     },
     closeModal() {
       this.modal.editModal.hide();
+      this.$emit('productsIn');
     },
     openModal() {
       this.modal.editModal.show();
     },
     productsIn() {
       axios
-        .get(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`,
-        )
+        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/all`)
         .then((res) => {
           const temp = res.data.products;
           this.productsInStock = temp;
         });
     },
-    update(key, value) {
-      this.$emit(
-        'editmodal',
-        tap(cloneDeep(this.local), (v) => set(v, key, value)),
-      );
-    },
     deleteImage(index) {
-      this.$emit('deleteImage', index);
+      if (index === 0) {
+        this.tempData.imageUrl = '';
+        const [aa] = this.tempData.imagesUrl[0];
+        this.tempData.imageUrl = aa;
+        this.tempData.imagesUrl.splice(0, 1);
+        this.$emit('productsIn');
+      } else {
+        this.tempData.imagesUrl.splice(index - 1, 1);
+        this.$emit('productsIn');
+      }
     },
   },
 };
@@ -465,4 +528,24 @@ export default {
   opacity: 0;
 }
 /* PROPS V-MODEL https://simonkollross.de/posts/vuejs-using-v-model-with-objects-for-custom-components */
+/* 刪除照片之按鈕 */
+.overlapPanel {
+  display: none;
+  z-index: 100;
+  position: absolute;
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  opacity: 0.3;
+  justify-content: center;
+  overflow: hidden;
+}
+/* .picture {
+  border-radius: 3px;
+  width: 30%;
+} */
+.picture:hover .overlapPanel {
+  display: block;
+}
 </style>

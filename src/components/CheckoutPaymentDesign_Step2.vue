@@ -2,7 +2,7 @@
   <div
     style="width: 60%; margin-left: 20%; margin-top: 8%; border: white dashed"
   >
-    <Form v-slot="{ errors }" id="form" @submit="toCheckoutPayment2">
+    <Form v-slot="{ errors }" id="form" @submit="toCheckPaymentStep3">
       <!-- 姓名 -->
       <div class="form__group field" style="margin-left: 23%">
         <Field
@@ -163,7 +163,7 @@
         type="button"
         class="btn btn-warning"
         style="padding-right:2%;padding-left:2%;margin-top:6%;margin-left: 64%; letter-spacing: 2px"
-        @click = 'toCheckPaymentStep3'
+        @click.prevent = 'toCheckPaymentStep3'
       >
         NEXT
       </button>
@@ -241,11 +241,8 @@ export default {
       cookie.set('json-profile', buyerProfile);
       this.$router.push('/checkout-payment-design/checkout-payment-designstep3');
     },
-    // getDistricts(districts) {
-    //   console.log(districts);
-    // },
     getCity() {
-      const addressApi = 'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json';
+      const addressApi = 'https://all-the-cors.herokuapp.com/https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json';
       axios
         .get(addressApi)
         .then((res) => {
@@ -267,26 +264,6 @@ export default {
     telephone2_verify(value) {
       const telephoneRules = /\d{4}-?\d{4}$/;
       return telephoneRules.test(value) ? true : '市話號碼未符合規則';
-    },
-    toCheckoutPayment2() {
-      const data = {
-        user: {
-          name: this.name,
-          email: this.email,
-          tell: this.cellphone,
-          address: this.address.fullAddress,
-        },
-        message: this.memo,
-      };
-      axios
-        .post(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`,
-          { data },
-        )
-        .then(() => {
-          this.data = data;
-          this.$router.push('/checkout-payment-top/checkout-payment2');
-        });
     },
   },
 };

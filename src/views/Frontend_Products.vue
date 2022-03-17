@@ -259,10 +259,6 @@ export default {
         username: '',
         password: '',
       },
-      // test: process.env.VUE_APP_API,
-      // productsInCart: [],
-      // cartId: '',
-
     };
   },
   components: { loginModal, ProductlistCartmodal, Loading },

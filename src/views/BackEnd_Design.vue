@@ -54,28 +54,28 @@
   <div class="content" style="margin-top: 5%">
     <div class="container" style="border: white solid; max-width: 75%">
       <div class="row">
-        <div class="col-3" style="border: pink solid"></div>
+        <div class="col-3"></div>
         <div
+          id = 'products-table'
           class="col-9 text-white container"
-          style="border: yellow solid; padding: 0"
         >
-          <ul style="border: white solid">
-            <li class="row" style="margin: 0; border: yellow dashed">
-              <h5 class="col-3" style="border: pink solid; margin-top: 1%">
+          <ul>
+            <li class="row" style="margin: 0;">
+              <h5 class="col-3" style="margin-top: 1%">
                 Product Name
               </h5>
-              <h5 class="col-2" style="border: pink solid; margin-top: 1%">
+              <h5 class="col-2" style="margin-top: 1%">
                 Price
               </h5>
-              <h5 class="col-2" style="border: pink solid; margin-top: 1%">
+              <h5 class="col-2" style="margin-top: 1%">
                 In Stock
               </h5>
-              <h5 class="col-2" style="border: pink solid; margin-top: 1%">
+              <h5 class="col-2" style="margin-top: 1%">
                 Available
               </h5>
               <h5
                 class="col-3"
-                style="border: pink solid; margin-x: 0; margin-top: 1%"
+                style="margin-x: 0; margin-top: 1%"
               >
                 More
               </h5>
@@ -84,70 +84,67 @@
               class="row"
               style="
                 margin: 0;
-                border: yellow dashed;
-                padding-top: 13px;
-                padding-bottom: 13px;
+                padding-top: 2vh;
+                padding-bottom: 2vh;
               "
+              v-for = 'item in productsInStock'
+              :key = 'item.id'
             >
               <p
                 class="col-3 m-0"
                 style="
-                font-size:14px;
-                  border: pink solid;
-                  padding-bottom: 12px;
-                  padding-top: 12px;.
-
+                  font-size:2.5vh;
+                  padding-bottom: 1.5vh;
+                  padding-top: 2.5vh;.
                 "
               >
-                AC/DC: LIVE AC/DC: LIVEAC/DC: LIVEAC/DC: LIVE
+                {{item.title}}
               </p>
               <p
                 class="col-2 m-0"
                 style="
-                font-size:14px;
-                border: pink solid;
-                  padding-bottom: 12px;
-                  padding-top: 12px;.
+                font-size: 2.2vh;
+                  padding-bottom: 1.5vh;
+                  padding-top: 2.5vh;
                   "
               >
-                Price
+                {{item.price}}
               </p>
               <p
                 class="col-2 m-0"
                 style="
-                font-size:14px;
-                border: pink solid;
-                  padding-bottom: 12px;
-                  padding-top: 12px;.
+                font-size:2.5vh;
+                  padding-bottom: 1.5vh;
+                  padding-top: 2.5vh;
                  "
               >
-                In Stock
+                {{item.inventory}}
               </p>
               <p
                 class="col-2 m-0"
                 style="
-                font-size:14px;
-                border: pink solid;
-                  padding-bottom: 12px;
-                  padding-top: 12px;.
+                font-size: 2.5vh;
+                  padding-bottom: 1.5vh;
+                  padding-top: 2.5vh;
                   "
               >
-                Available
+                {{item.is_enabled === '1' ? '啟用' : '未啟用'}}
               </p>
               <div
                 class="col-3 row m-0"
-                style="border: pink solid;
-                  padding-bottom: 12px;
-                  padding-top: 12px;.
+                style="
+                  padding-bottom: 1.5vh;
+                  padding-top: 2.5vh;
                   margin-top: 0;
                  "
               >
+              <!-- 編輯Product -->
                 <div
                   class="col-3 p-0"
                   style="
                     background-color: #ffeb0b;
-                    border-radius: 3px;
-                    margin-left: 20%;
+                    border-radius: 0.5vh;
+                    margin-left: 0vh;
                     height: 48px;
                   "
                 >
@@ -156,10 +153,11 @@
                     class="delete"
                     style="
                       color: black;
-                      margin-left: 28%;
-                      margin-top: 20%;
-                      margin-bottom: 20%;
+                      margin-left: 26%;
+                      margin-top: 25%;
+                      margin-bottom: 15%;
                     "
+                    @click.prevent = 'openEditProductModal(item)'
                   >
                     <font-awesome-icon
                       icon="pen-to-square"
@@ -168,6 +166,7 @@
                     />
                   </a>
                 </div>
+              <!-- 刪除Product -->
                 <div
                   class="col-3 p-0"
                   style="
@@ -211,7 +210,7 @@
       title="新增資料"
       data-placement="left"
       href="#"
-      @click.prevent="openEditProductModal({aa: 123,})"
+      @click.prevent="openEditProductModal({})"
     >
       <p style="color: white; margin-bottom: 0%; padding: 10px">Add Product</p>
     </a>
@@ -522,7 +521,8 @@
       </div>
     </div>
   </div> -->
-  <backend-edit-product-modal ref='callEditModal'></backend-edit-product-modal>
+  <backend-edit-product-modal ref='callEditModal'
+  @productsIn = 'productsIn'></backend-edit-product-modal>
 
   <div
     v-show="isShowProgressBar"
@@ -571,9 +571,6 @@ export default {
         },
       ],
       isShowProgressBar: false,
-      // modal: {
-      //   editModal: '',
-      // },
       productsPagination: [],
       searchProducts: [],
       currentPage: 1,
@@ -607,7 +604,6 @@ export default {
         /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1',
       );
-      // axios.defaults.headers.common['Authorization']，作為axios的post參數
       axios.defaults.headers.common.Authorization = cookieToken;
 
       // 驗證是否登入
@@ -653,7 +649,9 @@ export default {
       const url = `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products?page=${changeToPage}`;
       axios
         .get(url)
-        .then(() => {})
+        .then((res) => {
+          this.productsInStock = res.data.products;
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -677,7 +675,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           if (!this.temp.imageUrl) {
             this.temp.imageUrl = [];
             this.temp.imageUrl.push(res.data.imageUrl);
@@ -842,5 +839,8 @@ a {
 }
 .delete .fa-2x {
   font-size: 1.5em;
+}
+#products-table li{
+  border-bottom: white solid;
 }
 </style>

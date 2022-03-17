@@ -2,10 +2,9 @@
   <!-- 依據自己上傳的資料進行網頁之撰寫
 因此語言需自己設定 -->
   <div class="text-white">
-    <!-- <div><h5>Condition Filter:</h5></div> -->
     <div
       class="conditionFilter container"
-      style="max-width: 70%; margin-left: 15%; margin-top: 4%; font-size: 17px"
+      style="max-width: 70%; margin-left: 15%; margin-top: 4%; font-size: 2.3vh"
     >
       <div class="row">
         <div
@@ -13,7 +12,7 @@
           style="
             min-width: 12%;
             text-align: center;
-            margin-right: 15px;
+            margin-right: 1.8vh;
             border: yellow solid;
           "
         >
@@ -37,7 +36,7 @@
           style="
             min-width: 12%;
             text-align: center;
-            margin-right: 15px;
+            margin-right: 1.8vh;
             border: yellow solid;
           "
         >
@@ -61,7 +60,7 @@
       <div class="row mt-3">
         <div
           class="yearTitle col-auto"
-          style="max-width: 15%; margin-right: 15px; border: yellow solid"
+          style="max-width: 15%; margin-right: 2.2vh; border: yellow solid"
         >
           Release Year
         </div>
@@ -85,7 +84,7 @@
           style="
             min-width: 12%;
             text-align: center;
-            margin-right: 15px;
+            margin-right: 2.2vh;
             border: yellow solid;
           "
         >
@@ -133,29 +132,6 @@
     "
   >
     <div class="row recordDisplay" style="height: auto">
-      <!-- <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div> -->
-
       <div
         class="col-auto"
         style="
@@ -177,10 +153,6 @@
             <p class="card-title" style="text-align: center">
               {{ item.singer }}
             </p>
-            <!-- <p class="card-text" id="money">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p> -->
             <a
               href="#"
               class="btn btn-add-cart"
@@ -190,80 +162,8 @@
           </div>
         </div>
       </div>
-      <!-- <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
-
-  <!-- Modal of cart -->
-  <!-- <productlist-cartmodal
-    ref="callCartModal"
-  >
-  </productlist-cartmodal> -->
   <!-- Progress bar -->
     <div style="position: relative">
       <loading
@@ -276,9 +176,7 @@
 
 <script>
 import axios from 'axios';
-// import ProductlistCartmodal from '@/components/ProductList_CartModal.vue';
 import Loading from 'vue-loading-overlay';
-// import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   data() {
@@ -383,6 +281,18 @@ export default {
         this.isLoading = false;
       }, 970);
     },
+    productsIn(page = 1) {
+      const changeToPage = page;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${changeToPage}`;
+      axios
+        .get(url)
+        .then((res) => {
+          this.data = res.data.products.filter((ele) => ele.category === 'CDs');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     addProduct(temp) {
       const tempInFunction = temp;
       tempInFunction.num = 1;
@@ -415,48 +325,6 @@ export default {
           this.$emit('computeProductLength', this.productsInCartLength);
         });
     },
-    // checkLogin() {
-    //   const cookieToken = document.cookie.replace(
-    //     /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-    //     '$1',
-    //   );
-    //   // axios.defaults.headers.common['Authorization']，作為axios的post參數
-    //   axios.defaults.headers.common.Authorization = cookieToken;
-
-    //   // 驗證是否登入
-    //   axios
-    //     .post(
-    //       `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
-    //     )
-    //     .then(() => {
-    //       this.getYearList();
-    //       this.productsIn();
-    //     })
-    //     .catch(() => {
-    //       // check錯誤，會回到首頁
-    //       this.$router.push('/');
-    //     });
-    // },
-    productsIn(page = 1) {
-      const changeToPage = page;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${changeToPage}`;
-      axios
-        .get(url)
-        .then((res) => {
-          this.data = res.data.products.filter((ele) => ele.category === 'CDs');
-          // const resAllKey = Object.keys(res.data.products);
-          // const resAllValues = Object.values(res.data.products);
-          // const arrRes = resAllValues;
-          // for (let i = 0; i < resAllKey.length; i += 1) {
-          //   arrRes.id = resAllKey[i];
-          // }
-          // this.data = arrRes;
-          // console.log(this.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
     getYearList() {
       const nowYear = new Date(Date.now()).getFullYear();
       for (let i = 0; i < 10; i += 1) {
@@ -465,7 +333,7 @@ export default {
         yearObject.name = year;
         this.conditionFilter.yearList.push(yearObject);
       }
-      console.log(this.conditionFilter.yearList);
+      // console.log(this.conditionFilter.yearList);
     },
     activate(array, item) {
       array.forEach((el) => {

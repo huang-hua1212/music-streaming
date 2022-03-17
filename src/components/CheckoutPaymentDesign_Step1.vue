@@ -95,12 +95,19 @@ export default {
     };
   },
   created() {
+    // test
+    this.handleCompanyName();
     this.loadProductsInCart();
   },
   mounted() {
     this.$emit('changeCurrentStep', 1);
   },
   methods: {
+    handleCompanyName() {
+      console.log('呼叫handleCompanyName');
+      this.$store.commit('addCompanyId', '西打藍');
+      console.log(this.$store.state.companyId);
+    },
     toCheckPaymentStep2() {
       // 跳到步驟二
       this.$router.push('/checkout-payment-design/checkout-payment-designstep2');

@@ -91,7 +91,8 @@
       padding-right: 2%;
       padding-left: 2%;
       margin-top: 6%;
-      margin-left: 64%;
+      margin-bottom: 5%;
+      margin-left: 69%;
       letter-spacing: 2px;
     "
     @click="completeOrder"

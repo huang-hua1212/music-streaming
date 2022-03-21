@@ -39,7 +39,7 @@
             </td>
           </tr>
         </tbody>
-        <div class = 'table-btn' style = 'border-top: none; margin-right: -158%;'>
+        <div class = 'table-btn' style = 'border-top: none; margin-right: -100%;'>
         <button
           type="button"
           class="btn btn-primary"
@@ -54,6 +54,7 @@
           class="btn btn-warning"
           @click.prevent="deleteAllProductsInCart"
           style="float: right; margin-top: 2%;
+          margin-right: 2%;
           font-size: 2vh"
         >
           全部刪除

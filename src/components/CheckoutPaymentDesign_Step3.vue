@@ -147,7 +147,7 @@ export default {
         { data })
         .then(() => {
           // 回到首頁
-          this.$router.push('/home');
+          this.$router.push('/');
         }).catch((err) => {
           console.log(err.response);
         });

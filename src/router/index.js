@@ -15,7 +15,7 @@ const routes = [
     component: () => import('../views/BackEnd_Design.vue'),
   },
   {
-    path: '/home',
+    path: '/',
     name: 'FrontEndDesign1',
     component: () => import('../views/Home.vue'),
   },

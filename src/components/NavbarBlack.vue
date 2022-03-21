@@ -3,7 +3,7 @@
     <div class="collapse navbar-collapse navbar-sty" id="navbarText">
       <ul class="navbar-nav mr-auto col-auto nav-left" style="font-size: 19px">
         <li class="nav-item active">
-          <router-link to="/home" class="nav-link" href="#">Home</router-link>
+          <router-link to="/" class="nav-link" href="#">Home</router-link>
         </li>
         <li class="nav-item">
           <router-link

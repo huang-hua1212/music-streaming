@@ -73,10 +73,7 @@
 
   <!-- 內容Content -->
   <div class="content text-white" style="margin-bottom: 0px">
-    <div
-      class="freshSuggest ms-auto"
-      style = 'border: white solid;'
-    >
+    <div class="freshSuggest ms-auto" style="border: white solid">
       <!-- <button
         class="carousel-control-prev"
         type="button"
@@ -101,11 +98,18 @@
         ></span>
         <span class="visually-hidden">Next</span>
       </button> -->
-      <p style="margin-left:2%;
-      font-size: 5vh;
+      <p
+        style="
+          margin-left: 2%;
+          font-size: 5vh;
           margin-top: 15px;
-          margin-bottom: 1%;letter-spacing: 2px;
-          font-style:oblique;">Latest Songs</p>
+          margin-bottom: 1%;
+          letter-spacing: 2px;
+          font-style: oblique;
+        "
+      >
+        Latest Songs
+      </p>
       <div
         class="carousel slide freshSuggestCarousel container"
         id="carouselLatestSongs"
@@ -122,11 +126,24 @@
           >
             <div class="mt-3 freshSuggestImgs row">
               <div
-                class="freshSuggestImg col-sm-3"
+                class="freshSuggestImg picture col-sm-3 p-0"
                 v-for="it in item"
                 :key="it"
-                style="border: #212120 solid"
+                style="border: #212120 solid;
+                max-height: 100%;
+            max-width: 100%;
+            position: relative;
+            padding-right: 0;"
               >
+                <a href="#" @click.prevent="playSong(it)">
+                  <div class="overlapPanelLatestSong" style="padding: 0">
+                    <font-awesome-icon
+                      icon="play"
+                      size="3x"
+                      style="margin-left: 42%; margin-top: 38%"
+                    />
+                  </div>
+                </a>
                 <img :src="it.album.images[1].url" />
               </div>
             </div>
@@ -134,33 +151,38 @@
         </div>
       </div>
       <div class="carousel-indicators">
-      <button
-        type="button"
-        data-bs-target="#carouselLatestSongs"
-        data-bs-slide-to="0"
-        aria-current="true"
-        aria-label="Slide 1"
-        @click = "changeLatestSongCarousel(0)"
-        :class = "{ active: latestSongCarouselIdx === 0}"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselLatestSongs"
-        data-bs-slide-to="1"
-        aria-label="Slide 2"
-        @click = "changeLatestSongCarousel(1)"
-        :class = "{ active: latestSongCarouselIdx === 1}"
-      ></button>
-    </div>
+        <button
+          type="button"
+          data-bs-target="#carouselLatestSongs"
+          data-bs-slide-to="0"
+          aria-current="true"
+          aria-label="Slide 1"
+          @click="changeLatestSongCarousel(0)"
+          :class="{ active: latestSongCarouselIdx === 0 }"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselLatestSongs"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+          @click="changeLatestSongCarousel(1)"
+          :class="{ active: latestSongCarouselIdx === 1 }"
+        ></button>
+      </div>
     </div>
 
     <div class="chartList ms-auto container">
-      <p style="
+      <p
+        style="
           margin-top: 5%;
           font-size: 5vh;
           margin-bottom: 1%;
           letter-spacing: 2px;
-          font-style:oblique;">Hottest Charts</p>
+          font-style: oblique;
+        "
+      >
+        Hottest Charts
+      </p>
       <div class="row">
         <div
           class="chartImg col-3"
@@ -170,7 +192,7 @@
         >
           <router-link :to="`/ChartPlaylist/${item.id}`">
             <div class="overlapPanel">
-              <p style = 'font-size: 5vh;'>{{ item.title }}</p>
+              <p style="font-size: 5vh">{{ item.title }}</p>
               <hr />
             </div>
           </router-link>
@@ -204,18 +226,18 @@
           font-size: 5vh;
           margin-bottom: 1%;
           letter-spacing: 1px;
-          font-style:oblique;
+          font-style: oblique;
         "
       >
         Latest MV
       </p>
       <div
         class="carousel-video grid-animation"
-        style="display: flex; height: 80%; margin-bottom: 2%;"
+        style="display: flex; height: 80%; margin-bottom: 2%"
       >
         <div
           class="perVideo elements"
-          style="float: left; margin-left: 4%"
+          style="float: left; margin-left: 4%; margin-bottom: 2%"
           v-for="item in videoList"
           :key="item.id"
         >
@@ -231,7 +253,7 @@
         </div>
         <div
           class="perVideo elements"
-          style="float: left; margin-left: 4%;"
+          style="float: left; margin-left: 4%; margin-bottom: 2%"
           v-for="item in videoList"
           :key="item.id"
         >
@@ -307,6 +329,14 @@
     />
   </div>
 
+<div class="currentPlaySong" style="position: fixed; bottom: 0; width: 100%">
+    <iframe
+      :src="currentSongHref"
+      allow="autoplay"
+      style="height: 100px; width: 100%"
+    />
+  </div>
+
   <footer
     class="footer text-white"
     style="
@@ -348,7 +378,11 @@ const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n�
 export default {
   data() {
     return {
-      youtubeApiKeyArray: ['AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8', 'AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc'],
+      currentSongHref: '',
+      youtubeApiKeyArray: [
+        'AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8',
+        'AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc',
+      ],
       youtubeApiKey: 'AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc',
       musixmatchAccessToken: '1429bba043518ec0e509edd12f151731',
       musixmatchAccessTokenArray: [
@@ -386,7 +420,7 @@ export default {
     // this.getDailyLyric(); // 會耗損API
     this.testGetDailyLyric();
     this.getLatestSongs();
-    this.getLatestVideo();
+    // this.getLatestVideo();
   },
   methods: {
     changeLatestSongCarousel(it) {
@@ -626,6 +660,13 @@ export default {
       obj.iframeSrc = url;
       return obj;
     },
+    playSong(item) {
+      this.currentSong = { ...item };
+      console.log(this.currentSong);
+      const songHref = `https://widget.kkbox.com/v1/?id=${this.currentSong.id}&type=song&terr=TW&lang=TW&autoplay=true`;
+      this.currentSongHref = songHref;
+      console.log(this.currentSongHref);
+    },
   },
 };
 </script>
@@ -823,8 +864,34 @@ export default {
 }
 
 //latest song carousel
-.content  .carousel-indicators{
+.content .carousel-indicators {
   position: relative;
   margin-top: 20px;
+}
+// latest song effect
+.overlapPanelLatestSong {
+  display: none;
+  z-index: 100;
+  position: absolute;
+  left: 0;
+  // right: 0;
+  height: 100%;
+  width: auto;
+  overflow: hidden;
+  width: 100%;
+  background-color: #0e0c0c;
+  opacity: 0.5;
+  justify-content: center;
+}
+.picture a:hover,
+picture a {
+  color: white;
+}
+.picture {
+  overflow: hidden;
+  border-radius: 3px;
+}
+.picture:hover .overlapPanelLatestSong {
+  display: block;
 }
 </style>

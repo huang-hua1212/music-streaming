@@ -16,6 +16,10 @@
             text-align: center;
             margin-right: 15px;
             border: yellow solid;
+            border-radius: 5px;
+            background: yellow;
+            color: black;
+            font-weight: bold;
           "
         >
           Gender
@@ -41,6 +45,10 @@
             text-align: center;
             margin-right: 15px;
             border: yellow solid;
+            border-radius: 5px;
+            background: yellow;
+            color: black;
+            font-weight: bold;
           "
         >
           Language
@@ -63,13 +71,19 @@
       <div class="row mt-3">
         <div
           class="yearTitle col-auto"
-          style="max-width: 15%; margin-right: 15px; border: yellow solid"
+          style="max-width: 15%;
+          margin-right: 15px;
+          border: yellow solid;
+          border-radius: 5px;
+            background: yellow;
+            color: black;
+            font-weight: bold;"
         >
           Release Year
         </div>
         <div
           class="yearItem col-auto"
-          style="margin-left: 1%"
+          style="margin-left: 0.75%;"
           :class="{ active: item.isActive }"
           v-for="item in conditionFilter.yearList"
           :key="item"
@@ -89,6 +103,11 @@
             text-align: center;
             margin-right: 15px;
             border: yellow solid;
+            border-radius: 5px;
+            background: yellow;
+            color: black;
+            font-weight: bold;
+            max-height: 3.6vh;
           "
         >
           Genre
@@ -119,10 +138,16 @@
       border-bottom: yellow dashed;
       max-width: 90%;
       margin-left: 5%;
+      margin-top:2%;
       font-size: 19px;
     "
   >
-    <span><p style="padding-left: 20px; margin-bottom: 0">123456</p></span>
+    <span><p style="padding-left: 20px; margin-bottom: 0;
+     font-style: italic;">
+      {{conditionIsActive.gender}}
+      /{{conditionIsActive.language}}
+      /{{conditionIsActive.year}}
+      /{{conditionIsActive.genre}}</p></span>
   </div>
   <div
     class="content container"
@@ -263,7 +288,12 @@ export default {
   data() {
     return {
       data: [],
-      conditionIsActive: {},
+     conditionIsActive: {
+        year: "All",
+        genre: "All",
+        gender: "All",
+        language: "All",
+      },
       conditionFilter: {
         yearList: [{ name: 'All', isActive: true }],
         genre: [
@@ -407,12 +437,13 @@ export default {
       }
     },
     activate(array, item) {
+      this.conditionIsActive[arryName] = item.name;
       array.forEach((el) => {
         const ele = el;
-        if (ele.name === item.name) {
-          ele.isActive = true;
+        if (el.name === item.name) {
+          el.isActive = true;
         } else {
-          ele.isActive = false;
+          el.isActive = false;
         }
       });
     },

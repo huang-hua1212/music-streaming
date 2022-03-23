@@ -39,10 +39,10 @@
               <router-link to="/record-shop/vinyls">
                 <li>Vinyls</li></router-link
               >
-              <router-link to="/record-shop/dvds"> <li>DVDs</li></router-link>
-              <router-link to="/record-shop/blu-ray_discs">
+              <!-- <router-link to="/record-shop/dvds"> <li>DVDs</li></router-link> -->
+              <!-- <router-link to="/record-shop/blu-ray_discs">
                 <li>Blu-ray Disc</li>
-              </router-link>
+              </router-link> -->
             </ul>
           </transition>
         </li>

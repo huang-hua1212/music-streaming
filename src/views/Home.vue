@@ -73,7 +73,8 @@
 
   <!-- 內容Content -->
   <div class="content text-white" style="margin-bottom: 0px">
-    <div class="freshSuggest ms-auto" style="border: white solid">
+    <div class="freshSuggest ms-auto" style="border: white solid;
+    border-radius: 10px;">
       <!-- <button
         class="carousel-control-prev"
         type="button"
@@ -102,7 +103,7 @@
         style="
           margin-left: 2%;
           font-size: 5vh;
-          margin-top: 15px;
+          margin-top: 1%;
           margin-bottom: 1%;
           letter-spacing: 2px;
           font-style: oblique;
@@ -222,7 +223,7 @@
       <p
         style="
           margin-left: 1%;
-          margin-top: 2%;
+          margin-top: 1%;
           font-size: 5vh;
           margin-bottom: 1%;
           letter-spacing: 1px;
@@ -420,7 +421,7 @@ export default {
     // this.getDailyLyric(); // 會耗損API
     this.testGetDailyLyric();
     this.getLatestSongs();
-    // this.getLatestVideo();
+    this.getLatestVideo();
   },
   methods: {
     changeLatestSongCarousel(it) {

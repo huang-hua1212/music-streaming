@@ -31,7 +31,7 @@
           v-for="item in conditionFilter.gender"
           :key="item"
         >
-          <a href="#" @click.prevent="activate(conditionFilter.gender, item)">{{
+          <a href="#" @click.prevent="activate('gender', conditionFilter.gender, item)">{{
             item.name
           }}</a>
         </div>
@@ -62,7 +62,7 @@
         >
           <a
             href="#"
-            @click.prevent="activate(conditionFilter.language, item)"
+            @click.prevent="activate('language', conditionFilter.language, item)"
             >{{ item.name }}</a
           >
         </div>
@@ -90,7 +90,7 @@
         >
           <a
             href="#"
-            @click.prevent="activate(conditionFilter.yearList, item)"
+            @click.prevent="activate('year', conditionFilter.yearList, item)"
             >{{ item.name }}</a
           >
         </div>
@@ -122,7 +122,7 @@
           >
             <a
               href="#"
-              @click.prevent="activate(conditionFilter.genre, item)"
+              @click.prevent="activate('genre', conditionFilter.genre, item)"
               >{{ item.name }}</a
             >
           </div>
@@ -288,11 +288,11 @@ export default {
   data() {
     return {
       data: [],
-     conditionIsActive: {
-        year: "All",
-        genre: "All",
-        gender: "All",
-        language: "All",
+      conditionIsActive: {
+        year: 'All',
+        genre: 'All',
+        gender: 'All',
+        language: 'All',
       },
       conditionFilter: {
         yearList: [{ name: 'All', isActive: true }],
@@ -436,14 +436,14 @@ export default {
         this.conditionFilter.yearList.push(yearObject);
       }
     },
-    activate(array, item) {
+    activate(arryName, array, item) {
       this.conditionIsActive[arryName] = item.name;
       array.forEach((el) => {
         const ele = el;
-        if (el.name === item.name) {
-          el.isActive = true;
+        if (ele.name === item.name) {
+          ele.isActive = true;
         } else {
-          el.isActive = false;
+          ele.isActive = false;
         }
       });
     },

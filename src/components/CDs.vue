@@ -209,10 +209,10 @@ export default {
       isLoading: false,
       data: [],
       conditionIsActive: {
-        year: "All",
-        genre: "All",
-        gender: "All",
-        language: "All",
+        year: 'All',
+        genre: 'All',
+        gender: 'All',
+        language: 'All',
       },
       conditionFilter: {
         yearList: [{ name: 'All', isActive: true }],
@@ -369,10 +369,11 @@ export default {
       this.conditionIsActive[arryName] = item.name;
 
       array.forEach((el) => {
-        if (el.name === item.name) {
-          el.isActive = true;
+        const ele = el;
+        if (ele.name === item.name) {
+          ele.isActive = true;
         } else {
-          el.isActive = false;
+          ele.isActive = false;
         }
       });
     },

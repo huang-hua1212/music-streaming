@@ -192,10 +192,16 @@
               </div>
             </li>
           </ul>
+
+          <back-pagination :pages = 'totalPages'
+          @changePage = 'productsIn'
+          style = 'margin-top: 7%;'></back-pagination>
         </div>
       </div>
     </div>
+     
   </div>
+
   <div
     style="
       background-color: #8d8c91;
@@ -215,6 +221,8 @@
       <p style="color: white; margin-bottom: 0%; padding: 10px">Add Product</p>
     </a>
   </div>
+
+ 
 
   <!-- Modal of Edit -->
   <!-- <div class="modal fade" id="modalEdit" tabindex="-1" ref="editmodal">
@@ -531,12 +539,13 @@
     role="status"
     style="position: absolute; z-index: 100; bottom: 5%; right: 5%"
   >
-    <!-- <span class="sr-only">Loading...</span> -->
   </div>
+
 </template>
 <script>
 import axios from 'axios';
 import BackendEditProductModal from '@/components/BackendEditProductModal.vue';
+import BackPagination from '@/components/BackPagination.vue';
 
 export default {
   data() {
@@ -573,10 +582,8 @@ export default {
       isShowProgressBar: false,
       productsPagination: [],
       searchProducts: [],
-      currentPage: 1,
-      elePerPage: 2,
-      totalPages: 0,
       searchValue: '',
+      totalPages: 0,
       sort: {
         id: 1,
         sortBy: 'origin_price',
@@ -589,7 +596,7 @@ export default {
     };
   },
   components: {
-    BackendEditProductModal,
+    BackendEditProductModal, BackPagination,
   },
   created() {
     this.getYearList();
@@ -645,11 +652,13 @@ export default {
         });
     },
     productsIn(page = 1) {
+      // console.log("觸發productsIn");
       const changeToPage = page;
       const url = `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products?page=${changeToPage}`;
       axios
         .get(url)
         .then((res) => {
+          this.totalPages = res.data.pagination.total_pages;
           this.productsInStock = res.data.products;
         })
         .catch((err) => {
@@ -744,8 +753,6 @@ export default {
               if (item.id === id) {
                 this.productsInStock[i] = this.temp;
                 this.temp = {};
-                // 每次更新完要做一次分頁
-                // this.pagination(this.elePerPage, this.currentPage);
               }
             });
           });

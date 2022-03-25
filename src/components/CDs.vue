@@ -131,7 +131,7 @@
   <div
     style="
       color: yellow;
-      border-bottom: #f5e949 solid;
+      border-bottom: yellow solid;
       max-width: 90%;
       margin-top:2%;
       margin-left: 5%;

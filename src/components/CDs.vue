@@ -339,10 +339,8 @@ export default {
             data: cart,
           },
         )
-        .then((res) => {
+        .then(() => {
           this.showLoading();
-          console.log(res);
-          // this.$refs.callCartModal.loadProductsInCart();
           this.computProductLength();
         })
         .catch((err) => {

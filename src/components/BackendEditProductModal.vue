@@ -141,7 +141,7 @@
                     id="releaseYear"
                   >
                     <option disabled selected>選擇</option>
-                    <option v-for="it in yearList" :key="it" value="it">
+                    <option v-for="it in yearList" :key="it" :value="it">
                       {{ it }}
                     </option>
                   </select>

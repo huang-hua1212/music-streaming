@@ -135,11 +135,11 @@
   <div
     style="
       color: yellow;
-      border-bottom: yellow dashed;
+      border-bottom: yellow solid;
       max-width: 90%;
       margin-left: 5%;
       margin-top:2%;
-      font-size: 19px;
+      font-size: 3.2vh;
     "
   >
     <span><p style="padding-left: 20px; margin-bottom: 0;
@@ -152,9 +152,8 @@
   <div
     class="content container"
     style="
-      border: white solid;
-      height: 800px;
-      padding-top: 40px;
+      height: auto;
+      padding-top: 1.3vh;
       max-width: 90%;
       margin-left: 5%;
     "
@@ -452,7 +451,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .card {
-  background-color: #191919;
+  background-color: #2c2b2b;
   color: white;
 }
 a {

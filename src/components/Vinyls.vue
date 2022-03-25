@@ -131,7 +131,7 @@
   <div
     style="
       color: yellow;
-      border-bottom: yellow dashed;
+      border-bottom: yellow solid;
       max-width: 90%;
       margin-top:2%;
       margin-left: 5%;
@@ -148,9 +148,8 @@
   <div
     class="content container"
     style="
-      border: white solid;
-      height: 800px;
-      padding-top: 40px;
+      height: auto;
+      padding-top: 1.3vh;
       max-width: 90%;
       margin-left: 5%;
     "
@@ -165,7 +164,6 @@
           width: 22%;
           margin-left: 2.4%;
           margin-bottom: 2%;
-          border: pink solid;
           padding: 0;
         "
         v-for="item in data"
@@ -377,7 +375,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .card {
-  background-color: #191919;
+  background-color: #2c2b2b;
   color: white;
 }
 a {

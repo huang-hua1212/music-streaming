@@ -10,13 +10,15 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">購物車</h5>
+          <h5 class="modal-title" id="modalLabel"
+          style = 'margin-left: 1.2vh;'>Shopping Cart</h5>
           <div style="float: left; margin-left: 2px;"></div>
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            style = 'margin-right: 1vh;'
           ></button>
         </div>
         <div class="modal-body">

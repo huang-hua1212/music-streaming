@@ -26,6 +26,7 @@ export default {
           console.dir(err);
         });
     },
+
   },
 };
 </script>

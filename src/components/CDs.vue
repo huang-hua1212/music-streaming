@@ -170,7 +170,9 @@
         :key="item.id"
       >
         <div class="card" style="width: 100%">
+          <router-link :to = "`/record-shop/cds/${item.id}`">
           <img class="card-img-top" alt="Card image cap" :src="item.imageUrl" />
+          </router-link>
           <div class="card-body">
             <p class="card-title" style="text-align: center; font-size: 17px">
               {{ item.title }}

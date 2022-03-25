@@ -114,7 +114,6 @@ export default {
       this.$router.push('/checkout-payment-design/checkout-payment-designstep2');
     },
     loadProductsInCart() {
-      console.log('觸發loadProductsInCart');
       axios.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`).then((res) => {
         this.productsInCart = res.data.data.carts;
         this.$emit('computProductLength', this.productsInCart.length);

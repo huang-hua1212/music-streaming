@@ -154,7 +154,6 @@ export default {
         });
     },
     loadProductsInCart() {
-      console.log('觸發loadProductsInCart');
       axios
         .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {

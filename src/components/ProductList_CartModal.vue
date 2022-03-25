@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalLabel">購物車</h5>
-          <div style="float: left; margin-left: 2px;">123</div>
+          <div style="float: left; margin-left: 2px;"></div>
           <button
             type="button"
             class="btn-close"
@@ -62,7 +62,7 @@
             </table>
           </div>
         </div>
-        <div class="modal-footer" style="margin-right: 9vh;
+        <div class="modal-footer" style="margin-right: 6.5vh;
         margin-bottom: 2vh;">
           <button
             type="button"

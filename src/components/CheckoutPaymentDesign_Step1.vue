@@ -39,7 +39,7 @@
             </td>
           </tr>
         </tbody>
-        <div class = 'table-btn' style = 'border-top: none; margin-right: -100%;'>
+        <div class = 'table-btn' style = 'border-top: none; margin-right: -74.2vh;'>
         <button
           type="button"
           class="btn btn-primary"

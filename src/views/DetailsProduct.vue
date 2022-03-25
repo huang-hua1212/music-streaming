@@ -4,18 +4,19 @@
 </template>
 <script>
 import NavbarBlack from '@/components/NavbarBlack.vue';
-import axios from "axios";
+import axios from 'axios';
+
 export default {
   data() {
     return {};
   },
   components: { NavbarBlack },
-  created(){
-      this.contentIn();
+  created() {
+    this.contentIn();
   },
   methods: {
     contentIn() {
-      const id = this.$route.params.id;
+      const { id } = this.$route.params;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`;
       axios
         .get(url)

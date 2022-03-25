@@ -21,7 +21,7 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <table class="table">
+            <table class="table" style= 'text-align:center;'>
               <thead>
                 <th>產品名稱</th>
                 <th>售價</th>
@@ -62,7 +62,8 @@
             </table>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="margin-right: 9vh;
+        margin-bottom: 2vh;">
           <button
             type="button"
             class="btn btn-warning"
@@ -186,3 +187,8 @@ export default {
   },
 };
 </script>
+<style lang= 'scss' scoped>
+.modal-footer{
+  border-top: white;
+}
+</style>

@@ -199,7 +199,7 @@
         </div>
       </div>
     </div>
-     
+
   </div>
 
   <div
@@ -221,8 +221,6 @@
       <p style="color: white; margin-bottom: 0%; padding: 10px">Add Product</p>
     </a>
   </div>
-
- 
 
   <!-- Modal of Edit -->
   <!-- <div class="modal fade" id="modalEdit" tabindex="-1" ref="editmodal">

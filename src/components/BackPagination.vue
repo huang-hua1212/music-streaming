@@ -40,7 +40,6 @@ export default {
         // this.$emit("事件名稱","想傳遞的數據");
         this.$emit('changePage', whichPage);
       }
-  
     },
   },
 };
@@ -55,4 +54,3 @@ export default {
     color: #fff;
 }
 </style>
-

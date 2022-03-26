@@ -317,6 +317,7 @@ export default {
       axios
         .get(url)
         .then((res) => {
+          console.log(res);
           this.data = res.data.products.filter((ele) => ele.category === 'CDs');
         })
         .catch((err) => {

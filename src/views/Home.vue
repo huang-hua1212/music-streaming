@@ -19,29 +19,9 @@
     id="carouselExampleIndicators"
     class="carousel slide"
     data-bs-ride="carousel"
+    style = 'max-height: 550px;
+    overflow-y: hidden;'
   >
-    <!-- <div class="carousel-indicators">
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="0"
-        class="active"
-        aria-current="true"
-        aria-label="Slide 1"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="1"
-        aria-label="Slide 2"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="2"
-        aria-label="Slide 3"
-      ></button>
-    </div> -->
     <div class="carousel-inner nav-carousel-inner">
       <div
         class="carousel-item"
@@ -54,7 +34,7 @@
           :style="{ backgroundImage: `url(${item})` }"
           style="border: black solid"
         ></div>
-        <img :src="item" class="d-block" alt="" />
+        <img style = 'margin-top:-600px;' :src="item" class="d-block" alt="" />
       </div>
     </div>
   </div>
@@ -399,9 +379,15 @@ export default {
       slide: 0,
       sliding: null,
       imagePath: [
-        'https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80',
-        'https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-        'https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        'https://i.kfs.io/album/global/121656465,1v1/fit/500x500.jpg',
+        'https://i.kfs.io/album/global/142042170,2v1/fit/700x700.jpg',
+        'https://i.kfs.io/album/global/162300536,0v1/fit/700x700.jpg',
+        'https://i.kfs.io/album/global/161307573,1v1/fit/700x700.jpg',
+        // 'https://i.kfs.io/album/tw/1550023,0v1/fit/500x500.jpg',
+        // 'https://i.kfs.io/artist/global/20635,0v13/fit/500x500.jpg',
+        // 'https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80',
+        // 'https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+        // 'https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
       ],
       latestSongsList: [],
       dailyLyric: {
@@ -421,7 +407,7 @@ export default {
     // this.getDailyLyric(); // 會耗損API
     this.testGetDailyLyric();
     this.getLatestSongs();
-    this.getLatestVideo();
+    // this.getLatestVideo();
   },
   methods: {
     changeLatestSongCarousel(it) {
@@ -680,7 +666,7 @@ export default {
 .nav-carousel-inner > .carousel-item img,
 .nav-carousel-inner > .carousel-item a img {
   width: 75%;
-  max-height: 550px;
+  // max-height: 550px;
   margin: auto;
 }
 .navCarousel-prev-icon {

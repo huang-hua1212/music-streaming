@@ -2,8 +2,8 @@
   <navbar-black></navbar-black>
   <div class="pageCover text-white" style="height: 510px">
     <div class="page-cover-overlap text-black">
-      <p class="chinese">華語單曲日榜</p>
-      <h3>Top Mandarin Daily Singles Chart</h3>
+      <p class="chinese">{{ this.chartName.zhName }}日榜</p>
+      <h3>Top {{ this.chartName.engName }} Daily Singles Chart</h3>
     </div>
     <!-- PAGE COVER -->
     <section class="holder">
@@ -31,12 +31,7 @@
   </div>
   <div
     class="text-white row"
-    style="
-      height: 800px;
-      margin-top: 6%;
-      max-width: 75%;
-      margin-left: 12.5%;
-    "
+    style="height: 800px; margin-top: 6%; max-width: 75%; margin-left: 12.5%"
   >
     <div
       class="col-6 container"
@@ -230,6 +225,10 @@ import NavbarBlack from '@/components/NavbarBlack.vue';
 export default {
   data() {
     return {
+      chartName: {
+        zhName: '',
+        engName: '',
+      },
       chartId: 'DZrC8m29ciOFY2JAm3',
       chartPlayList: [],
       currentSong: {},
@@ -251,10 +250,56 @@ export default {
   components: {
     NavbarBlack,
   },
+  created() {
+    this.checkChartName();
+  },
   mounted() {
     this.getChartPlayList();
   },
   methods: {
+    checkChartName() {
+      if (this.$route.params.id === '8snDCwJb8xOOgFOERe') {
+        this.chartName = {
+          zhName: '華語單曲',
+          engName: 'Mandarin',
+        };
+      } else if (this.$route.params.id === 'Wrgc182ds0x6oPmugQ') {
+        this.chartName = {
+          zhName: '西洋單曲',
+          engName: 'Western',
+        };
+      } else if (this.$route.params.id === '9-4KezVIL47LK1ouQF') {
+        this.chartName = {
+          zhName: '韓語單曲',
+          engName: 'Korean',
+        };
+      } else if (this.$route.params.id === 'L_iYsbFoZyv3L4ph1x') {
+        this.chartName = {
+          zhName: '日語單曲',
+          engName: 'Japanese',
+        };
+      } else if (this.$route.params.id === 'KoIj7Jv-60uHIPR4fu') {
+        this.chartName = {
+          zhName: '台語單曲',
+          engName: 'Taiwanese',
+        };
+      } else if (this.$route.params.id === 'WsitHuOyp1sPmQcp7q') {
+        this.chartName = {
+          zhName: '粵語單曲',
+          engName: 'Cantonese',
+        };
+      } else if (this.$route.params.id === 'X_vv9jMkGc_agEth5a') {
+        this.chartName = {
+          zhName: '華語新歌',
+          engName: 'Latest Mandarin',
+        };
+      } else if (this.$route.params.id === '5ZzfirRUMpn-zOtlmn') {
+        this.chartName = {
+          zhName: '西洋新歌',
+          engName: 'Latest Western',
+        };
+      }
+    },
     getChartPlayList() {
       this.chartId = this.$route.params.id;
       const chartPath = `https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/new-hits-playlists/${this.chartId}/tracks?territory=TW&limit=30`;

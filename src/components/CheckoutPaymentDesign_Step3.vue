@@ -94,6 +94,7 @@
       margin-bottom: 5%;
       margin-left: 69%;
       letter-spacing: 2px;
+      font-weight: bold;
     "
     @click="completeOrder"
   >

@@ -1,7 +1,7 @@
 <template>
 <!-- fff -->
   <div
-    style="width: 60%; margin-left: 20%; margin-top: 8%; border: white dashed"
+    style="width: 70%; margin-left: 16%; margin-top: 8%;"
   >
     <Form v-slot="{ errors }" id="form" @submit="toCheckPaymentStep3">
       <!-- 姓名 -->
@@ -159,29 +159,45 @@
         <label for="address" class="form__label">Address</label>
         <error-message name="地址" class="invalid-feedback"></error-message>
       </div>
-
+      <div class= 'row' style= "width: 50%;margin-left: 23%;
+      margin-top: 5vh;">
+      <div class = 'col-auto'
+      style = 'color: red;letter-spacing: 0.5vh;
+      margin-left: 35vh;
+      line-height: 5vh;'
+      v-show= '!isPass'><p>資料未填寫完全</p></div>
+      <div class ='col-auto'
+      style = "margin-left: auto;
+      margin-left: 57vh;position: fixed;">
       <button
         type="button"
         class="btn btn-warning"
-        style="padding-right:2%;padding-left:2%;margin-top:6%;margin-left: 64%; letter-spacing: 2px"
+        style="
+        padding-top:25%;
+        padding-bottom:25%;
+        padding-right:50%;
+        padding-left:50%;
+        font-weight: bold;
+        letter-spacing: 2px;"
         @click.prevent = 'toCheckPaymentStep3'
       >
         NEXT
       </button>
+      </div>
+      </div>
     </Form>
   </div>
 </template>
 <script>
 import axios from 'axios';
-// import mitt from 'mitt';
 import cookie from 'json-cookie';
 
-// const emitter = mitt();
 export default {
   data() {
     return {
       addressSelectOptionsCities: [],
       addressSelectOptionsDistricts: [],
+      isPass: true,
       step: 2,
       name: '',
       email: '',
@@ -190,7 +206,6 @@ export default {
       address: {
         city: '',
         district: '',
-        road: '',
         zipcode: '',
         fullAddress: '',
       },
@@ -225,22 +240,33 @@ export default {
     },
   },
   methods: {
+    checkContent(buyerProfile) {
+      const profileArray = Object.values(buyerProfile);
+      this.isPass = true;
+      profileArray.forEach((it) => {
+        if (it === '') {
+          this.isPass = false;
+        }
+      });
+    },
     toCheckPaymentStep3() {
       const buyerProfile = {
-        name: this.name,
-        email: this.email,
-        cellphone: this.cellphone,
-        housephone: this.housephone,
+        name: this.name.trim(),
+        email: this.email.trim(),
+        cellphone: this.cellphone.trim(),
         address: {
-          city: this.address.city,
-          district: this.address.district,
-          road: this.address.road,
+          city: this.address.city.trim(),
+          district: this.address.district.trim(),
+          // road: this.address.road,
           zipcode: this.addressZip,
-          fullAddress: this.address.fullAddress,
+          fullAddress: this.address.fullAddress.trim(),
         },
       };
-      cookie.set('json-profile', buyerProfile);
-      this.$router.push('/checkout-payment-design/checkout-payment-designstep3');
+      this.checkContent(buyerProfile);
+      if (this.isPass) {
+        cookie.set('json-profile', buyerProfile);
+        this.$router.push('/checkout-payment-design/checkout-payment-designstep3');
+      }
     },
     getCity() {
       const addressApi = 'https://all-the-cors.herokuapp.com/https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json';

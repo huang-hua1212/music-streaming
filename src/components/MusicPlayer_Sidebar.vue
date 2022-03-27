@@ -19,13 +19,9 @@
         v-for="item in songs"
         :key="item"
         v-show="songs"
-        style = 'margin-top: 5vh;padding-right: 1vh;
-        padding-left: 5vh;'
+        style="margin-top: 5vh; padding-right: 1vh; padding-left: 5vh"
       >
-        <div
-          class="col-auto"
-          style="width: 8vh; height: 8vh; padding: 0"
-        >
+        <div class="col-auto" style="width: 8vh; height: 8vh; padding: 0">
           <img
             style="width: 100%; height: 100%"
             :src="item.album.images[1].url"
@@ -46,21 +42,29 @@
       <a href="#">Services</a>
       <a href="#">Clients</a>
       <a href="#">Contact</a> -->
-        <div
-          class="col-auto"
-          style="color: white; font-size: 3vh;padding: 0"
-        >
-          <a href="#" style="padding-right: 1.2vh">
+        <div class="col-auto" style="color: white; font-size: 3vh; padding: 0">
+          <a
+            role="button"
+            style="padding-right: 1.2vh"
+            @click.prevent="openDropDown(item)"
+          >
             <font-awesome-icon icon="ellipsis" size="1x" />
           </a>
         </div>
-
+        <!-- temp -->
+        <div
+          v-show="openDropdownId === item.id"
+          :class="{ openDropdown: openDropdownId === item.id }"
+        >
+          <ul class="ul-toggle" style="list-style-type: none">
+            <li>從播放列表中刪除</li>
+          </ul>
+        </div>
         <div
           class="col-auto"
-          style="color: white;padding: 0;
-          padding-top: 1.2vh;"
+          style="color: white; padding: 0; padding-top: 1.2vh"
         >
-          <a href="#" style="padding-right: 0.5vh; font-size: 2.6vh; ">☰</a>
+          <a href="#" style="padding-right: 0.5vh; font-size: 2.6vh">☰</a>
         </div>
       </div>
     </div>
@@ -78,9 +82,17 @@ export default {
       openMain: false,
       width: 0,
       chartPlayList: [],
+      openDropdownId: '',
     };
   },
   methods: {
+    openDropDown(item) {
+      if (this.openDropdownId === item.id) {
+        this.openDropdownId = '';
+      } else {
+        this.openDropdownId = item.id;
+      }
+    },
     openNav() {
       this.width = 49;
       this.openMain = true;
@@ -96,8 +108,8 @@ export default {
 /* .openSideBar{
   width: 80vh;
 } */
-.fa-1x{
-    font-size: 0.5em;
+.fa-1x {
+  font-size: 0.5em;
 }
 .openMain {
   margin-right: 45vh;
@@ -113,7 +125,7 @@ export default {
   top: 0;
   right: 0;
   background-color: rgb(0, 0, 0); /**#111 */
-  opacity: 0.6;
+  opacity: 0.8;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -175,4 +187,25 @@ export default {
 }
 /* 參考:
 https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapse_sidebar */
+/* dropdown toggle */
+.openDropdown {
+  font-size: 2vh;
+  color: rgb(75, 73, 73);
+  position: absolute;
+  padding: 10px;
+  margin: auto;
+  border-radius: 4px;
+  background: white;
+  margin-top: 7vh;
+  width: 23vh;
+  right: 8vh;
+  text-align: center;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+  opacity: 1;
+  transition: opacity 3s;
+}
+.ul-toggle {
+  padding-left: 0;
+  margin: 0;
+}
 </style>

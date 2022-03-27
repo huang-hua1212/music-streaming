@@ -1,6 +1,7 @@
 <template>
   <navbar-black></navbar-black>
   <music-player-sidebar
+  ref="playersSidebar"
   :songs= 'playList'></music-player-sidebar>
   <div class="pageCover text-white" style="height: 510px">
     <div class="page-cover-overlap text-black">
@@ -281,6 +282,11 @@ export default {
     addToPlaylist(item) {
       this.showLoading();
       this.playList.push(item);
+      this.$refs.playersSidebar.openNav();
+      setTimeout(() => {
+        this.$refs.playersSidebar.closeNav();
+      }, 2000);
+
     },
     checkChartName() {
       const chartNam = this.$route.params.name;

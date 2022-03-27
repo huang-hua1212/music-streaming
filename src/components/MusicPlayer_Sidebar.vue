@@ -1,21 +1,76 @@
 <template>
   <div>
-    <div id="mySidebar" class="sidebar"
-    :style="{ width: width + 'vh' }">
+    <div id="mySidebar" class="sidebar" :style="{ width: width + 'vh' }">
       <a href="javascript:void(0)" class="closebtn" @click="closeNav()">×</a>
-      <a href="#">About</a>
+      <div>
+        <h3
+          style="
+            font-weight: bold;
+            color: white;
+            margin-left: 3vh;
+            margin-top: 4.5vh;
+          "
+        >
+          PlayList
+        </h3>
+      </div>
+      <div
+        class="container row"
+        v-for="item in songs"
+        :key="item"
+        v-show="songs"
+        style = 'margin-top: 5vh;padding-right: 1vh;
+        padding-left: 5vh;'
+      >
+        <div
+          class="col-auto"
+          style="width: 8vh; height: 8vh; padding: 0"
+        >
+          <img
+            style="width: 100%; height: 100%"
+            :src="item.album.images[1].url"
+          />
+        </div>
+        <div
+          class="col-auto"
+          style="
+            width: 60%;
+            color: white;
+            padding-top: 1.5vh;
+            padding-right: 0.3vh;
+          "
+        >
+          <p style="font-size: 1vh">{{ item.name }}</p>
+        </div>
+        <!-- <a href="#">About</a>
       <a href="#">Services</a>
       <a href="#">Clients</a>
-      <a href="#">Contact</a>
+      <a href="#">Contact</a> -->
+        <div
+          class="col-auto"
+          style="color: white; font-size: 3vh;padding: 0"
+        >
+          <a href="#" style="padding-right: 1.2vh">
+            <font-awesome-icon icon="ellipsis" size="1x" />
+          </a>
+        </div>
+
+        <div
+          class="col-auto"
+          style="color: white;padding: 0;
+          padding-top: 1.2vh;"
+        >
+          <a href="#" style="padding-right: 0.5vh; font-size: 2.6vh; ">☰</a>
+        </div>
+      </div>
     </div>
 
-    <div id="main" :class = '{openMain: openMain}'>
+    <div id="main" :class="{ openMain: openMain }">
       <button class="openbtn" @click="openNav()">☰ Music</button>
     </div>
   </div>
 </template>
 <script>
-
 export default {
   props: ['songs'],
   data() {
@@ -27,7 +82,7 @@ export default {
   },
   methods: {
     openNav() {
-      this.width = 45;
+      this.width = 49;
       this.openMain = true;
     },
     closeNav() {
@@ -41,9 +96,12 @@ export default {
 /* .openSideBar{
   width: 80vh;
 } */
-.openMain{
-    margin-right: 45vh;
-    visibility: hidden;
+.fa-1x{
+    font-size: 0.5em;
+}
+.openMain {
+  margin-right: 45vh;
+  visibility: hidden;
 }
 /* .closeSideBar{
 } */
@@ -55,18 +113,18 @@ export default {
   top: 0;
   right: 0;
   background-color: rgb(0, 0, 0); /**#111 */
-  opacity: 0.4;
+  opacity: 0.6;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
 }
 
 .sidebar a {
-    text-align: right;
+  text-align: right;
   padding: 8px 32px 8px 8px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #fafafa;
   display: block;
   transition: 0.3s;
 }
@@ -80,11 +138,11 @@ export default {
   top: 0;
   left: 0vh;
   font-size: 36px;
-  margin-left: 3vh;
+  margin-left: 1.4vh;
 }
 
 .openbtn {
-    position: fixed;
+  position: fixed;
   font-size: 20px;
   cursor: pointer;
   background-color: #111;

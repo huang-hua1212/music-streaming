@@ -258,42 +258,43 @@ export default {
   },
   methods: {
     checkChartName() {
-      if (this.$route.params.id === '8snDCwJb8xOOgFOERe') {
+      const chartNam = this.$route.params.name;
+      if (chartNam.trim() === '華語單曲日榜') {
         this.chartName = {
           zhName: '華語單曲',
           engName: 'Mandarin',
         };
-      } else if (this.$route.params.id === 'Wrgc182ds0x6oPmugQ') {
+      } else if (chartNam.trim() === '西洋單曲日榜') {
         this.chartName = {
           zhName: '西洋單曲',
           engName: 'Western',
         };
-      } else if (this.$route.params.id === '9-4KezVIL47LK1ouQF') {
+      } else if (chartNam.trim() === '韓語單曲日榜') {
         this.chartName = {
           zhName: '韓語單曲',
           engName: 'Korean',
         };
-      } else if (this.$route.params.id === 'L_iYsbFoZyv3L4ph1x') {
+      } else if (chartNam.trim() === '日語單曲日榜') {
         this.chartName = {
           zhName: '日語單曲',
           engName: 'Japanese',
         };
-      } else if (this.$route.params.id === 'KoIj7Jv-60uHIPR4fu') {
+      } else if (chartNam.trim() === '台語單曲日榜') {
         this.chartName = {
           zhName: '台語單曲',
           engName: 'Taiwanese',
         };
-      } else if (this.$route.params.id === 'WsitHuOyp1sPmQcp7q') {
+      } else if (chartNam.trim() === '粵語單曲日榜') {
         this.chartName = {
           zhName: '粵語單曲',
           engName: 'Cantonese',
         };
-      } else if (this.$route.params.id === 'X_vv9jMkGc_agEth5a') {
+      } else if (chartNam.trim() === '華語新歌日榜') {
         this.chartName = {
           zhName: '華語新歌',
           engName: 'Latest Mandarin',
         };
-      } else if (this.$route.params.id === '5ZzfirRUMpn-zOtlmn') {
+      } else if (chartNam.trim() === '西洋新歌日榜') {
         this.chartName = {
           zhName: '西洋新歌',
           engName: 'Latest Western',

@@ -31,10 +31,12 @@
       >
         <div
           class="backOfImg"
-          :style="{ backgroundImage: `url(${item})` }"
+          :style="{ backgroundImage: `url(${item.imgUrl})` }"
           style="border: black solid"
         ></div>
-        <img style = 'margin-top:-600px;' :src="item" class="d-block" alt="" />
+        <router-link :to= 'item.to'>
+        <img style = 'margin-top:-600px;' :src="item.imgUrl" class="d-block" alt="" />
+      </router-link>
       </div>
     </div>
   </div>
@@ -171,7 +173,7 @@
           v-for="item in allChart"
           :key="item"
         >
-          <router-link :to="`/ChartPlaylist/${item.id}`">
+          <router-link :to="`/ChartPlaylist/${item.id}/${item.title}`">
             <div class="overlapPanel">
               <p style="font-size: 5vh">{{ item.title }}</p>
               <hr />
@@ -379,16 +381,30 @@ export default {
       slide: 0,
       sliding: null,
       imagePath: [
-        'https://i.kfs.io/album/global/121656465,1v1/fit/500x500.jpg',
-        'https://i.kfs.io/album/global/142042170,2v1/fit/700x700.jpg',
-        'https://i.kfs.io/album/global/162300536,0v1/fit/700x700.jpg',
-        'https://i.kfs.io/album/global/161307573,1v1/fit/700x700.jpg',
-        // 'https://i.kfs.io/album/tw/1550023,0v1/fit/500x500.jpg',
-        // 'https://i.kfs.io/artist/global/20635,0v13/fit/500x500.jpg',
-        // 'https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80',
-        // 'https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-        // 'https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        {
+          imgUrl: 'https://i.kfs.io/album/global/121656465,1v1/fit/500x500.jpg',
+          to: '/record-shop/vinyls/-MxhOSKEQE7NmVP8YH_N',
+        },
+        {
+          imgUrl: 'https://i.kfs.io/album/global/142042170,2v1/fit/700x700.jpg',
+          to: '',
+        },
+        {
+          imgUrl: 'https://i.kfs.io/album/global/162300536,0v1/fit/700x700.jpg',
+          to: '',
+        },
       ],
+      // imagePath: [
+      //   'https://i.kfs.io/album/global/121656465,1v1/fit/500x500.jpg',
+      //   'https://i.kfs.io/album/global/142042170,2v1/fit/700x700.jpg',
+      //   'https://i.kfs.io/album/global/162300536,0v1/fit/700x700.jpg',
+      //   'https://i.kfs.io/album/global/161307573,1v1/fit/700x700.jpg',
+      //   // 'https://i.kfs.io/album/tw/1550023,0v1/fit/500x500.jpg',
+      //   // 'https://i.kfs.io/artist/global/20635,0v13/fit/500x500.jpg',
+      //   // 'https://images.unsplash.com/photo-1645812579074-2e82763422df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80',
+      //   // 'https://images.unsplash.com/photo-1645742175891-9207e6a52e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+      //   // 'https://images.unsplash.com/photo-1555918001-e20d10c2bc1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+      // ],
       latestSongsList: [],
       dailyLyric: {
         writer: '',
@@ -509,6 +525,8 @@ export default {
         )
         .then((res) => {
           this.allChart = res.data.data.slice(1, 9);
+          this.imagePath[1].to = `/ChartPlaylist/${this.allChart[0].id}/${this.allChart[0].title}`;
+          this.imagePath[2].to = `/ChartPlaylist/${this.allChart[2].id}/${this.allChart[2].title}`;
         }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常

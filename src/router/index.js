@@ -98,7 +98,7 @@ const routes = [
     component: Backend,
   },
   {
-    path: '/chartPlaylist/:id',
+    path: '/chartPlaylist/:id/:name',
     name: 'ChartPlaylist',
     component: ChartPlaylist,
   },

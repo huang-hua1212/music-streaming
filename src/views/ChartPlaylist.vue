@@ -286,7 +286,6 @@ export default {
       setTimeout(() => {
         this.$refs.playersSidebar.closeNav();
       }, 2000);
-
     },
     checkChartName() {
       const chartNam = this.$route.params.name;

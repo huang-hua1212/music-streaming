@@ -10,16 +10,19 @@
     </div>
 
     <div id="main" :class = '{openMain: openMain}'>
-      <button class="openbtn" @click="openNav()">☰ Open Sidebar</button>
+      <button class="openbtn" @click="openNav()">☰ Music</button>
     </div>
   </div>
 </template>
 <script>
+
 export default {
+  props: ['songs'],
   data() {
     return {
       openMain: false,
       width: 0,
+      chartPlayList: [],
     };
   },
   methods: {
@@ -40,6 +43,7 @@ export default {
 } */
 .openMain{
     margin-right: 45vh;
+    visibility: hidden;
 }
 /* .closeSideBar{
 } */
@@ -80,6 +84,7 @@ export default {
 }
 
 .openbtn {
+    position: fixed;
   font-size: 20px;
   cursor: pointer;
   background-color: #111;
@@ -87,7 +92,9 @@ export default {
   padding: 10px 15px;
   border: none;
   /* 新增 */
-  float:right;
+  /* float:right; */
+  right: 5vh;
+  top: 10vh;
 }
 
 .openbtn:hover {

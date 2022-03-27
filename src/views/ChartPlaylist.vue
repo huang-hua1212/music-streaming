@@ -1,5 +1,7 @@
 <template>
   <navbar-black></navbar-black>
+  <music-player-sidebar
+  :songs= 'playList'></music-player-sidebar>
   <div class="pageCover text-white" style="height: 510px">
     <div class="page-cover-overlap text-black">
       <p class="chinese">{{ this.chartName.zhName }}日榜</p>
@@ -98,7 +100,8 @@
 
         <!-- 加入歌單 -->
         <div class="col-1" style="padding-left: 0; margin-top: 3.5%">
-          <a class="" style="color: white" href="#" @click.prevent="">
+          <a class="" style="color: white" href="#"
+          @click.prevent="addToPlaylist(item)">
             <font-awesome-icon icon="plus" size="2x" />
           </a>
         </div>
@@ -175,7 +178,7 @@
 
         <!-- 加入歌單 -->
         <div class="col-1" style="padding-left: 0; margin-top: 3.5%">
-          <a class="" style="color: white" href="#" @click.prevent="">
+          <a class="" style="color: white" href="#" @click.prevent="addToPlaylist(item)">
             <font-awesome-icon icon="plus" size="2x" />
           </a>
         </div>
@@ -190,6 +193,14 @@
 
     <!-- <div style="height: 40%; border: white solid">你可能想聽</div> -->
   </div>
+
+  <div style="position: relative">
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        :is-full-page="true"
+      />
+    </div>
 
   <div class="currentPlaySong" style="position: fixed; bottom: 0; width: 100%">
     <iframe
@@ -221,10 +232,13 @@
 <script>
 import axios from 'axios';
 import NavbarBlack from '@/components/NavbarBlack.vue';
+import musicPlayerSidebar from '@/components/MusicPlayer_Sidebar.vue';
+import Loading from 'vue-loading-overlay';
 
 export default {
   data() {
     return {
+      isLoading: false,
       chartName: {
         zhName: '',
         engName: '',
@@ -245,10 +259,11 @@ export default {
       cssPropsUrl4: {
         backgroundImage: '',
       },
+      playList: [],
     };
   },
   components: {
-    NavbarBlack,
+    NavbarBlack, musicPlayerSidebar, Loading,
   },
   created() {
     this.checkChartName();
@@ -257,6 +272,16 @@ export default {
     this.getChartPlayList();
   },
   methods: {
+    showLoading() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 970);
+    },
+    addToPlaylist(item) {
+      this.showLoading();
+      this.playList.push(item);
+    },
     checkChartName() {
       const chartNam = this.$route.params.name;
       if (chartNam.trim() === '華語單曲日榜') {

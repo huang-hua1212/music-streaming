@@ -3,8 +3,9 @@
   <music-player-sidebar
   ref="playersSidebar"
   :songs= 'playList'></music-player-sidebar>
-  <div class="pageCover text-white" style="height: 510px">
-    <div class="page-cover-overlap text-black">
+  <div class="pageCover text-white" style="height: 510px;">
+    <div class="page-cover-overlap text-black"
+    style = 'margin-top: 3.5vh'>
       <p class="chinese">{{ this.chartName.zhName }}日榜</p>
       <h3>Top {{ this.chartName.engName }} Daily Singles Chart</h3>
     </div>

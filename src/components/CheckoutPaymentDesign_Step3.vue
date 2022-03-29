@@ -1,16 +1,26 @@
 <template>
   <div style="width: 58%; margin-left: 21%; margin-top: 20vh; height: 40%">
-    <p style="font-size: 2.5vh; color: white; margin-left: 5%; margin-bottom: 0; line-height: 20%">
-      <!-- Shop Details -->
+    <div
+    style="font-size: 2.5vh;
+    color: white;
+    margin-left: 5%;
+    margin-bottom: 0;
+    line-height: 20%;
+    ">
+    <!-- <p>
       購物車明細
-    </p>
-    <div class="container" style="border-radius: 5px; padding: 5vh; padding-bottom: 4%">
+    </p> -->
+    </div>
+    <div class="container" style="border-radius: 5px;
+    padding-left: 5vh;
+     padding-right: 5vh;
+      padding-top: 0%;padding-bottom: 4%">
       <table class="table text-white" style="text-align: center">
         <thead style="font-size: 2.8vh">
           <td style="padding-left: 1%"></td>
           <th style="padding-left: 1%">名稱</th>
           <th style="padding-left: 1%">售價</th>
-          <th style="padding-left: 1%">數量</th>
+          <th style="padding-left: 6vh;">數量</th>
           <th style="padding-left: 1%">小計</th>
         </thead>
         <tbody>
@@ -30,7 +40,8 @@
             <td style="padding-top: 5vh">
               {{ item.product.price }}
             </td>
-            <td style="padding-top: 5vh">
+            <td style="padding-top: 5vh;
+            padding-left: 6vh;">
               <div type="number">
                 <p>{{ item.qty }}</p>
               </div>
@@ -40,50 +51,75 @@
             </td>
           </tr>
         </tbody>
+        <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td style= 'font-size: 4vh;
+                  padding-right: 10vh;'>總計: ${{allTotal}}</td>
+                </tr>
+              </tfoot>
       </table>
     </div>
   </div>
-  <div class="text-white" style="margin-top: 3%">
-    <p
-      style="font-size: 2.5vh;
-      margin-left: 50vh;
+  <div class="text-white" style="margin-top: 3%;">
+    <div
+     style="font-size: 2.5vh;
+      margin-left: 28%;
       color: white;
-      line-height: 20%;"
-    >
+      line-height: 20%;">
+    <p>
       收件資訊
     </p>
+    </div>
     <div
       style="
-        margin-left: 25%;
-        width: 50%;
+        margin-left: 26%;
+        width: 48%;
         background-color: #fafafa;
-        border-radius: 2vh;
-        font-size: 2vh;
         color: #424242;
         padding-left: 5vh;
+        height: 45vh;
       "
     >
       <div>
-        <p style="padding-top: 2vh">收件者: {{ this.personFile.name }}</p>
+        <p style="padding-top: 3.2vh;
+        font-size: 2.1vh;">收件者</p>
+        <p style="font-size: 3.2vh;
+        font-weight: bold;
+        line-height: 0.5vh;"> {{ this.personFile.name }}</p>
       </div>
       <div>
-        <p>聯絡電話: {{ this.personFile.cellphone }}</p>
+        <p style="margin-top: 4.2vh;font-size: 2vh;">聯絡電話</p>
+        <p style="font-size: 3.2vh;
+        font-weight: bold;
+         line-height: 0.5vh;"> {{ this.personFile.cellphone }}</p>
       </div>
       <div>
-        <p>Email: {{ this.personFile.email }}</p>
+        <p style="margin-top: 4.2vh;font-size: 2vh;">信箱</p>
+        <p style="font-size: 3.2vh;
+        font-weight: bold;
+         line-height: 0.5vh;"> {{ this.personFile.email }}</p>
       </div>
       <div>
-        <p>
-          住址: {{ this.personFile.address.city }}
+        <p style="margin-top: 4.2vh;font-size: 2vh;">住址</p>
+        <p style="margin-bottom: 3.5vh;
+        font-size: 3.2vh;
+        font-weight: bold;
+         line-height: 0.5vh;"> {{ this.personFile.address.city }}
           {{ this.personFile.address.district }}
           {{ this.personFile.address.zipcode }}
-        </p>
+          {{ this.personFile.address.fullAddress }}</p>
+        </div>
+        <!-- <p
+        style="margin-left: 4vh">{{ this.personFile.address.fullAddress }}</p> -->
       </div>
-      <div>
+      <!-- <div>
         <p style="margin-left: 4vh">{{ this.personFile.address.fullAddress }}</p>
-      </div>
+      </div> -->
     </div>
-  </div>
   <button
     type="button"
     class="btn btn-warning"
@@ -107,10 +143,8 @@
 </template>
 <script>
 import axios from 'axios';
-// import mitt from 'mitt';
 import cookie from 'json-cookie';
 
-// const emitter = mitt();
 export default {
   data() {
     return {
@@ -121,21 +155,22 @@ export default {
     };
   },
   created() {
-    // sendProduct
-    // emitter.on('sendBuyerProfile', (profile) => {
-    //   console.log('profile', profile);
-    //   this.data = profile;
-    // });
     this.personFile = cookie.get('json-profile');
     cookie.delete('json-profile');
     this.loadProductsInCart();
   },
   mounted() {
-    // emitter.on('sendBuyerProfile', (profile) => {
-    //   console.log('profile', profile);
-    //   this.data = profile;
-    // });
     this.$emit('changeCurrentStep', 3);
+  },
+  computed: {
+    allTotal() {
+      const total = this.productsInCart.reduce((acc, currentValue) => {
+        let accumulator = acc;
+        accumulator += currentValue.total;
+        return accumulator;
+      }, 0);
+      return total;
+    },
   },
   methods: {
     showLoading() {
@@ -172,3 +207,21 @@ export default {
   },
 };
 </script>
+<style lang = 'scss' scoped>
+thead {
+  /* background-color: #F6E71D; */
+  color: black;
+  height: 8vh;
+}
+tfoot, tbody{
+  border-style: none;
+  border-top-style: none;
+  border-bottom-style: none;
+}
+tfoot{
+  border-bottom-style: none;
+}
+.container {
+  padding-top: 0;
+}
+</style>

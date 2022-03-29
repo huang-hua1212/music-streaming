@@ -338,7 +338,7 @@ export default {
       axios
         .get(chartPath, {
           headers: {
-            Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+            Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
             Accept: 'application/json',
             'content-type': 'application/json',
           },

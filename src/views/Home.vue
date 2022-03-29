@@ -416,7 +416,7 @@ export default {
     // this.getDailyLyric(); // 會耗損API
     this.testGetDailyLyric();
     this.getLatestSongs();
-    this.getLatestVideo();
+    // this.getLatestVideo();
   },
   methods: {
     changeLatestSongCarousel(it) {

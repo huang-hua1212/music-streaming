@@ -298,12 +298,7 @@
       </div>
     </div>
   </div>
-
-  <!-- <iframe id="player" type="text/html" width="100%" height="360"
-  src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
-  frameborder="0"></iframe> -->
-
-  <!-- Loading Circle -->
+  <!-- Loading -->
   <div style="position: relative">
     <loading
       v-model:active="isLoading"
@@ -347,10 +342,9 @@
 // carousel參考https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_carousel2&stacked=h
 import axios from 'axios';
 import qs from 'query-string';
-// import loginModal from '@/components/LoginModal.vue';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import NavbarBlack from '@/components/NavbarBlack.vue';
-// import Loading from 'vue-loading-overlay';
+import Loading from 'vue-loading-overlay';
 
 const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n心之所動 且就隨緣去吧\n\n'
   + '這一路上走走停停\n順著少年漂流的痕跡\n邁出車站的前一刻\n竟有些猶豫\n\n不禁笑這近鄉情怯'
@@ -361,6 +355,7 @@ const testLyricText = '我曾將青春翻湧成她\n也曾指尖彈出盛夏\n�
 export default {
   data() {
     return {
+      isLoading: false,
       currentSongHref: '',
       youtubeApiKeyArray: [
         'AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8',
@@ -373,9 +368,6 @@ export default {
         '5b50630c7d65f4a374b27ad929e1a073',
       ],
       recordShopDropDown: false,
-      isLoading: false,
-      // isShowProgressBar: false,
-      // isLogin: false,
       productsToSell: [],
       temp: {},
       slide: 0,
@@ -415,9 +407,10 @@ export default {
       latestSongCarouselIdx: 0,
     };
   },
-  components: { NavbarBlack },
+  components: { NavbarBlack, Loading },
   watch: {},
   created() {
+    this.showLoading(1200);
     // 全部皆呼叫axios，但都不具相關性，故可以
     this.getChart();
     // this.getDailyLyric(); // 會耗損API
@@ -429,11 +422,11 @@ export default {
     changeLatestSongCarousel(it) {
       this.latestSongCarouselIdx = it;
     },
-    showLoading() {
+    showLoading(time) {
       this.isLoading = true;
       setTimeout(() => {
         this.isLoading = false;
-      }, 970);
+      }, time);
     },
     getKKboxAccessToken() {
       const oauth = {
@@ -490,7 +483,7 @@ export default {
           'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/new-hits-playlists/DZrC8m29ciOFY2JAm3?territory=TW',
           {
             headers: {
-              Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+              Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
               Accept: 'application/json',
               'content-type': 'application/json',
             },
@@ -516,7 +509,7 @@ export default {
           'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/charts?territory=TW&limit=10',
           {
             headers: {
-              Authorization: 'Bearer tES0iTvx8nu--_fFoJFWHA==',
+              Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
               Accept: 'application/json',
               'content-type': 'application/json',
             },

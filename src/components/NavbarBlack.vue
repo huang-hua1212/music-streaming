@@ -46,11 +46,11 @@
             </ul>
           </transition>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link to="/" class="nav-link" href="#"
             >Latest News</router-link
           >
-        </li>
+        </li> -->
       </ul>
       <ul class="nav-right navbar-nav mr-auto col-auto">
         <li class="nav-item fs-5">

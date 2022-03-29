@@ -1,9 +1,10 @@
 <template>
-<!-- fff -->
   <div
     style="width: 70%; margin-left: 16%; margin-top: 8%;"
   >
-    <Form v-slot="{ errors }" id="form" @submit="toCheckPaymentStep3">
+    <Form ref= 'form'
+    v-slot="{ errors }" id="form" @submit.prevent="toCheckPaymentStep3"
+    rules = 'required'>
       <!-- 姓名 -->
       <div class="form__group field" style="margin-left: 23%">
         <Field
@@ -32,7 +33,7 @@
           placeholder="Phone Number"
           name="手機號碼"
           id="cellphone"
-          rules="required"
+          :rules="cellphone_verify"
           :class="{ 'is-invalid': errors['手機號碼'] }"
           v-model="cellphone"
         ></Field>
@@ -181,6 +182,7 @@
         letter-spacing: 2px;"
         @click.prevent = 'toCheckPaymentStep3'
       >
+      <!-- @click.prevent = 'toCheckPaymentStep3' -->
         NEXT
       </button>
       </div>
@@ -241,6 +243,7 @@ export default {
   },
   methods: {
     checkContent(buyerProfile) {
+      // this.$refs.form.validate();
       const profileArray = Object.values(buyerProfile);
       this.isPass = true;
       profileArray.forEach((it) => {
@@ -266,6 +269,8 @@ export default {
       if (this.isPass) {
         cookie.set('json-profile', buyerProfile);
         this.$router.push('/checkout-payment-design/checkout-payment-designstep3');
+      } else {
+        this.$refs.form.validate();
       }
     },
     getCity() {

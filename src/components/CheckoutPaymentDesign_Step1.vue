@@ -5,84 +5,74 @@
       style="border-radius: 5px; background-color: white; padding: 5vh; padding-bottom: 4%"
     >
       <table class="table" style="text-align: center">
-        <thead style="font-size: 2.5vh">
-          <th style="padding-left: 1%">產品名稱</th>
-          <th style="padding-left: 1%">售價</th>
-          <th style="padding-left: 1%">數量</th>
-          <th style="padding-left: 1%">小計</th>
-          <th style="padding-left: 1%">變更</th>
-        </thead>
-        <tbody>
-          <tr v-for="item in productsInCart" :key="item.product.id" style="height: 1.6vh">
-            <td>
-              {{ item.product.title }}
-            </td>
-            <td>
-              {{ item.product.price }}
-            </td>
-            <td>
-              <input
-                type="number"
-                style="width: 8vh"
-                v-model="item.qty"
-                @change="changeNumInCart(item)"
-              />
-            </td>
-            <td>
-              {{ item.final_total }}
-            </td>
-            <td>
-              <button type="button" class="btn btn-primary" @click.prevent="deleteProduct(item)"
-              style = 'font-size: 2vh'>
-                刪除
-              </button>
-            </td>
-          </tr>
-        </tbody>
-        <div class = 'table-btn' style = 'border-top: none; margin-right: -61.5vh;'>
-        <button
-          type="button"
-          class="btn btn-primary"
-          style="float: right; margin-top: 2%;
-          font-size: 2vh"
-          @click.prevent="toCheckPaymentStep2"
-        >
-          結帳
-        </button>
-        <button
-          type="button"
-          class="btn btn-warning"
-          @click.prevent="deleteAllProductsInCart"
-          style="float: right; margin-top: 2%;
-          margin-right: 2%;
-          font-size: 2vh"
-        >
-          全部刪除
-        </button>
-      </div>
-      </table>
-      <!-- <div>
-        <button
-          type="button"
-          class="btn btn-primary"
-          style="float: right; margin-right: 8%; margin-top: 3%;
-          font-size: 2vh"
-          @click.prevent="toCheckPaymentStep2"
-        >
-          結帳
-        </button>
-        <button
+              <!-- <thead>
+                <th>產品名稱</th>
+                <th>售價</th>
+                <th>數量</th>
+                <th>小計</th>
+                <th>變更</th>
+              </thead> -->
+              <tbody>
+                <tr v-for="item in productsInCart" :key="item.product.id">
+                  <td style="width: 2vh; padding-left: 11vh">
+                    <div style="width: 8.6vh; padding-top: 2vh; padding-bottom: 2vh">
+                      <img :src="item.product.imageUrl" style="width: 100%" />
+                    </div>
+                  </td>
+                  <td style="padding-top: 5vh">
+                    {{ item.product.title }}
+                  </td>
+                  <td style="padding-top: 5vh">
+                    {{ item.product.price }}
+                  </td>
+                  <td style="width: 18vh">
+                    <div class="row" style="padding-left: 4vh; padding-top: 3vh">
+                      <div class="wrapper">
+                        <span class="minus" @click.prevent="decrement(item)">-</span>
+                        <span class="num">{{ item.qty }}</span>
+                        <span class="plus" @click.prevent="increment(item)">+</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="padding-top: 4vh">
+                    <h3>${{ item.final_total }}</h3>
+                    <div>
+                      <a href="#" @click.prevent="deleteProduct(item)">Remove </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td style= 'font-size: 4vh;
+                  padding-right: 10vh;'>總計: ${{allTotal}}</td>
+                </tr>
+              </tfoot>
+            </table>
+            <button
           type="button"
           class="btn btn-warning"
-          @click.prevent="deleteAllProductsInCart"
-          style="float: right; margin-right: 2%; margin-top: 3%;
-          font-size: 2vh"
+          style="float: right; margin-right: 12vh;margin-top: 10%;
+          font-size: 3vh; font-weight: bold;
+          margin-bottom: 10vh;"
+          @click.prevent="toCheckPaymentStep2"
         >
-          全部刪除
+          下一步
         </button>
-      </div> -->
     </div>
   </div>
+  <!-- show loading -->
+   <div style="position: relative">
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        :is-full-page="true"
+      />
+    </div>
 </template>
 <script>
 import axios from 'axios';
@@ -96,18 +86,46 @@ export default {
     };
   },
   created() {
-    // test
+    this.showLoading();
     this.handleCompanyName();
     this.loadProductsInCart();
   },
   mounted() {
     this.$emit('changeCurrentStep', 1);
   },
+  computed: {
+    allTotal() {
+      // const formatter = new Intl.NumberFormat('en-US', {
+      //   style: 'currency',
+      //   currency: 'USD',
+      // });
+      const total = this.productsInCart.reduce((acc, currentValue) => {
+        let accumulator = acc;
+        accumulator += currentValue.total;
+        return accumulator;
+      }, 0);
+      return total;
+    },
+  },
   methods: {
+    showLoading() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 970);
+    },
+    decrement(it) {
+      const item = it;
+      item.qty -= 1;
+      this.changeNumInCart(item);
+    },
+    increment(it) {
+      const item = it;
+      item.qty += 1;
+      this.changeNumInCart(item);
+    },
     handleCompanyName() {
-      console.log('呼叫handleCompanyName');
       this.$store.commit('addCompanyId', '西打藍');
-      console.log(this.$store.state.companyId);
     },
     toCheckPaymentStep2() {
       // 跳到步驟二
@@ -152,3 +170,35 @@ export default {
   },
 };
 </script>
+<style lang= 'scss' scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+.wrapper {
+  height: 6vh; /* 120px */
+  min-width: 15vh; /* 380p */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.wrapper span {
+  width: 100%;
+  text-align: center;
+  font-size: 4vh; /* 55px */
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+.wrapper span.num {
+  font-size: 3vh; /* 50px */
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+// modal background color
+.modal-content {
+  background-color: rgb(255, 255, 255);
+  opacity: 0.9;
+}
+</style>

@@ -65,7 +65,11 @@ background-color: white'></div> -->
       <input type="radio" name="tabs" id="tabone" checked="checked" />
       <label for="tabone">曲目</label>
       <div class="tab">
-        <h1>First Tab Content</h1>
+        <ul>
+          <li v-for = 'track in tracks'
+          :key = 'track'>{{track}}</li>
+        </ul>
+        <!-- <h1>First Tab Content</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -74,7 +78,7 @@ background-color: white'></div> -->
           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        </p> -->
       </div>
 
       <input type="radio" name="tabs" id="tabtwo" />
@@ -86,13 +90,6 @@ background-color: white'></div> -->
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
       </div>
-<!--
-      <input type="radio" name="tabs" id="tabthree" />
-      <label for="tabthree">Third Tab</label>
-      <div class="tab">
-        <h1>Third tab content</h1>
-        <p>hfioezhogehzioghz</p>
-      </div> -->
     </div>
   </div>
   <!-- Progress bar -->
@@ -239,6 +236,13 @@ export default {
 <style lang = 'scss' scoped>
 a {
   text-decoration: none;
+}
+ul {
+  padding-left: 0;
+}
+li {
+  list-style: none;
+  border-bottom: solid 1px #ebebeb;
 }
 
 /* ADD CART SUCCESS ANIMATION */

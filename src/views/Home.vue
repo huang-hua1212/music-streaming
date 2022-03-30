@@ -410,7 +410,7 @@ export default {
   components: { NavbarBlack, Loading },
   watch: {},
   created() {
-    this.showLoading(1200);
+    this.showLoading(2100);
     // 全部皆呼叫axios，但都不具相關性，故可以
     this.getChart();
     // this.getDailyLyric(); // 會耗損API

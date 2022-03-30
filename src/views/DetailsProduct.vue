@@ -374,7 +374,7 @@ li {
   /* width: 500px; */
   margin-left: 22%;
   width: 78.78%; /*78.78%;*/
-  height: 78.3vh;
+  height: 78.4vh;
 }
 
 .tabs label {

@@ -16,7 +16,7 @@
      padding-right: 5vh;
       padding-top: 0%;padding-bottom: 4%">
       <table class="table text-white" style="text-align: center">
-        <thead style="font-size: 2.8vh">
+        <thead class = 'text-white' style="font-size: 2.8vh">
           <td style="padding-left: 1%"></td>
           <th style="padding-left: 1%">名稱</th>
           <th style="padding-left: 1%">售價</th>
@@ -128,7 +128,7 @@
       padding-left: 2%;
       margin-top: 6%;
       margin-bottom: 5%;
-      margin-left: 69%;
+      margin-left: 67%;
       letter-spacing: 2px;
       font-weight: bold;
     "

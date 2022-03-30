@@ -59,6 +59,11 @@ setLocale('zh_TW');
 
 const app = createApp(App).use().use(store).use(router); // 新增use(VueLazyLoad)
 
+// 於created時定位到最頂端
+router.afterEach(() => {
+  window.scrollTo(0, 0);
+});
+
 // 註冊 vee-validate 三個全域元件
 app.component('Form', Form);
 app.component('Field', Field);

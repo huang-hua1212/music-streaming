@@ -220,7 +220,7 @@ export default {
       this.isLoading = true;
       setTimeout(() => {
         this.isLoading = false;
-      }, 970);
+      }, 1800);
     },
     contentIn() {
       const { id } = this.$route.params;

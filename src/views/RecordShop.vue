@@ -3,7 +3,14 @@
 <navbar-black ref="callNavModal"></navbar-black>
 
 <router-view @computeProductLength = "computeProductLength"/>
-
+<!-- Progress bar -->
+    <div style="position: relative">
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        :is-full-page="true"
+      />
+    </div>
 </template>
 
 <script>
@@ -13,13 +20,21 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      isLoading: false,
     };
   },
   created() {
     // this.checkLogin();
+    this.showLoading();
   },
   components: { NavbarBlack },
   methods: {
+    showLoading() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 970);
+    },
     computeProductLength() {
       this.$refs.callNavModal.addProduct();
     },

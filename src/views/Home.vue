@@ -19,8 +19,7 @@
     id="carouselExampleIndicators"
     class="carousel slide"
     data-bs-ride="carousel"
-    style = 'max-height: 550px;
-    overflow-y: hidden;'
+    style="max-height: 550px; overflow-y: hidden"
   >
     <div class="carousel-inner nav-carousel-inner">
       <div
@@ -34,9 +33,14 @@
           :style="{ backgroundImage: `url(${item.imgUrl})` }"
           style="border: black solid"
         ></div>
-        <router-link :to= 'item.to'>
-        <img style = 'margin-top:-600px;' :src="item.imgUrl" class="d-block" alt="" />
-      </router-link>
+        <router-link :to="item.to">
+          <img
+            style="margin-top: -600px"
+            :src="item.imgUrl"
+            class="d-block"
+            alt=""
+          />
+        </router-link>
       </div>
     </div>
   </div>
@@ -55,8 +59,10 @@
 
   <!-- 內容Content -->
   <div class="content text-white" style="margin-bottom: 0px">
-    <div class="freshSuggest ms-auto" style="border: white solid;
-    border-radius: 10px;">
+    <div
+      class="freshSuggest ms-auto"
+      style="border: white solid; border-radius: 10px"
+    >
       <!-- <button
         class="carousel-control-prev"
         type="button"
@@ -112,11 +118,13 @@
                 class="freshSuggestImg picture col-sm-3 p-0"
                 v-for="it in item"
                 :key="it"
-                style="border: #212120 solid;
-                max-height: 100%;
-            max-width: 100%;
-            position: relative;
-            padding-right: 0;"
+                style="
+                  border: #212120 solid;
+                  max-height: 100%;
+                  max-width: 100%;
+                  position: relative;
+                  padding-right: 0;
+                "
               >
                 <a href="#" @click.prevent="playSong(it)">
                   <div class="overlapPanelLatestSong" style="padding: 0">
@@ -307,7 +315,7 @@
     />
   </div>
 
-<div class="currentPlaySong" style="position: fixed; bottom: 0; width: 100%">
+  <div class="currentPlaySong" style="position: fixed; bottom: 0; width: 100%">
     <iframe
       :src="currentSongHref"
       allow="autoplay"
@@ -410,7 +418,7 @@ export default {
   components: { NavbarBlack, Loading },
   watch: {},
   created() {
-    this.showLoading(2100);
+    this.isLoading = true;
     // 全部皆呼叫axios，但都不具相關性，故可以
     this.getChart();
     // this.getDailyLyric(); // 會耗損API
@@ -625,8 +633,9 @@ export default {
           this.videoList = res.data.items.slice(9, 20);
           // this.videoList.map((ele) => this.getThumbnail(ele));
           this.videoList.map((ele) => this.getIframeSrc(ele));
-          // console.log(this.videoList);
-          console.log(res);
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 2200);
         })
         .catch((err) => {
           console.log(err.response);

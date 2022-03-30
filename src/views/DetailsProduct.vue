@@ -160,7 +160,8 @@
     class="checkmark"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 52 52"
-    style="position: absolute; z-index: 100; top: 30vh; left: 100vh"
+    style="position: absolute; z-index: 100;left: 100vh"
+    :style = "{top: window.y + 'vh'}"
     v-show="isSuccess"
   >
     <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
@@ -199,6 +200,9 @@ export default {
     return {
       isLoading: false,
       isSuccess: false,
+      window: {
+        y: 0,
+      },
       data: {},
       tracks: [],
     };
@@ -211,16 +215,17 @@ export default {
   methods: {
     // 參考: https://bbbootstrap.com/snippets/animated-checkmark-50934051
     showSuccessAnimation() {
+      this.window.y = 100 * (window.scrollY / window.innerHeight) + 30;
       this.isSuccess = true;
       setTimeout(() => {
         this.isSuccess = false;
-      }, 1500);
+      }, 1200);
     },
     showLoading() {
       this.isLoading = true;
       setTimeout(() => {
         this.isLoading = false;
-      }, 1800);
+      }, 1660);
     },
     contentIn() {
       const { id } = this.$route.params;

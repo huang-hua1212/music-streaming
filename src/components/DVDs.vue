@@ -202,82 +202,23 @@
           <div class="card-body">
             <p class="card-title" style="text-align: center; font-size: 17px;">{{item.title}}</p>
             <p class="card-title" style="text-align: center;">{{item.singer}}</p>
-            <!-- <p class="card-text" id="money">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p> -->
             <a href="#" class="btn btn-add-cart">add cart</a>
           </div>
         </div>
       </div>
-      <!-- <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
+  <!-- ADD CART SUCCESS ANIMATION -->
+  <svg
+    class="checkmark"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 52 52"
+    style="position: absolute; z-index: 100; top: 30vh; left: 100vh"
+    v-show="isSuccess"
+  >
+    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+  </svg>
 </template>
 
 <script>
@@ -286,6 +227,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      isSuccess: false,
       data: [],
       conditionIsActive: {
         year: 'All',
@@ -381,6 +323,12 @@ export default {
     // this.checkLogin();
   },
   methods: {
+    showSuccessAnimation() {
+      this.isSuccess = true;
+      setTimeout(() => {
+        this.isSuccess = false;
+      }, 1200);
+    },
     checkLogin() {
       const cookieToken = document.cookie.replace(
         /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
@@ -404,6 +352,28 @@ export default {
           this.$router.push('/');
         });
     },
+    addProduct(temp) {
+      const tempInFunction = temp;
+      tempInFunction.num = 1;
+      const cart = {
+        product_id: temp.id,
+        qty: temp.num,
+      };
+      axios
+        .post(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`,
+          {
+            data: cart,
+          },
+        )
+        .then(() => {
+          // this.showLoading();
+          this.computProductLength();
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
     productsIn(page = 1) {
       const changeToPage = page;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${changeToPage}`;
@@ -412,14 +382,6 @@ export default {
         .then((res) => {
           console.log(res.data.products);
           this.data = res.data.products.filter((ele) => ele.category === 'DVDs');
-          // const resAllKey = Object.keys(res.data.products);
-          // const resAllValues = Object.values(res.data.products);
-          // const arrRes = resAllValues;
-          // for (let i = 0; i < resAllKey.length; i += 1) {
-          //   arrRes.id = resAllKey[i];
-          // }
-          // this.data = arrRes;
-          // console.log(this.data);
         })
         .catch((err) => {
           console.log(err);

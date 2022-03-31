@@ -317,9 +317,11 @@ export default {
   },
   components: { Loading },
   created() {
+    this.isLoading = true;
     this.getYearList();
     this.productsIn();
     this.computProductLength();
+    this.isLoading = false;
   },
   methods: {
     showSuccessAnimation() {

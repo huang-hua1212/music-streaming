@@ -365,6 +365,7 @@ export default {
     return {
       isLoading: false,
       currentSongHref: '',
+      access_token: '',
       youtubeApiKeyArray: [
         'AIzaSyAiDdbkL-phVHXwR0YNxAgjVE7V0xOLmG8',
         'AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc',
@@ -416,14 +417,15 @@ export default {
     };
   },
   components: { NavbarBlack, Loading },
-  watch: {},
   created() {
     this.isLoading = true;
+    // TEST
+    this.getKKboxAccessToken(this.getChart, this.getLatestSongs);
     // 全部皆呼叫axios，但都不具相關性，故可以
-    this.getChart();
-    // this.getDailyLyric(); // 會耗損API
-    this.testGetDailyLyric();
-    this.getLatestSongs();
+    // this.getChart();
+    this.getDailyLyric(); // 會耗損API
+    // this.testGetDailyLyric();
+    // this.getLatestSongs();
     this.getLatestVideo();
   },
   methods: {
@@ -436,7 +438,7 @@ export default {
         this.isLoading = false;
       }, time);
     },
-    getKKboxAccessToken() {
+    getKKboxAccessToken(func1, func2) {
       const oauth = {
         grant_type: 'client_credentials',
         client_id: '94bc95aa9cdcd73c8d5e10ce0146e40a',
@@ -447,12 +449,6 @@ export default {
           'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token', // '?grant_type=client_credentials&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
           qs.stringify(oauth),
           {
-            // withCredentials: true,
-            // data: {
-            //   grant_type: 'client_credentials',
-            //   client_id: '94bc95aa9cdcd73c8d5e10ce0146e40a',
-            //   client_secret: '27995ba42851ede2928d759cb2d56d17',
-            // },
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
               Accept: 'application/x-www-form-urlencoded',
@@ -460,7 +456,15 @@ export default {
             crossdomain: true,
           },
         )
-        .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
+        .then((res) => {
+          this.access_token = res.data.access_token;
+          if (func1) {
+            func1();
+          }
+          if (func2) {
+            func2();
+          }
+        }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
         });
@@ -491,7 +495,7 @@ export default {
           'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/new-hits-playlists/DZrC8m29ciOFY2JAm3?territory=TW',
           {
             headers: {
-              Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
+              Authorization: `Bearer ${this.access_token}`,
               Accept: 'application/json',
               'content-type': 'application/json',
             },
@@ -517,7 +521,7 @@ export default {
           'https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/charts?territory=TW&limit=10',
           {
             headers: {
-              Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
+              Authorization: `Bearer ${this.access_token}`,
               Accept: 'application/json',
               'content-type': 'application/json',
             },
@@ -557,8 +561,9 @@ export default {
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常
           // accessToken過期
-          this.changeMusixmatchAccessToken();
-          this.getDailyLyric();
+          // this.changeMusixmatchAccessToken();
+          // this.getDailyLyric();
+          this.testGetDailyLyric();
         });
     },
     getSongIdApiPath(songIdApiPath, pageSize) {

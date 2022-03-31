@@ -236,10 +236,12 @@ import axios from 'axios';
 import NavbarBlack from '@/components/NavbarBlack.vue';
 import musicPlayerSidebar from '@/components/MusicPlayer_Sidebar.vue';
 import Loading from 'vue-loading-overlay';
+import qs from 'query-string';
 
 export default {
   data() {
     return {
+      access_token: '',
       isLoading: false,
       chartName: {
         zhName: '',
@@ -268,12 +270,46 @@ export default {
     NavbarBlack, musicPlayerSidebar, Loading,
   },
   created() {
+    this.isLoading = true;
     this.checkChartName();
+    this.getKKboxAccessToken(this.getChartPlayList);
   },
   mounted() {
-    this.getChartPlayList();
+    // this.getChartPlayList();
+    // this.getKKboxAccessToken(this.getChartPlayList);
   },
   methods: {
+    getKKboxAccessToken(func1, func2) {
+      const oauth = {
+        grant_type: 'client_credentials',
+        client_id: '94bc95aa9cdcd73c8d5e10ce0146e40a',
+        client_secret: '27995ba42851ede2928d759cb2d56d17',
+      };
+      axios
+        .post(
+          'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token', // '?grant_type=client_credentials&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
+          qs.stringify(oauth),
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Accept: 'application/x-www-form-urlencoded',
+            },
+            crossdomain: true,
+          },
+        )
+        .then((res) => {
+          this.access_token = res.data.access_token;
+          if (func1 !== undefined) {
+            func1();
+          }
+          if (func2 !== undefined) {
+            func2();
+          }
+        }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
+        .catch((error) => {
+          console.dir(error); // 失敗的話回傳連線異常
+        });
+    },
     showLoading() {
       this.isLoading = true;
       setTimeout(() => {
@@ -338,7 +374,7 @@ export default {
       axios
         .get(chartPath, {
           headers: {
-            Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
+            Authorization: `Bearer ${this.access_token}`,
             Accept: 'application/json',
             'content-type': 'application/json',
           },
@@ -355,6 +391,7 @@ export default {
           this.cssPropsUrl2.backgroundImage = `url(${this.chartPlayList[0][1].album.images[1].url})`;
           this.cssPropsUrl3.backgroundImage = `url(${this.chartPlayList[0][2].album.images[1].url})`;
           this.cssPropsUrl4.backgroundImage = `url(${this.chartPlayList[0][3].album.images[1].url})`;
+          this.isLoading = false;
         })
         .catch((error) => {
           console.dir(error); // 失敗的話回傳連線異常

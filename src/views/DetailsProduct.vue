@@ -194,12 +194,14 @@
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
 import NavbarBlack from '@/components/NavbarBlack.vue';
+import qs from 'query-string';
 
 export default {
   data() {
     return {
       isLoading: false,
       isSuccess: false,
+      access_token: '',
       window: {
         y: 0,
       },
@@ -210,9 +212,41 @@ export default {
   components: { NavbarBlack, Loading },
   created() {
     this.showLoading();
+    this.getKKboxAccessToken(this.searchTracksOfAlbum);
     this.contentIn();
   },
   methods: {
+    getKKboxAccessToken(func1, func2) {
+      const oauth = {
+        grant_type: 'client_credentials',
+        client_id: '94bc95aa9cdcd73c8d5e10ce0146e40a',
+        client_secret: '27995ba42851ede2928d759cb2d56d17',
+      };
+      axios
+        .post(
+          'https://all-the-cors.herokuapp.com/https://account.kkbox.com/oauth2/token', // '?grant_type=client_credentials&client_id=94bc95aa9cdcd73c8d5e10ce0146e40a&client_secret=27995ba42851ede2928d759cb2d56d17',
+          qs.stringify(oauth),
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Accept: 'application/x-www-form-urlencoded',
+            },
+            crossdomain: true,
+          },
+        )
+        .then((res) => {
+          this.access_token = res.data.access_token;
+          if (func1 !== undefined) {
+            func1();
+          }
+          if (func2 !== undefined) {
+            func2();
+          }
+        }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
+        .catch((error) => {
+          console.dir(error); // 失敗的話回傳連線異常
+        });
+    },
     // 參考: https://bbbootstrap.com/snippets/animated-checkmark-50934051
     showSuccessAnimation() {
       this.window.y = 100 * (window.scrollY / window.innerHeight) + 30;
@@ -270,7 +304,7 @@ export default {
           `https://all-the-cors.herokuapp.com/https://api.kkbox.com/v1.1/search?q=${albumName}&type=album&territory=TW`,
           {
             headers: {
-              Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
+              Authorization: `Bearer ${this.access_token}`,
               Accept: 'application/json',
               'content-type': 'application/json',
             },
@@ -284,7 +318,7 @@ export default {
               `https://api.kkbox.com/v1.1/albums/${albumId}/tracks?territory=TW&offset=0&limit=500`,
               {
                 headers: {
-                  Authorization: 'Bearer CSUEk2k0ISNRgn_NasExMw==',
+                  Authorization: `Bearer ${this.access_token}`,
                   Accept: 'application/json',
                   'content-type': 'application/json',
                 },

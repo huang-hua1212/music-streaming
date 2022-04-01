@@ -279,9 +279,6 @@ export default {
         .get(addressApi)
         .then((res) => {
           this.addressSelectOptionsCities = [...res.data];
-        })
-        .catch((err) => {
-          console.dir(err);
         });
     },
 

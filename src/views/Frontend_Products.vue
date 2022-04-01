@@ -94,6 +94,7 @@
                 class="card-img-top"
                 :src="item.imageUrl"
                 style="height: 350px"
+                alt="圖片未加載完成"
               />
               <div class="card-body">
                 <h3 class="card-title text-primary">{{ item.title }}</h3>
@@ -138,7 +139,8 @@
             </div>
             <div class="modal-body">
               <div class="text-center">
-                <img v-bind:src="temp.imageUrl" style="width: 45%" />
+                <img v-bind:src="temp.imageUrl" style="width: 45%"
+                alt="圖片未加載完成"/>
               </div>
               <div class="mt-4 ms-3">
                 <h5>
@@ -181,6 +183,7 @@
                       @click.prevent="changeImage(key)"
                     >
                       <img :src="item" style="height: 80px"
+                      alt="圖片未加載完成"
                     /></a>
                   </div>
                 </div>
@@ -334,15 +337,9 @@ export default {
         document.cookie = `hexToken=${token}; expired=${new Date(
           expired,
         )};path=/`;
-        //   console.log(document.cookie);
-        // window.location = "VueSpringClass_hw2.html";
 
         window.location.href = 'VueSpringClass_hw2.html';
-        // window.location.assign ("VueSpringClass_hw2.html");
       });
-      // .catch((error) => {
-      //   console.dir(error);
-      // });
     },
   },
 

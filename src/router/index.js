@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import CheckoutPaymentDesignStep2 from '@/components/CheckoutPaymentDesign_Step2.vue';
-import Backend from '../views/Backend.vue';
 import FrontendProducts from '../views/Frontend_Products.vue';
 import ChartPlaylist from '../views/ChartPlaylist.vue';
 import CheckoutPaymentDesign from '../views/CheckoutPayment_Design.vue';
@@ -93,11 +92,6 @@ const routes = [
     component: () => import('../views/DetailsProduct.vue'),
   },
   {
-    path: '/backend_origin',
-    name: 'Backend',
-    component: Backend,
-  },
-  {
     path: '/chartPlaylist/:id/:name',
     name: 'ChartPlaylist',
     component: ChartPlaylist,
@@ -111,6 +105,11 @@ const routes = [
     path: '/musicplayer-sidebar',
     name: 'MusicPlayerSidebar',
     component: () => import('@/components/MusicPlayer_Sidebar.vue'),
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: () => import('@/components/Map.vue'),
   },
   // 若使用者輸入的網址為錯誤，或找不到時，有以下兩種解決方法
   // 1.404頁面

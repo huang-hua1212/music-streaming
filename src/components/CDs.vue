@@ -169,7 +169,7 @@
       >
         <div class="card" style="width: 100%">
           <router-link :to = "`/record-shop/cds/${item.id}`">
-          <img class="card-img-top" alt="Card image cap" :src="item.imageUrl" />
+          <img class="card-img-top" alt="圖片未加載完成" :src="item.imageUrl"/>
           </router-link>
           <div class="card-body">
             <p class="card-title" style="text-align: center; font-size: 17px">
@@ -344,9 +344,6 @@ export default {
         .get(url)
         .then((res) => {
           this.data = res.data.products.filter((ele) => ele.category === 'CDs');
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
     addProduct(temp) {
@@ -367,9 +364,6 @@ export default {
           // this.showLoading();
           this.computProductLength();
           this.showSuccessAnimation();
-        })
-        .catch((err) => {
-          console.log(err.response);
         });
     },
     computProductLength() {
@@ -388,7 +382,6 @@ export default {
         yearObject.name = year;
         this.conditionFilter.yearList.push(yearObject);
       }
-      // console.log(this.conditionFilter.yearList);
     },
     activate(arryName, array, item) {
       this.conditionIsActive[arryName] = item.name;

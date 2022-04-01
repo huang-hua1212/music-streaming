@@ -171,7 +171,7 @@
       >
         <div class="card" style="width: 100%">
           <router-link :to = "`/record-shop/vinyls/${item.id}`">
-          <img class="card-img-top" alt="Card image cap" :src = "item.imageUrl"/>
+          <img class="card-img-top" alt="圖片未加載完成" :src = "item.imageUrl"/>
           </router-link>
           <div class="card-body">
             <p class="card-title" style="text-align: center; font-size: 17px;">{{item.title}}</p>
@@ -335,9 +335,6 @@ export default {
         .get(url)
         .then((res) => {
           this.data = res.data.products.filter((ele) => ele.category === 'Vinyls');
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
     addProduct(temp) {
@@ -358,9 +355,6 @@ export default {
           // this.showLoading();
           this.computProductLength();
           this.showSuccessAnimation();
-        })
-        .catch((err) => {
-          console.log(err.response);
         });
     },
     computProductLength() {
@@ -373,7 +367,6 @@ export default {
     },
     getYearList() {
       const nowYear = new Date(Date.now()).getFullYear();
-      console.log(nowYear);
       for (let i = 0; i < 10; i += 1) {
         const yearObject = { name: '', isActive: false };
         const year = nowYear - i;

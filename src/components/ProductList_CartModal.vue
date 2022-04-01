@@ -36,7 +36,8 @@
                 <tr v-for="item in productsInCart" :key="item.product.id">
                   <td style="width: 2vh; padding-left: 11vh">
                     <div style="width: 8.6vh; padding-top: 2vh; padding-bottom: 2vh">
-                      <img :src="item.product.imageUrl" style="width: 100%" />
+                      <img :src="item.product.imageUrl" style="width: 100%"
+                      alt="圖片未加載完成"/>
                     </div>
                   </td>
                   <td style="padding-top: 5vh">

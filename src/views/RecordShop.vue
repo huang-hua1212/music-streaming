@@ -15,7 +15,6 @@
 
 <script>
 import NavbarBlack from '@/components/NavbarBlack.vue';
-import axios from 'axios';
 
 export default {
   data() {
@@ -24,7 +23,6 @@ export default {
     };
   },
   created() {
-    // this.checkLogin();
     this.showLoading();
   },
   components: { NavbarBlack },
@@ -37,26 +35,6 @@ export default {
     },
     computeProductLength() {
       this.$refs.callNavModal.addProduct();
-    },
-    checkLogin() {
-      const cookieToken = document.cookie.replace(
-        /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-        '$1',
-      );
-      // axios.defaults.headers.common['Authorization']，作為axios的post參數
-      axios.defaults.headers.common.Authorization = cookieToken;
-
-      // 驗證是否登入
-      axios
-        .post(
-          `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
-        )
-        .then(() => {
-        })
-        .catch(() => {
-          // check錯誤，會回到首頁
-          this.$router.push('/');
-        });
     },
   },
 };

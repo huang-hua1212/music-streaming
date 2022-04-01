@@ -4,7 +4,8 @@
     <div class="row">
       <div class="col-auto" style="margin-left: 10vh; padding-top: 6vh">
         <div style="width: 65vh; height: auto">
-          <img :src="data.imageUrl" style="max-width: 100%; height: auto" />
+          <img :src="data.imageUrl" style="max-width: 100%; height: auto"
+          alt="圖片未加載完成"/>
         </div>
       </div>
       <div class="col-auto" style="max-width: 75vh">
@@ -83,6 +84,7 @@
               <img
                 style="width: 100%; height: auto"
                 src="https://developer.spotify.com/assets/branding-guidelines/icon4@2x.png"
+                alt="圖片未加載完成"
               />
             </a>
           </div>
@@ -91,6 +93,7 @@
               <img
                 style="width: 100%; height: auto"
                 src="https://seeklogo.com/images/Y/youtube-square-logo-3F9D037665-seeklogo.com.png"
+                alt="圖片未加載完成"
               />
             </a>
           </div>
@@ -99,6 +102,7 @@
               <img
                 style="width: 100%; height: auto"
                 src="https://icons.iconarchive.com/icons/danleech/simple/256/soundcloud-icon.png"
+                alt="圖片未加載完成"
               />
             </a>
           </div>
@@ -107,6 +111,7 @@
               <img
                 style="width: 100%; height: auto"
                 src="https://scontent.ftpe8-2.fna.fbcdn.net/v/t1.6435-9/121186795_1586856208163841_1963396418935118163_n.png?stp=dst-png_p403x403&_nc_cat=100&ccb=1-5&_nc_sid=7aed08&_nc_ohc=uEPn0_G9d5oAX8t7wNS&_nc_ht=scontent.ftpe8-2.fna&oh=00_AT9ix4ThG3EWMk_tV-2prY6URor6v4iVYgPgc1IBoxk03g&oe=6268631D"
+                alt="圖片未加載完成"
               />
             </a>
           </div>
@@ -115,6 +120,7 @@
               <img
                 style="width: 100%; height: auto"
                 src="https://cdn2.thelineofbestfit.com/images/made/images/remote/https_cdn2.thelineofbestfit.com/media/2014/apple_music_960_960_90.jpg"
+                alt="圖片未加載完成"
               />
             </a>
           </div>
@@ -184,6 +190,7 @@
     <img
       style="width: 100px; height: 40px"
       src="https://storage.googleapis.com/vue-course-api.appspot.com/record-shop/1647107643454.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=kqRZZ03yHPmRgXpQb6LdfwfDPUU8qcfStNPiCsglNAomY%2BncZLFA9zAp8nGEJFyF8ada8XAWBxcVxV9NmqC3vx8LsQISVkalgAoM3Syzx4u%2BasVYFB7LjqHJ20EevMHd5WWFr2rq4tr4gVl84MpRRC9kCf%2BDpTKGNwoEwmANlVTs1ZARLB1gPz3Skua%2BCpYPVWVj2Em8TAzNMq4%2B7NjpRD%2Fx9Z3PWOxQ20d0GAlg%2BTt7d18BIahDFjzEGru0LHydr5EI%2F%2BFEF8ZzzFx0T2KFKMSp7XtphZEUlPep73T%2BXO9K86HEWIbxE5hy7Q7OOzYpRanRXNcNx%2Bl4FBJDfY4%2B0w%3D%3D"
+      alt="圖片未加載完成"
     />
     <div>
       <h5>Copyright © 2022 hua</h5>
@@ -242,9 +249,6 @@ export default {
           if (func2 !== undefined) {
             func2();
           }
-        }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
         });
     },
     // 參考: https://bbbootstrap.com/snippets/animated-checkmark-50934051
@@ -270,9 +274,6 @@ export default {
           this.data = res.data.product;
           const albumName = this.data.title;
           this.searchTracksOfAlbum(albumName);
-        })
-        .catch((err) => {
-          console.dir(err);
         });
     },
     addProduct() {
@@ -288,9 +289,6 @@ export default {
           // this.showLoading();
           this.computProductLength();
           this.showSuccessAnimation();
-        })
-        .catch((err) => {
-          console.log(err.response);
         });
     },
     computProductLength() {
@@ -327,13 +325,7 @@ export default {
             )
             .then((res1) => {
               this.tracks = res1.data.data;
-            })
-            .catch((error) => {
-              console.dir(error); // 失敗的話回傳連線異常
             });
-        })
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
         });
     },
   },

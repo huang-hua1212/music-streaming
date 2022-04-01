@@ -25,6 +25,7 @@
           <img
             style="width: 100%; height: 100%"
             :src="item.album.images[1].url"
+            alt="圖片未加載完成"
           />
         </div>
         <div

@@ -152,7 +152,6 @@ export default {
           password: this.password,
         })
         .then((res) => {
-          console.log('success!!');
           this.closeModal(); // 要先關閉modal才不會有陰影
           const { token, expired } = res.data;
           document.cookie = `hexToken=${token}; expired=${new Date(
@@ -162,8 +161,7 @@ export default {
           // this.$router.push('/backend');
           this.$router.push('/backend');
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           this.loginSuccess = false;
         });
     },

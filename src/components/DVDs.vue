@@ -162,28 +162,6 @@
       class="row recordDisplay"
       style="height: auto;"
     >
-      <!-- <div
-        class="col-auto"
-        style="
-          width: 23%;
-          margin-left: 1.6%;
-          margin-bottom: 2%;
-          border: pink solid;
-          padding: 0;
-        "
-      >
-        <div class="card" style="width: 100%">
-          <img class="card-img-top" src="" alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div> -->
 
       <div
         class="col-auto"
@@ -342,8 +320,7 @@ export default {
         .post(
           `https://all-the-cors.herokuapp.com/${process.env.VUE_APP_API}/api/user/check`,
         )
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.getYearList();
           this.productsIn();
         })
@@ -367,11 +344,7 @@ export default {
           },
         )
         .then(() => {
-          // this.showLoading();
           this.computProductLength();
-        })
-        .catch((err) => {
-          console.log(err.response);
         });
     },
     productsIn(page = 1) {
@@ -380,16 +353,11 @@ export default {
       axios
         .get(url)
         .then((res) => {
-          console.log(res.data.products);
           this.data = res.data.products.filter((ele) => ele.category === 'DVDs');
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
     getYearList() {
       const nowYear = new Date(Date.now()).getFullYear();
-      console.log(nowYear);
       for (let i = 0; i < 10; i += 1) {
         const yearObject = { name: '', isActive: false };
         const year = nowYear - i;

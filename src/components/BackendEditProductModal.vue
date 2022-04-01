@@ -253,6 +253,7 @@
                       <img
                         v-bind:src="tempData.imageUrl"
                         style="border: dashed grey; height: 100%; width: auto"
+                        alt="圖片未加載完成"
                       />
                     </div>
                     <div
@@ -376,16 +377,9 @@ export default {
   },
   methods: {
     editProduct(tempProduct) {
-      if (Object.keys(tempProduct).length === 0) {
-        // this.tempData = this.tempData;
-        // console.log('空字串');
-        // console.log(tempProduct);
-      } else {
-        // console.log('非空字串');
-        // console.log(tempProduct);
+      if (Object.keys(tempProduct).length !== 0) {
         this.tempData = tempProduct;
       }
-      // console.log(tempProduct);
     },
     checkLogin() {
       const cookieToken = document.cookie.replace(

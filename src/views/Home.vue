@@ -38,7 +38,7 @@
             style="margin-top: -600px"
             :src="item.imgUrl"
             class="d-block"
-            alt=""
+            alt="圖片未加載完成"
           />
         </router-link>
       </div>
@@ -63,30 +63,6 @@
       class="freshSuggest ms-auto"
       style="border: white solid; border-radius: 10px"
     >
-      <!-- <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselLatestSongs"
-        data-bs-slide="prev"
-      >
-        <span
-          class="carousel-control-prev-icon latestSong-Carousel-prev-icon"
-          aria-hidden="true"
-        ></span>
-        <span class="visually-hidden">Previous</span>
-      </button>---->
-      <!-- <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselLatestSongs"
-        data-bs-slide="next"
-      >
-        <span
-          class="carousel-control-next-icon latestSong-Carousel-next-icon"
-          aria-hidden="true"
-        ></span>
-        <span class="visually-hidden">Next</span>
-      </button> -->
       <p
         style="
           margin-left: 2%;
@@ -135,7 +111,8 @@
                     />
                   </div>
                 </a>
-                <img :src="it.album.images[1].url" />
+                <img :src="it.album.images[1].url"
+                alt="圖片未加載完成"/>
               </div>
             </div>
           </div>
@@ -187,7 +164,8 @@
               <hr />
             </div>
           </router-link>
-          <img :src="item.images[1].url" />
+          <img :src="item.images[1].url"
+          alt="圖片未加載完成"/>
         </div>
       </div>
     </div>
@@ -240,7 +218,6 @@
             :src="item.iframeSrc"
             frameborder="0"
           ></iframe>
-          <!-- <img :src="item.thumbnail[0]" /> -->
         </div>
         <div
           class="perVideo elements"
@@ -256,55 +233,47 @@
             :src="item.iframeSrc"
             frameborder="0"
           ></iframe>
-          <!-- <img :src="item.thumbnail[0]" /> -->
         </div>
       </div>
     </div>
-    <!-- <div
-      class="news"
-      style="border: white solid; height: 320px; margin-top: 4%"
-    >
-      <h3>Don't miss</h3>
-      <h3>Must Read</h3>
-      <h3>Good To Read</h3>
-      <h3>Featured</h3>
-      <div><buttom type="button">Load More</buttom></div>
-      <h4>新聞區</h4>
-      <h5>新聞區</h5>
-    </div> -->
     <div
       class="randomLyric"
-      style="border: white solid; height: auto; margin-top: 4%"
+      style="height: auto; margin-top: 4%"
     >
       <!-- 參考標語 -->
       <h2 style="margin-left: 5px; letter-spacing: 1px" hidden>每日歌詞</h2>
       <div
-        style="margin-top: 6%; max-width: 80%; margin-left: 10%; width: auto"
+        style="margin-top: 1%; max-width: 80%; margin-left: 10%; width: auto;
+        color: #e8e3e3;"
       >
         <p
           style="
             letter-spacing: 4px;
             white-space: pre-wrap;
-            line-height: 10vh;
+            line-height: 5vh;
             text-align: center;
-            font-size: 4vh;
+            font-size: 2.5vh;
           "
           v-html="dailyLyric.text"
         ></p>
         <p
           style="
             font-style: italic;
-            margin-top: 4%;
-            margin-left: 15%;
+            margin-top: 2%;
+            margin-left: 0%;
             text-align: right;
             width: 70%;
             font-size: 3.5vh;
           "
         >
-          by {{ dailyLyric.writer }}
+          -{{ dailyLyric.writer }}
         </p>
       </div>
     </div>
+    <div hidden><blockquote>
+      {{dailyLyric.text}}
+<cite> {{ dailyLyric.writer }}</cite>
+</blockquote></div>
   </div>
   <!-- Loading -->
   <div style="position: relative">
@@ -326,7 +295,7 @@
   <footer
     class="footer text-white"
     style="
-      margin-top: 10%;
+      margin-top: 8%;
       margin-bottom: 0;
       width: 100%;
       height: 120px;
@@ -464,9 +433,6 @@ export default {
           if (func2) {
             func2();
           }
-        }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
         });
     },
     refreshToken() {
@@ -484,10 +450,7 @@ export default {
             crossdomain: true,
           },
         )
-        .then((res) => console.log(res)) // 成功拿到資料後讓回傳的資料匯入Vue的data中
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
-        });
+        .then((res) => console.log(res));
     },
     getLatestSongs() {
       axios
@@ -510,9 +473,6 @@ export default {
           this.latestSongsList = [...this.latestSongsList];
           this.latestSongsList[0] = [...this.latestSongsList[0]];
           this.latestSongsList[1] = [...this.latestSongsList[1]];
-        })
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
         });
     },
     getChart() {
@@ -532,9 +492,6 @@ export default {
           this.allChart = res.data.data.slice(1, 9);
           this.imagePath[1].to = `/ChartPlaylist/${this.allChart[0].id}/${this.allChart[0].title}`;
           this.imagePath[2].to = `/ChartPlaylist/${this.allChart[2].id}/${this.allChart[2].title}`;
-        }) // 成功拿到資料後讓回傳的資料匯入Vue的data中
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
         });
     },
     testGetDailyLyric() {
@@ -558,11 +515,7 @@ export default {
           const songIdApiPath = `https://all-the-cors.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?f_artist_id=${artistId}&f_has_lyrics=1&page_size=${pageSize}&page=${pageNth}&s_track_rating=ASC&apikey=${this.musixmatchAccessToken}`;
           this.getSongIdApiPath(songIdApiPath, pageSize);
         })
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
-          // accessToken過期
-          // this.changeMusixmatchAccessToken();
-          // this.getDailyLyric();
+        .catch(() => {
           this.testGetDailyLyric();
         });
     },
@@ -586,9 +539,7 @@ export default {
             this.dailyLyric.writer = '青峰';
           });
         })
-        .catch((error) => {
-          console.dir(error); // 失敗的話回傳連線異常
-          // accessToken過期
+        .catch(() => {
           this.changeMusixmatchAccessToken();
           this.getDailyLyric();
         });
@@ -642,8 +593,7 @@ export default {
             this.isLoading = false;
           }, 2200);
         })
-        .catch((err) => {
-          console.log(err.response);
+        .catch(() => {
           this.changeYoutubeApiKey();
           this.getLatestVideo();
         });
@@ -674,10 +624,8 @@ export default {
     },
     playSong(item) {
       this.currentSong = { ...item };
-      console.log(this.currentSong);
       const songHref = `https://widget.kkbox.com/v1/?id=${this.currentSong.id}&type=song&terr=TW&lang=TW&autoplay=true`;
       this.currentSongHref = songHref;
-      console.log(this.currentSongHref);
     },
   },
 };
@@ -905,5 +853,39 @@ picture a {
 }
 .picture:hover .overlapPanelLatestSong {
   display: block;
+}
+// 每日歌詞
+blockquote {
+font-family: Georgia, serif;
+font-size: 18px;
+font-style: italic;
+width: 500px;
+margin: 0.25em 0;
+padding: 0.35em 40px;
+line-height: 1.45;
+position: relative;
+color: #383838;
+}
+
+blockquote:before {
+display: block;
+padding-left: 10px;
+content: "\201C";
+font-size: 80px;
+position: absolute;
+left: -20px;
+top: -20px;
+color: #7a7a7a;
+}
+
+blockquote cite {
+color: #999999;
+font-size: 14px;
+display: block;
+margin-top: 5px;
+}
+
+blockquote cite:before {
+content: "\2014 \2009";
 }
 </style>

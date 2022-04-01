@@ -294,9 +294,6 @@ export default {
     this.getYearList();
     this.checkLogin();
   },
-  mounted() {
-    // this.modal.editmodal = new Modal(this.$refs.editmodal);
-  },
   methods: {
     checkLogin() {
       const cookieToken = document.cookie.replace(
@@ -321,7 +318,6 @@ export default {
         });
     },
     openEditProductModal(temp) {
-      // console.log(this.$refs.callEditModal);
       this.$refs.callEditModal.editProduct(temp);
       this.$refs.callEditModal.openModal();
     },

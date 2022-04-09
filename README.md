@@ -2,23 +2,22 @@
 
 ## Project setup
 ```
-yarn install
+npm install
 ```
 
-### Compiles and hot-reloads for development
+### Lints and fixes files with ESLint
 ```
-yarn serve
+npm run lint
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+npm run build
 ```
 
-### Lints and fixes files
+### Compiles and hot-reloads for development
 ```
-yarn lint
+npm run serve
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+

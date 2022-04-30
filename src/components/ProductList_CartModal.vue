@@ -25,13 +25,6 @@
         <div class="modal-body" style="padding-top: 0vh">
           <div class="container">
             <table class="table" style="text-align: center">
-              <!-- <thead>
-                <th>產品名稱</th>
-                <th>售價</th>
-                <th>數量</th>
-                <th>小計</th>
-                <th>變更</th>
-              </thead> -->
               <tbody>
                 <tr v-for="item in productsInCart" :key="item.product.id">
                   <td style="width: 2vh; padding-left: 11vh">

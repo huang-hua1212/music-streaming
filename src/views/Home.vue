@@ -263,7 +263,7 @@
             margin-left: 0%;
             text-align: right;
             width: 70%;
-            font-size: 3.5vh;
+            font-size: 2.5vh;
           "
         >
           -{{ dailyLyric.writer }}
@@ -565,7 +565,6 @@ export default {
       const tempaApiKey = this.youtubeApiKeyArray[0]; // prefer destruct array!!!
       this.youtubeApiKey = tempaApiKey;
     },
-    // from youtube
     getLatestVideo() {
       // API KEY2 : AIzaSyAPfa88f3-wUXl9BeEu4qRanejhlaIvwnc
       const url = 'https://all-the-cors.herokuapp.com/https://www.googleapis.com/youtube/v3/search';

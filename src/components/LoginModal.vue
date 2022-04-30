@@ -117,8 +117,6 @@ export default {
   mounted() {
     this.modal.loginModal = new Modal(this.$refs.loginModal);
   },
-  // components: { login, LoginModalBodyTest },
-  // components: { LoginModalBodyTest },
   props: ['isOpenModal'],
   watch: {
     is_openLoginModal(newValue) {
@@ -129,7 +127,6 @@ export default {
   },
   methods: {
     closeModal() {
-      // this.$emit('close-modal', isCloseLoginModal);
       this.email = '';
       this.password = '';
       this.modal.loginModal.hide();
@@ -158,7 +155,6 @@ export default {
             expired,
           )};path=/`;
           this.loginSuccess = true;
-          // this.$router.push('/backend');
           this.$router.push('/backend');
         })
         .catch(() => {

@@ -1,22 +1,15 @@
-FROM node:lts-alpine
+# 依赖 nginx 容器
+# FROM hyuhua616/vue-jenkins
+FROM nginx:stable-alpine as production-stage
 
-# install simple http server for serving static content
-RUN npm install -g http-server
+# 作者
+MAINTAINER songxiaoguang
 
-# make the 'app' folder the current working directory
-WORKDIR /app
+# 首先删除 nginx default.conf 文件
+RUN rm /etc/nginx/conf.d/default.conf
 
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY package*.json ./
+# 用本地的 default.conf 替换 nginx 镜像的默認配置
+ADD default.conf /etc/nginx/conf.d/
 
-# install project dependencies leaving out dev dependencies
-RUN npm install --production
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
-COPY . .
-
-# build app for production with minification
-RUN npm run build
-
-EXPOSE 80
-CMD [ "http-server", "dist" ]
+# 將項目打包後的 dist 目錄，複製到 default.conf 指定的發布目錄 
+COPY dist/ /usr/share/nginx/html
